@@ -5,8 +5,8 @@ const Category = model("categorys", CategorySchema);
 
 export class CategoryModel {
   async findByFoodType(foodType) {
-    const category = await User.findOne({ email });
-    return user;
+    const category = await Category.findOne({ foodType });
+    return category;
   }
 
   /*async findById(userId) {

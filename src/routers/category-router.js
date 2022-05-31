@@ -22,15 +22,15 @@ categoryRouter.post("/add", async (req, res, next) => {
     const foodType = req.body.foodType;
     const description = req.body.description;
 
-    // 위 데이터를 유저 db에 추가하기
-    const newUser = await categoryService.addUser({
+    // 위 데이터를 카테고리 db에 추가하기
+    const newCategory = await categoryService.addCategory({
       foodType,
       description,
     });
 
-    // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
+    // 추가된 카테고리의 db 데이터를 프론트에 다시 보내줌
     // 물론 프론트에서 안 쓸 수도 있지만, 편의상 일단 보내 줌
-    res.status(201).json(newUser);
+    res.status(201).json(newCategory);
   } catch (error) {
     next(error);
   }
