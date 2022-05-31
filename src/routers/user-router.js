@@ -1,4 +1,5 @@
 import { Router } from 'express';
+//type check
 import is from '@sindresorhus/is';
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired } from '../middlewares';
@@ -21,12 +22,16 @@ userRouter.post('/register', async (req, res, next) => {
     const fullName = req.body.fullName;
     const email = req.body.email;
     const password = req.body.password;
+    const phoneNumber = req.body.phoneNumber;
+    const address = req.body.address;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userService.addUser({
       fullName,
       email,
       password,
+      phoneNumber,
+      address,
     });
 
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
@@ -113,6 +118,8 @@ userRouter.patch(
       // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
       // 보내주었다면, 업데이트용 객체에 삽입함.
       const toUpdate = {
+        //if fullName = undefined, result = undefined
+        //if fullName = "String", result = { fullName: "String"} 
         ...(fullName && { fullName }),
         ...(password && { password }),
         ...(address && { address }),
