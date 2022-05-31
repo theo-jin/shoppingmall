@@ -82,21 +82,19 @@ userRouter.get("/userlist", loginRequired, async function (req, res, next) {
 
 //TODO: userId에 대해 프론트와 논의해야함
 // 사용자 정보 조회
-userRouter.get(
-  "/users/:userId",
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      const { userId } = req.params;
-      // 선택 사용자 정보를 얻음
-      const users = await userService.getUserInfo(userId);
-      // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-      res.status(200).json(users);
-    } catch (error) {
-      next(error);
-    }
+userRouter.get("/userInfo", loginRequired, async function (req, res, next) {
+  try {
+    // loginRequired에서 decoded된 userId
+    const userId = req.currentUserId;
+
+    // 선택 사용자 정보를 얻음
+    const users = await userService.getUserInfo(userId);
+    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
