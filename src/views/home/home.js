@@ -66,7 +66,7 @@ function changeNavbar() {
   const firstList = navbar.children[0];
   const secondList = navbar.children[1];
   if (sessionStorage.getItem("token")) {
-    firstList.innerHTML = "<a href='/'>계정관리</a>";
+    firstList.innerHTML = "<a href='/userInfo'>계정관리</a>";
     secondList.innerHTML = "<a href='/'>로그아웃</a>";
     secondList.addEventListener("click", () => {
       sessionStorage.removeItem("token");

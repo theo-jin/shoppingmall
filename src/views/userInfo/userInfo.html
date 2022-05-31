@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>쇼핑-n팀</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="userInfo.css" />
+    <script src="userInfo.js" type="module" defer></script>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="container mt-3">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img src="/elice-rabbit.png" width="30" height="30" />
+            <span class="has-text-link">쇼핑-n팀</span>
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
+            <ul id="navbar">
+              <li><a href='/userInfo'>계정관리</a></li>
+              <li><a href='/'>로그아웃</a></li>
+              <li>
+                <a href="#cart" aria-current="page">
+                  <span class="icon">
+                    <i class="fas fa-cart-shopping"></i>
+                  </span>
+                  <span>카트</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="divContainer">
+      <div class="userTitle"><h3 class="title">계정관리</h3></div>
+      <hr>
+      <div class="mainContainer">
+          <a class="userMenu" href="/">
+              <div class="menuIcon">
+                  <span class="userIcon">
+                      &#10004;
+                  </span>
+              </div>
+              <b class="menuName">주문조회</b><br>
+              <p class="desc">
+                  주문하신 상품을 취소, 확인할 수 있습니다.
+              </p>
+            </a>
+          <a class="userMenu" href="/">
+            <div class="menuIcon">
+                <span class="userIcon">
+                    &#9874;
+                </span>
+            </div>
+              <b class="menuName">회원정보관리</b>
+              <p class="desc">
+                회원정보를 확인, 수정할 수 있습니다.
+                </p>
+            </a>
+          <a class="userMenu" href="/">
+            <div class="menuIcon">
+                <span class="userIcon">
+                    &#9986;
+                </span>
+            </div>
+              <b class="menuName">회원탈퇴</b><br>
+              <p class="desc">
+                회원정보를 안전하게 삭제할 수 있습니다.
+            </p>
+        </a>
+      </div>
+
+    </div>
+
+  </body>
+</html>
