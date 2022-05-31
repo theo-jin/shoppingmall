@@ -14,10 +14,10 @@ export class CategoryModel {
     return user;
   }*/
 
-  /*async create(userInfo) {
-    const createdNewUser = await User.create(userInfo);
-    return createdNewUser;
-  }*/
+  async create(categoryInfo) {
+    const createdNewCategory = await Category.create(categoryInfo);
+    return createdNewCategory;
+  }
 
   /*async findAll() {
     const users = await User.find({});

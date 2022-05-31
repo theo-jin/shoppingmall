@@ -21,7 +21,7 @@ categoryRouter.post("/add", async (req, res, next) => {
     // req (request)의 body 에서 데이터 가져오기
     const foodType = req.body.foodType;
     const description = req.body.description;
-
+    console.log(foodType);
     // 위 데이터를 카테고리 db에 추가하기
     const newCategory = await categoryService.addCategory({
       foodType,
