@@ -8,7 +8,7 @@ import { categoryService } from "../services";
 const categoryRouter = Router();
 
 // 카테고리 추가 api (아래는 /add이지만, 실제로는 /api/category/add로 요청해야 함.)
-categoryRouter.post("/add", async (req, res, next) => {
+categoryRouter.post("/add", loginRequired, async (req, res, next) => {
   try {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -21,7 +21,7 @@ categoryRouter.post("/add", async (req, res, next) => {
     // req (request)의 body 에서 데이터 가져오기
     const foodType = req.body.foodType;
     const description = req.body.description;
-    console.log(foodType);
+
     // 위 데이터를 카테고리 db에 추가하기
     const newCategory = await categoryService.addCategory({
       foodType,
