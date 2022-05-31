@@ -3,12 +3,12 @@ import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired } from "../middlewares";
-import { userService } from "../services";
+import { categoryService } from "../services";
 
-const userRouter = Router();
+const categoryRouter = Router();
 
-// 회원가입 api (아래는 /register이지만, 실제로는 /api/register로 요청해야 함.)
-userRouter.post("/register", async (req, res, next) => {
+// 카테고리 추가 api (아래는 /add이지만, 실제로는 /api/category/add로 요청해야 함.)
+categoryRouter.post("/add", async (req, res, next) => {
   try {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -19,19 +19,13 @@ userRouter.post("/register", async (req, res, next) => {
     }
 
     // req (request)의 body 에서 데이터 가져오기
-    const fullName = req.body.fullName;
-    const email = req.body.email;
-    const password = req.body.password;
-    const phoneNumber = req.body.phoneNumber;
-    const address = req.body.address;
+    const foodType = req.body.foodType;
+    const description = req.body.description;
 
     // 위 데이터를 유저 db에 추가하기
-    const newUser = await userService.addUser({
-      fullName,
-      email,
-      password,
-      phoneNumber,
-      address,
+    const newUser = await categoryService.addUser({
+      foodType,
+      description,
     });
 
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
@@ -43,7 +37,7 @@ userRouter.post("/register", async (req, res, next) => {
 });
 
 // 로그인 api (아래는 /login 이지만, 실제로는 /api/login로 요청해야 함.)
-userRouter.post("/login", async function (req, res, next) {
+/*userRouter.post("/login", async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
@@ -64,11 +58,11 @@ userRouter.post("/login", async function (req, res, next) {
   } catch (error) {
     next(error);
   }
-});
+});*/
 
 // 전체 유저 목록을 가져옴 (배열 형태임)
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
-userRouter.get("/userlist", loginRequired, async function (req, res, next) {
+/*userRouter.get("/userlist", loginRequired, async function (req, res, next) {
   try {
     // 전체 사용자 목록을 얻음
     const users = await userService.getUsers();
@@ -78,11 +72,11 @@ userRouter.get("/userlist", loginRequired, async function (req, res, next) {
   } catch (error) {
     next(error);
   }
-});
+});*/
 
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
-userRouter.patch(
+/*userRouter.patch(
   "/users/:userId",
   loginRequired,
   async function (req, res, next) {
@@ -139,6 +133,6 @@ userRouter.patch(
       next(error);
     }
   }
-);
+);*/
 
-export { userRouter };
+export { categoryRouter };
