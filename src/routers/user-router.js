@@ -70,6 +70,10 @@ userRouter.post("/login", async function (req, res, next) {
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
 userRouter.get("/userlist", loginRequired, async function (req, res, next) {
   try {
+    const userRole = req.currentUserRole
+    if(userRole !== "admin"){
+      throw new Error("권한이 없습니다.")
+    }
     // 전체 사용자 목록을 얻음
     const users = await userService.getUsers();
 
@@ -159,16 +163,22 @@ userRouter.delete("/user", loginRequired, async function (req, res, next) {
     // 사용자가 자신의 계정을 탈퇴하는 경우
     const userId = req.currentUserId;
 
-    //TODO: 관리자 권한인지 확인할 것
-    // 관리자 권한으로 user를 삭제하는 경우, userId 변경
-    if (req.body.userId) {
-      userId = req.body.userId;
+    // 관리자 권한으로 user를 삭제하는 경우, 선택한 userId로 변경
+    if (req.currentUserRole === "admin") {
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+      if(!req.body.userId){
+        userId = req.body.userId;
+      }
     }
 
     const deleteUserInfo = await userService.deleteUser(userId);
     
     if(!deleteUserInfo){
-      throw new Error("사용자 정보 삭제하는 데 실패했습니다.")
+      throw new Error("사용자 정보 삭제 실패했습니다.")
     }
 
     res.status(200).json({message: "OK"});
