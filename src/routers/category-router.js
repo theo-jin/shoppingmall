@@ -45,7 +45,6 @@ categoryRouter.delete(
       // req (request)의 params 에서 데이터 가져오기
       const categoryType = req.params.categoryType;
 
-      console.log(`params가져오는거 ${categoryType}`);
       // 위 데이터를 카테고리 db에서 삭제하기
       await categoryService.deleteCategory(categoryType);
 
