@@ -43,5 +43,17 @@ productRouter.post("/add", loginRequired, async function (req, res, next) {
   }
 });
 
+// 상품 카테고리 별 조회
+productRouter.get("/productlist/:category", async function (req, res, next) {
+  try {
+    const { category } = req.params;
+
+    const products = await productService.getProductsByCategory(category);
+
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { productRouter };

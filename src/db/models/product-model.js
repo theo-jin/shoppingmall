@@ -15,7 +15,7 @@ export class ProductModel {
   }
 
   async findByCategory(category) {
-    const products = await Product.findOne({ category });
+    const products = await Product.find({ category });
     return products;
   }
 
