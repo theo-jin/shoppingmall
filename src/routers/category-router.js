@@ -36,48 +36,31 @@ categoryRouter.post("/add", loginRequired, async (req, res, next) => {
   }
 });
 
-// 로그인 api (아래는 /login 이지만, 실제로는 /api/login로 요청해야 함.)
-/*userRouter.post("/login", async function (req, res, next) {
-  try {
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+// 카테고리 삭제 api (아래는 /:categoryType이지만, 실제로는 /api/category/:categoryType로 요청해야 함.)
+categoryRouter.delete(
+  "/:categoryType",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      // req (request)의 params 에서 데이터 가져오기
+      const categoryType = req.params.categoryType;
+
+      console.log(`params가져오는거 ${categoryType}`);
+      // 위 데이터를 카테고리 db에서 삭제하기
+      await categoryService.deleteCategory(categoryType);
+
+      // 삭제되었다고 그냥 success를 보내줌
+      res.status(201).json({ result: "success" });
+    } catch (error) {
+      next(error);
     }
-
-    // req (request) 에서 데이터 가져오기
-    const email = req.body.email;
-    const password = req.body.password;
-
-    // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
-    const userToken = await userService.getUserToken({ email, password });
-
-    // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).json(userToken);
-  } catch (error) {
-    next(error);
   }
-});*/
+);
 
-// 전체 유저 목록을 가져옴 (배열 형태임)
-// 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
-/*userRouter.get("/userlist", loginRequired, async function (req, res, next) {
-  try {
-    // 전체 사용자 목록을 얻음
-    const users = await userService.getUsers();
-
-    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(users);
-  } catch (error) {
-    next(error);
-  }
-});*/
-
-// 사용자 정보 수정
-// (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
-/*userRouter.patch(
-  "/users/:userId",
+// 카테고리 수정
+// (예를 들어 /api/category/한식123 로 요청하면 req.params.categoryType는 '한식123' 문자열로 됨)
+categoryRouter.patch(
+  "/:categoryType",
   loginRequired,
   async function (req, res, next) {
     try {
@@ -89,50 +72,36 @@ categoryRouter.post("/add", loginRequired, async (req, res, next) => {
         );
       }
 
-      // params로부터 id를 가져옴
-      const userId = req.params.userId;
+      // params로부터 categoryType를 가져옴
+      const categoryType = req.params.categoryType;
 
-      // body data 로부터 업데이트할 사용자 정보를 추출함.
-      const fullName = req.body.fullName;
-      const password = req.body.password;
-      const address = req.body.address;
-      const phoneNumber = req.body.phoneNumber;
-      const role = req.body.role;
+      // body data 로부터 업데이트할 카테고리 정보를 추출함.
+      const foodType = req.body.foodType;
+      const description = req.body.description;
 
-      // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
-      const currentPassword = req.body.currentPassword;
-
-      // currentPassword 없을 시, 진행 불가
-      if (!currentPassword) {
-        throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
-      }
-
-      const userInfoRequired = { userId, currentPassword };
+      const categoryInfoRequired = { categoryType };
 
       // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
       // 보내주었다면, 업데이트용 객체에 삽입함.
       const toUpdate = {
         //if fullName = undefined, result = undefined
         //if fullName = "String", result = { fullName: "String"}
-        ...(fullName && { fullName }),
-        ...(password && { password }),
-        ...(address && { address }),
-        ...(phoneNumber && { phoneNumber }),
-        ...(role && { role }),
+        ...(foodType && { foodType }),
+        ...(description && { description }),
       };
 
-      // 사용자 정보를 업데이트함.
-      const updatedUserInfo = await userService.setUser(
-        userInfoRequired,
+      // 카테고리 정보를 업데이트함.
+      const updatedCategoryInfo = await categoryService.setCategory(
+        categoryInfoRequired,
         toUpdate
       );
 
-      // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
-      res.status(200).json(updatedUserInfo);
+      // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌
+      res.status(200).json(updatedCategoryInfo);
     } catch (error) {
       next(error);
     }
   }
-);*/
+);
 
 export { categoryRouter };

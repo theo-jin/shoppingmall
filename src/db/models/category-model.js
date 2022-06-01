@@ -9,28 +9,32 @@ export class CategoryModel {
     return category;
   }
 
-  /*async findById(userId) {
-    const user = await User.findOne({ _id: userId });
-    return user;
-  }*/
-
   async create(categoryInfo) {
     const createdNewCategory = await Category.create(categoryInfo);
     return createdNewCategory;
   }
 
-  /*async findAll() {
-    const users = await User.find({});
-    return users;
-  }*/
+  async findByCategoryType(categoryType) {
+    const category = await Category.findOne({ foodType: categoryType });
+    return category;
+  }
 
-  /*async update({ userId, update }) {
-    const filter = { _id: userId };
+  async delete(categoryType) {
+    const deleteCategory = await Category.deleteOne({ foodType: categoryType });
+    return deleteCategory;
+  }
+
+  async update({ foodType, update }) {
+    const filter = { foodType: foodType };
     const option = { returnOriginal: false };
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
-    return updatedUser;
-  }*/
+    const updatedCategory = await Category.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedCategory;
+  }
 }
 
 const categoryModel = new CategoryModel();
