@@ -138,6 +138,21 @@ class UserService {
 
     return user;
   }
+
+  //유저 정보 삭제
+  async deleteUser(userId) {
+    const user = await this.userModel.findById(userId);
+
+    // 삭제하려는 사용자가 존재하지 않는 경우
+    if (!user) {
+      throw new Error(`삭제하려는 사용자가 존재하지 않습니다.`);
+    }
+
+    // 사용자 삭제
+    // 삭제된 user 정보를 반환
+    const deletedUser = await this.userModel.deleteUser(userId);
+    return deletedUser;
+  }
 }
 
 const userService = new UserService(userModel);
