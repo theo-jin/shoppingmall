@@ -66,9 +66,8 @@ async function handleSubmit(e) {
 
   // 회원정보 수정 요청
   try {
-    const data = { fullName, email, password, address, phoneNumber };
-    const userEmail = sessionStorage.getItem("email");
-    await Api.patch("/api/users/" + userEmail, data);
+    const data = { fullName, password, address, phoneNumber };
+    await Api.patch("/api/userInfo", data);
     alert(`정상적으로 수정되었습니다.`);
 
     // 회원 정보 페이지 이동
@@ -81,7 +80,7 @@ async function handleSubmit(e) {
 
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
-  const data = await Api.get("/api/users/" + userEmail);
+  const data = await Api.get("/api/userInfo");
 
   fullNameInput.value = data.fullName;
   phoneInput.value = data.phoneNumber;

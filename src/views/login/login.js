@@ -23,8 +23,6 @@ async function handleSubmit(e) {
 
   const email = emailInput.value;
   const password = passwordInput.value;
-  // email정보로 사용자 정보 요청을 위해 sessionStore에 저장
-  sessionStorage.setItem("email", email);
 
   // 잘 입력했는지 확인
   const isEmailValid = validateEmail(email);
