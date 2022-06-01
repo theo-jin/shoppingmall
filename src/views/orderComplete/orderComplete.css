@@ -1,0 +1,16 @@
+.div-container {
+  margin: 10% 40% 20% 40%;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+}
+.orderMessage{
+  margin: 4% 4% 15% 15%;
+  font-size: 20px;
+}
+.button{
+  margin: 4% 4% 2% 4%;
+  width: 300px;
+}
+
