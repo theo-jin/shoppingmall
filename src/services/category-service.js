@@ -20,14 +20,8 @@ class CategoryService {
     }
 
     // 카테고리 중복은 이제 아니므로, 카테고리 추가를 진행함
-
-    const newCategoryInfo = {
-      foodType,
-      description,
-    };
-
     // db에 저장
-    const createdNewCategory = await this.categoryModel.create(newCategoryInfo);
+    const createdNewCategory = await this.categoryModel.create(categoryInfo);
 
     return createdNewCategory;
   }
@@ -46,7 +40,7 @@ class CategoryService {
     // db에 반영
     const deleteCategory = await this.categoryModel.delete(categoryType);
 
-    return;
+    return deleteCategory;
   }
 
   // 카테고리 정보 수정
@@ -56,7 +50,7 @@ class CategoryService {
     const { categoryType } = categoryInfoRequired;
 
     // 우선 해당 카테고리가 db에 있는지 확인
-    let category = await this.categoryModel.findByCategoryType(categoryType);
+    const category = await this.categoryModel.findByCategoryType(categoryType);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {

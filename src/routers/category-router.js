@@ -18,6 +18,11 @@ categoryRouter.post("/add", loginRequired, async (req, res, next) => {
       );
     }
 
+    // 관리자 권한 확인
+    if(req.currentUserRole !== "admin"){
+      throw new Error("권한이 없습니다.")
+    }
+
     // req (request)의 body 에서 데이터 가져오기
     const foodType = req.body.foodType;
     const description = req.body.description;
@@ -42,14 +47,26 @@ categoryRouter.delete(
   loginRequired,
   async (req, res, next) => {
     try {
+      // 관리자 권한 확인
+      if(req.currentUserRole !== "admin"){
+        throw new Error("권한이 없습니다.")
+      }
       // req (request)의 params 에서 데이터 가져오기
       const categoryType = req.params.categoryType;
 
       // 위 데이터를 카테고리 db에서 삭제하기
-      await categoryService.deleteCategory(categoryType);
+      const deletedCategory = await categoryService.deleteCategory(
+        categoryType
+      );
 
-      // 삭제되었다고 그냥 success를 보내줌
-      res.status(201).json({ result: "success" });
+      //삭제 성공
+      if (deletedCategory.deletedCount === 1) {
+        res.status(201).json({ message: "OK" });
+      }
+      //삭제 실패
+      else {
+        throw new Error(`${categoryType}을 삭제 실패했습니다.`);
+      }
     } catch (error) {
       next(error);
     }
@@ -69,6 +86,11 @@ categoryRouter.patch(
         throw new Error(
           "headers의 Content-Type을 application/json으로 설정해주세요"
         );
+      }
+
+      // 관리자 권한 확인
+      if(req.currentUserRole !== "admin"){
+        throw new Error("권한이 없습니다.")
       }
 
       // params로부터 categoryType를 가져옴

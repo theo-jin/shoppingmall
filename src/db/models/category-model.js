@@ -1,7 +1,7 @@
 import { model } from "mongoose";
 import { CategorySchema } from "../schemas/category-schema";
 
-const Category = model("categorys", CategorySchema);
+const Category = model("category", CategorySchema);
 
 export class CategoryModel {
   async findByFoodType(foodType) {
