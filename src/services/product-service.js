@@ -5,14 +5,9 @@ class ProductService {
     this.productModel = productModel;
   }
 
+  //상품 추가
   async addProduct(productInfo) {
-    const {
-      productName,
-      productContent,
-      productPrice,
-      productImage,
-      category,
-    } = productInfo;
+    const productName = productInfo.productName;
 
     //productName 중복 확인
     const product = await this.productModel.findByProductName(productName);

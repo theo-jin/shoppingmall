@@ -6,10 +6,9 @@ import { productService } from "../services";
 
 const productRouter = Router();
 
-// 상품 추가 api
+// 상품 추가 api (관리자만 접근 가능)
 productRouter.post("/add", loginRequired, async function (req, res, next) {
   try {
-
     // 관리자 권한이 아니면 error
     if (req.currentUserRole !== "admin") {
       throw new Error("권한이 없습니다.");
@@ -43,5 +42,6 @@ productRouter.post("/add", loginRequired, async function (req, res, next) {
     next(error);
   }
 });
+
 
 export { productRouter };
