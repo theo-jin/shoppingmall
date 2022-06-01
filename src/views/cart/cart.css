@@ -1,0 +1,19 @@
+.userTitle{
+  margin: 2% 40% 4% 45%;
+}
+.mainContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userMenu{
+  margin: 2% 2% 2% 2%;
+}
+
+.userIcon{
+  align-items: flex-start;
+  font-size: 40px;
+}
+.menuIcon{
+  height: 60px;
+}
