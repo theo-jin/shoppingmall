@@ -102,28 +102,38 @@
         </div>
 
         <!-- 선택한 상품 총 요약 -->
-        <div class="tile is-parent tile-order-summary">
-          <div class="box order-summary">
+        <div class="orderSummary">
+          <div class="boxOrderSummary">
             <div class="header">
               <p>결제정보</p>
             </div>
-            <div class="order-info">
+            <div class="orderInfo">
               <div class="info">
                 <p>상품수</p>
-                <p id="productsCount">0개</p>
+                <span id="productsCount">
+                  <!-- 총 상품수 -->
+                </span>
+      
               </div>
               <div class="info">
                 <p>상품금액</p>
-                <p id="productsTotal">0원</p>
+                <span id="totalCost">
+                  <!-- 총 상품 금액 -->
+                </span>
+      
               </div>
               <div class="info">
                 <p>배송비</p>
-                <p id="deliveryFee">0원</p>
+                <span id="deliveryFee">
+                  <!-- 배송비 -->
+                </span>
               </div>
             </div>
             <div class="total">
-              <p class="total-label">총 결제금액</p>
-              <p class="total-price" id="orderTotal">0원</p>
+              <p>총 금액</p>
+              <span id="totalCostAndDeliveryFee">
+                <!-- 상품금액 + 배송비 -->
+              </span>
             </div>
             <div class="purchase">
               <button class="button is-info" id="purchaseButton">

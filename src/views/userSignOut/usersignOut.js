@@ -9,18 +9,18 @@ async function userSignOut(e) {
 
   const password = passwordInput.value;
   const data = { password };
-  try {
-    const res = await Api.delete('/api/user', data);
+      try {
+        const res = await Api.del('', data);
 
-    alert(`${res.message}`);
-    console.log('삭제된 유저 data : ', res.result);
+        alert(`${res.message}`);
+        console.log('탈퇴된 유저: ', res.result);
 
-    
-    sessionStorage.removeItem('token');
-    window.location.href = '/';
-  } catch (err) {
-    alert(err.message);
-  }
-}
-submitButton.addEventListener('click', userSignOut);
+        
+        sessionStorage.removeItem('token');
+        window.location.href = '/';
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+  submitButton.addEventListener('click', userSignOut);
 
