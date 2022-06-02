@@ -2,6 +2,10 @@ import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
+    userId:{
+      type: String,
+      required: true
+    },
     fullName: {
       type: String,
       required: true,

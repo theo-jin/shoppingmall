@@ -7,24 +7,20 @@ import { orderService } from "../services";
 const orderRouter = Router();
 
 //사용자 주문 정보 조회
-orderRouter.get(
-  "/:phoneNumber",
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      const { phoneNumber } = req.params;
+orderRouter.get("/user", loginRequired, async function (req, res, next) {
+  try {
+    const userId = req.currentUserId;
 
-      const orders = await orderService.getOrdersByPhoneNumber(phoneNumber);
+    const orders = await orderService.getOrdersByUserId(userId);
 
-      res.status(200).json(orders);
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 //사용자 주문 정보 db 에 저장
-orderRouter.post("/", loginRequired, async (req, res, next) => {
+orderRouter.post("/complete", loginRequired, async (req, res, next) => {
   try {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -33,6 +29,8 @@ orderRouter.post("/", loginRequired, async (req, res, next) => {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
+
+    const userId = req.currentUserId;
 
     // req (request)의 body 에서 데이터 가져오기
     const fullName = req.body.fullName;
@@ -43,6 +41,7 @@ orderRouter.post("/", loginRequired, async (req, res, next) => {
 
     // 위 데이터를 주문 정보 db에 추가하기
     const newOrder = await orderService.addOrder({
+      userId,
       fullName,
       phoneNumber,
       address,
@@ -59,22 +58,19 @@ orderRouter.post("/", loginRequired, async (req, res, next) => {
 });
 
 //사용자 주문 취소
-orderRouter.delete("/:phoneNumber/:fullName", loginRequired, async (req, res, next) => {
+orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
   try {
     // req (request)의 params 에서 데이터 가져오기
-    const { phoneNumber, fullName } = req.params;
+    const { orderId } = req.params;
 
     // 위 데이터를 주문 정보 db에서 삭제하기
-    const deletedOrder = await orderService.deleteOrder(phoneNumber, fullName);
+    const deletedResult = await orderService.deleteOrder(orderId);
 
     //삭제 성공
-    if (deletedOrder.deletedCount === 1) {
-      res.status(201).json({ message: "OK" });
-    }
-    //삭제 실패
-    else {
+    if (deletedResult.deletedCount !== 1) {
       throw new Error(`${deletedOrder}을 삭제 실패했습니다.`);
     }
+    res.status(201).json({ message: "OK" });
   } catch (error) {
     next(error);
   }

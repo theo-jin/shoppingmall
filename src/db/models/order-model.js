@@ -1,12 +1,18 @@
 import { model } from "mongoose";
 import { OrderSchema } from "../schemas/order-schema";
+import mongoose from "mongoose";
 
 const Order = model("orders", OrderSchema);
 
 export class OrderModel {
-  //phoneNumber 로 주문 정보 조회
-  async findByPhoneNumber(phoneNumber) {
-    const orders = await Order.find({ phoneNumber });
+  async findById(orderId) {
+    const order = await Order.findOne({ _id: orderId });
+    return order;
+  }
+
+  //userId 로 주문 정보 조회
+  async findByUserId(userId) {
+    const orders = await Order.find({ userId });
     return orders;
   }
 
@@ -16,16 +22,10 @@ export class OrderModel {
     return createdNewOrder;
   }
 
-  //fullName 로 주문 정보 조회
-  async findByFullName(fullName) {
-    const order = await Order.findOne({ fullName });
-    return order;
-  }
-
   //주문 정보 삭제
-  async delete(fullName) {
-    const deleteOrder = await Order.deleteOne({ fullName });
-    return deleteOrder;
+  async deleteOrder(orderId) {
+    const deletedOrder = await Order.deleteOne({ _id: orderId });
+    return deletedOrder;
   }
 }
 
