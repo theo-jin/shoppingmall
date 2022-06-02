@@ -1,5 +1,5 @@
 import * as Api from "/api.js";
-import { validatePhoneNumber } from "/useful-functions.js";
+import { validatePhoneNumber} from "/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const submitButton = document.querySelector("#submitButton");
@@ -9,10 +9,11 @@ const address1Input = document.querySelector("#address1Input");
 const address2Input = document.querySelector("#address2Input");
 const phoneInput = document.querySelector("#phoneInput");
 const requestInput = document.querySelector("#requestInput");
-const totalUserPrice = document.querySelector("#totalUserPrice");
 var requestValue = requestInput.options[requestInput.selectedIndex].value;
 const navbar = document.querySelector("#navbar");
 const secondList = navbar.children[1];
+const productList= document.querySelector("#productList");
+const totalProductPrice= document.querySelector("#totalProductPrice");
 
 secondList.addEventListener("click", () => {
   sessionStorage.removeItem("token");
@@ -21,6 +22,7 @@ secondList.addEventListener("click", () => {
 addAllElements();
 addAllEvents();
 checkLogin();
+getItemData()
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
@@ -70,8 +72,21 @@ checkAddressBtn.addEventListener("click", findAddress);
 
 // TODO : 주문상품 데이터 받아오기(장바구니, 상품상세 페이지에서 바로결제)
 // TODO : 각 상품들의 총액과 전체 총액을 계산
+async function getItemData(){
+  const data=sessionStorage.getItem("product");
+  console.log(data);
+  const itemData=JSON.parse(data);
+  console.log(itemData);
+  console.log(itemData.name);
 
-
+  productList.innerHTML+=
+  `<tr><td class="productName">${itemData.name}</td>
+            <td class="productPrice">${itemData.price}</td>
+            <td class="productNumber">${itemData.count}</td>
+            <td class="productTotal">${itemData.price*itemData.count}</td></tr>`
+  totalProductPrice.insertAdjacentHTML('beforeend',
+  `<label class="totaPrice" id="totalUserPrice">${itemData.price*itemData.count}</label>`)
+}
 
 // 주문자 데이터와 주문상품 데이터 DB에 보내기(주문자 이름, 연락처, 주소, 총액), 
 async function handleSubmit(e) {
@@ -81,13 +96,14 @@ async function handleSubmit(e) {
   const postalCode = addressInput.value;
   const address1 = address1Input.value;
   const address2 = address2Input.value;
+  const status="Information Received";
   const address = {
     postalCode,
     address1,
     address2,
   };
   const phoneNumber = phoneInput.value;
-  const totalPrice=totalUserPrice.value;
+  const totalPrice=totalProductPrice.value;
 
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
@@ -103,7 +119,7 @@ async function handleSubmit(e) {
 
   // TODO : 주문 api 추가필요
   try {
-    const data = { fullName, phoneNumber, address, totalPrice };
+    const data = { fullName, phoneNumber, address, status, totalPrice };
 
     await Api.post("/api/", data);
 
