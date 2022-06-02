@@ -1,6 +1,7 @@
-const navbar = document.querySelector("#navbar");
-const secondList = navbar.children[1];
+import { changeNavbar } from "/changeNavbar.js";
 
-secondList.addEventListener("click", () => {
-  sessionStorage.removeItem("token");
-});
+addAllElements();
+
+async function addAllElements() {
+  changeNavbar();
+}
