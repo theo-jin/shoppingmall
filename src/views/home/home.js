@@ -4,61 +4,65 @@
 
 import * as Api from "/api.js";
 import { randomId } from "/useful-functions.js";
-
 // 요소(element), input 혹은 상수
 const landingDiv = document.querySelector("#landingDiv");
-const greetingDiv = document.querySelector("#greetingDiv");
 const navbar = document.querySelector("#navbar");
+const slidesList = document.querySelector(".slides");
 
 addAllElements();
-addAllEvents();
+// addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   insertTextToLanding();
-  insertTextToGreeting();
   changeNavbar();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
-  landingDiv.addEventListener("click", alertLandingText);
-  greetingDiv.addEventListener("click", alertGreetingText);
+// function addAllEvents() {}
+
+async function insertTextToLanding() {
+  const getData = await getDataFromApi();
+  createMainpageSlider(getData).forEach((el) => (slidesList.innerHTML += el));
+  //이미지 순환을 위해서 첫번째 이미지를 한 번 더 추가해줌
+  slidesList.innerHTML += `<li><img src =${getData[0].productImage} alt="밀키트 이미지"></li>`;
 }
 
-function insertTextToLanding() {
-  landingDiv.insertAdjacentHTML(
-    "beforeend",
-    `
-      <h2>n팀 쇼핑몰의 랜딩 페이지입니다. 자바스크립트 파일에서 삽입되었습니다.</h2>
-    `
-  );
-}
-
-function insertTextToGreeting() {
-  greetingDiv.insertAdjacentHTML(
-    "beforeend",
-    `
-      <h1>반갑습니다! 자바스크립트 파일에서 삽입되었습니다.</h1>
-    `
-  );
-}
-
-function alertLandingText() {
-  alert("n팀 쇼핑몰입니다. 안녕하세요.");
-}
-
-function alertGreetingText() {
-  alert("n팀 쇼핑몰에 오신 것을 환영합니다");
+// api를 통해 상품 상세 정보를 받아온 후 html에 표시
+function createMainpageSlider(data) {
+  return data.map((el) => `<li><img src =${el.productImage} alt="밀키트 이미지"></li>`);
 }
 
 async function getDataFromApi() {
-  // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
-  const data = await Api.get("/api/user/data");
-  const random = randomId();
-
-  console.log({ data });
-  console.log({ random });
+  //db에서 img파일 get 요청
+  // const data = await Api.get("/api/product/productlist/mainpageImage");
+  const data = [
+    {
+      _id: "6296fcf15c1216a10e5d9bba",
+      productName: "떡볶이",
+      productContent: "국민간식",
+      productPrice: 10000,
+      productImage: "http://localhost:5000/image/mealKit1.jpeg",
+      category: "한식",
+    },
+    {
+      _id: "6296fcf15c1216a10e5d9bba",
+      productName: "떡볶이",
+      productContent: "국민간식",
+      productPrice: 10000,
+      productImage: "http://localhost:5000/image/steak.jpeg",
+      category: "한식",
+    },
+    {
+      _id: "6296fcf15c1216a10e5d9bba",
+      productName: "떡볶이",
+      productContent: "국민간식",
+      productPrice: 10000,
+      productImage: "http://localhost:5000/image/friedRice.jpeg",
+      category: "한식",
+    },
+  ];
+  return data;
 }
 
 //sessionStore 내에 token이 존재할 시 home의 navbar 변경시키는 함수

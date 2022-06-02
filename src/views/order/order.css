@@ -1,0 +1,54 @@
+.order-user-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+}
+
+.order-user-form-box {
+  width: 30rem;
+}
+
+.order-user-form-box .title {
+  text-align: center;
+}
+
+.order-user-form-box .button {
+  font-weight: bold;
+}
+
+.order-user-form-box .input:focus {
+  border-color: #00d1b2;
+  box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
+}
+
+.order-product-form-box{
+  width: 30rem;
+}
+.order-product-form-box .title {
+  text-align: center;
+}
+
+.order-product-form-box .button {
+  font-weight: bold;
+}
+
+.order-product-form-box .input:focus {
+  border-color: #00d1b2;
+  box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
+}
+
+form{
+  margin: 0% 2% 2% 2%;
+}
+
+.userTitle{
+  margin: 2% 40% 4% 45%;
+}
+
+.productTotal{
+  float:right;
+}
+.productName, .productPrice{
+  margin: 0% 3% 3% 0%;
+}

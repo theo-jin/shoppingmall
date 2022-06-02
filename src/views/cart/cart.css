@@ -1,0 +1,117 @@
+.userTitle{
+  margin: 2% 40% 4% 45%;
+}
+.mainContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userMenu{
+  margin: 2% 2% 2% 2%;
+}
+
+.userIcon{
+  align-items: flex-start;
+  font-size: 40px;
+}
+.menuIcon{
+  height: 60px;
+}
+
+.header{
+  font-size: 20px;
+  border-bottom: 2px solid #d6d6d6;
+  text-align: left;
+  margin: 0 0 10px 0 ;
+  
+}
+.orderSummary{
+
+line-height: 1.5;
+color: #333;
+border: 2px solid #d6d6d6;
+text-align: left;
+border-radius: 5px;
+
+}
+
+.productsCount{
+line-height: 1.5;
+color: #333;
+box-sizing: inherit;
+display: flex;
+justify-content: space-between;
+margin-top: 1.2rem;
+}
+.productsCountValue{
+line-height: 1.5;
+color: #333;
+font-size: 1.1rem;
+box-sizing: inherit;
+margin: 0;
+padding: 0;
+display: block;
+}
+.totalCost{
+  line-height: 1.5;
+  color: #333;
+  box-sizing: inherit;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+  }
+  .totalCostValue{
+  line-height: 1.5;
+  color: #333;
+  font-size: 1.1rem;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0 200 0 0;
+  display: block;
+  }
+  .deliveryFee{
+    line-height: 1.5;
+    color: #333;
+    box-sizing: inherit;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    }
+    .deliveryFeeValue {
+    line-height: 1.5;
+    color: #333;
+    font-size: 1.1rem;
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    display: block;
+    }
+    .totalCostAndDeliveryFee{
+      line-height: 1.5;
+      color: #333;
+      box-sizing: inherit;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+      }
+      /* .totalCostAndDeliveryFeeValue{
+      line-height: 1.5;
+      color: #333;
+      font-size: 1.1rem;
+      box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+      display: block;
+      } */
+
+
+.boxOrderSummary{
+  font-size: 17px;
+  padding: 0px 25px 25px 10px;
+  margin: 0 0 0 0;
+}
+
+#purchaseButton{
+  float: right;
+  text-align: center;
+}
