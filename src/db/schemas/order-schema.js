@@ -2,9 +2,9 @@ import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
-    userId:{
+    userId: {
       type: String,
-      required: true
+      required: true,
     },
     fullName: {
       type: String,
@@ -21,8 +21,13 @@ const OrderSchema = new Schema(
           address1: String,
           address2: String,
         },
-        { _id: false, }
+        { _id: false }
       ),
+      required: true,
+    },
+    products: {
+      type: Schema.Types.ObjectId,
+      ref: "products",
       required: true,
     },
     status: {

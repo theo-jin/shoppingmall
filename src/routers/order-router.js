@@ -36,6 +36,7 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
     const fullName = req.body.fullName;
     const phoneNumber = req.body.phoneNumber;
     const address = req.body.address;
+    const products = req.body.products;
     const status = req.body.status;
     const totalPrice = req.body.totalPrice;
 
@@ -45,6 +46,7 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
       fullName,
       phoneNumber,
       address,
+      products,
       status,
       totalPrice,
     });
