@@ -9,15 +9,19 @@ async function userSignOut(e) {
   const password = passwordInput.value;
   const data = { email,password };
 
+  // TODO 로그아웃 API요청
+  // 로그아웃 api 요청
   try {
-    const res = await 
-
+    //TODO 어디서 받아와야할까요?delete로 안되는거같던데
+    const res = await Api.(data);
+    alert(`회원탈퇴 완료하였습니다.감사합니다.${res.message}`);
    
-  
+    //회원탈퇴 성공, 토큰을 세션 스토리지에 저장
     sessionStorage.removeItem('token');
+    //홈으로 이동. 
     window.location.href = '/';
   } catch (err) {
-    alert(err.message);
+    alert(`문제가 발생하였습니다. 비밀번호를 다시확인해주세요${err.message}`);
   }
 }
 submitButton.addEventListener('click', userSignOut);

@@ -67,39 +67,33 @@
       </div>
     </nav>
   <!-- 장바구니 -->
-  <section class="section">
-    <div class="container">
-      <div class="cart-header">
-        <div class="title">
-          <p class="is-size-2">장바구니</p>
+  <section class="cart">
+    <div class="cart-wrap">
+      <div class="info-wrapper">
+        <div class="items">
+          <div class="select">
+            <label class="checkbox">
+              <input type="checkbox" id="allSelectCheckbox" />
+              <p>전체 선택</p>
+            </label>
+            <label class="delete-part" id="partialDeleteLabel">
+              <p>선택 삭제</p>
+            </label>
+          </div>
+          <div id="cart"></div>
         </div>
-        <div class="subtitle">
-          <p class="is-size-6">
-            &gt; &nbsp; 주문결제 &nbsp; &gt; &nbsp;주문완료
-          </p>
+        <div class="info">
+          <h2>결제 정보</h2>
+          <div class="data total">
+            <p>총 결제 금액</p>
+            <p id="total">원</p>
+          </div>
+          <button class="button" id="purchaseButton">구매하기</button>
         </div>
       </div>
-
-      <div class="tile is-ancestor">
-        <div class="tile is-8 is-parent cart-products">
-          <!-- 장바구니에 담긴 상품 모음 -->
-          <div class="box cart-products-container" id="cartProductsContainer">
-            <div class="cart-products-header">
-              <label class="checkbox">
-                <input type="checkbox" id="allSelectCheckbox">
-                <p class="help">전체선택</p>
-              </label>
-              <label class="seperator">
-                <p class="help help-seperator">&nbsp;&nbsp;|&nbsp;&nbsp;</p>
-              </label>
-              <label class="delete-part" id="partialDeleteLabel">
-                <p class="help">선택삭제</p>
-              </label>
-            </div>
-
-            <!-- 장바구니에 담긴 상품들의 html 요소(카드 형태)가 주입되는 곳 -->
-          </div>
-        </div>
+    </div>
+  </section>
+    
 
         <!-- 선택한 상품 총 요약 -->
         <div class="orderSummary">
@@ -108,32 +102,35 @@
               <p>결제정보</p>
             </div>
             <div class="orderInfo">
-              <div class="info">
+              <div class="productsCount">
                 <p>상품수</p>
-                <span id="productsCount">
+                <p id="productsCountValue">
                   <!-- 총 상품수 -->
-                </span>
+                  10개
+                </p>
       
               </div>
-              <div class="info">
+              <div class="totalCost">
                 <p>상품금액</p>
-                <span id="totalCost">
+                <span id="totalCostValue">
                   <!-- 총 상품 금액 -->
+                  200,000원
                 </span>
       
               </div>
-              <div class="info">
+              <div class="deliveryFee">
                 <p>배송비</p>
-                <span id="deliveryFee">
-                  <!-- 배송비 -->
-                </span>
+                <p id="deliveryFeeValue">
+                  3000원
+              </p>
               </div>
             </div>
-            <div class="total">
+            <div class="totalCostAndDeliveryFee">
               <p>총 금액</p>
-              <span id="totalCostAndDeliveryFee">
+              <p id="totalCostAndDeliveryFeeValue">
                 <!-- 상품금액 + 배송비 -->
-              </span>
+              203,000원
+              </p>
             </div>
             <div class="purchase">
               <button class="button is-info" id="purchaseButton">
@@ -146,5 +143,6 @@
     </div>
   </section>
 
+  
 
 </body></html>
