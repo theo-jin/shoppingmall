@@ -5,30 +5,12 @@ const User = model("users", UserSchema);
 
 export class UserModel {
   async findByEmail(email) {
-    const { userEmail, fullName, password, phoneNumber, address, createdAt } =
-      await User.findOne({ email });
-    const user = {
-      userEmail,
-      fullName,
-      password,
-      phoneNumber,
-      address,
-      createdAt,
-    };
+    const user = await User.findOne({ email });
     return user;
   }
 
   async findById(userId) {
-    const { userEmail, fullName, password, phoneNumber, address, createdAt } =
-      await User.findOne({ _id: userId });
-    const user = {
-      userEmail,
-      fullName,
-      password,
-      phoneNumber,
-      address,
-      createdAt,
-    };
+    const user = await User.findOne({ _id: userId });
     return user;
   }
 
@@ -36,7 +18,7 @@ export class UserModel {
     const { userEmail, fullName, password, phoneNumber, address, createdAt } =
       await User.create(userInfo);
     const createdNewUser = {
-      userEmail,
+      email: userEmail,
       fullName,
       password,
       phoneNumber,
@@ -58,7 +40,7 @@ export class UserModel {
     const { userEmail, fullName, password, phoneNumber, address, createdAt } =
       await User.findOneAndUpdate(filter, update, option);
     const updatedUser = {
-      userEmail,
+      email: userEmail,
       fullName,
       password,
       phoneNumber,
