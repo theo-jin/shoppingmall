@@ -1,50 +1,25 @@
-import {} from "/useful-functions.js";
+import * as Api from "/api.js";
 
-// 요소(element), input 혹은 상수
-const passwordInput = document.querySelector("#passwordInput");
-const submitButton = document.querySelector("#submitButton");
+const passwordInput = document.getElementById("passwordInput");
+const submitButton = document.getElementById("submitButton");
 
-addAllElements();
-addAllEvents();
-
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {}
-
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
-  submitButton.addEventListener("click", handleSubmit);
-}
-
-// 탈퇴 진행
-async function handleSubmit(e) {
+async function userSignOut(e) {
   e.preventDefault();
-
+  if (!confirm("정말 회원 탈퇴하시겠습니까?")) return;
   const password = passwordInput.value;
+  const data = { email, password };
 
-  // 잘 입력했는지 확인
-  const isPasswordValid = password.length >= 4;
-
-  if (!isPasswordValid) {
-    return alert("비밀번호가 4글자 이상인지 확인해 주세요.");
-  }
-
-  // 로그인 api 요청
+  // TODO 로그아웃 API요청
+  // 로그아웃 api 요청
   try {
-    const data = { password };
+    //TODO 어디서 받아와야할까요?delete로 안되는거같던데
+    const res = await Api.delete(data);
+    alert(`회원탈퇴 완료하였습니다.감사합니다.${res.message}`);
 
-    // const result =;
-    const token = result.token;
-
-    // 탈퇴 성공, 토큰을 세션 스토리지에 저장
-    // 물론 다른 스토리지여도 됨
-    sessionStorage.setItem("token", token);
-
-    alert(`정상적으로 탈퇴되었습니다.`);
-
-    // 기본 페이지로 이동
+    //홈으로 이동.
     window.location.href = "/";
   } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(`문제가 발생하였습니다. 비밀번호를 다시확인해주세요${err.message}`);
   }
 }
+submitButton.addEventListener("click", userSignOut);
