@@ -26,6 +26,7 @@ app.use(cookieParser("ElIcEkEy"));
 
 // html, css, js 라우팅
 app.use(viewsRouter);
+app.use('/users', express.static('uploads'))
 
 // api 라우팅
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서
