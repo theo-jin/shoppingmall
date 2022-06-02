@@ -22,9 +22,9 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
-    <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="userSignOut.css" />
-    <script src="userSignOut.js" type="module" defer></script>
+    <!-- 커스텀 css, js --> 
+    <link rel="stylesheet" href="product.css" />
+    <script src="product.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -51,8 +51,8 @@
 
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
-              <li><a href='/userInfo'>계정관리</a></li>
-              <li><a href='/'>로그아웃</a></li>
+              <li><a href="/login">로그인</a></li>
+              <li><a href="/register">회원가입</a></li>
               <li>
                 <a href="#cart" aria-current="page">
                   <span class="icon">
@@ -66,31 +66,33 @@
         </div>
       </div>
     </nav>
-
-       <!-- 삭제 폼 -->
-       <div class="register-user-form-container">
-        <form class="box register-user-form-box" id="registerUserForm">
-          <p class="title is-5 has-text-primary">계정 삭제</p>
-  
-          <div class="field">
-            <label class="label" for="passwordInput">현재 비밀번호</label>
-            <div class="control">
-              <input
-                class="input"
-                id="passwordInput"
-                type="password"
-                placeholder="현재 비밀번호를 입력해 주세요."
-                autocomplete="off"
-              />
-            </div>
+    <nav class="navbar " role="navigation" aria-label="main navigation">
+      <div class="container mt-3">
+          <div class="navbar-start">
+            <div class="navbar-item">
+              <a class="navbar-item ml-5 mr-5" href ="/product?category=krFood">
+                한식 
+              </a>
+              <span>|</span>
+              <a class="navbar-item ml-5 mr-5" href ="/product?category=jpFood">
+                일식
+              </a>
+              <span>|</span>
+              <a class="navbar-item ml-5 mr-5" href ="/product?category=chFood">
+                중식
+              </a>
+              <span>|</span>
+              <a class="navbar-item ml-5 mr-5" href ="/product?category=wsFood">
+                양식
+              </a>
           </div>
-  
-          <button class="button is-primary is-fullwidth" id="submitButton">
-            회원정보 삭제하기
-          </button>
-  
-        </form>
+      </div>  
+    </nav>
+
+    <div class="div-container">
+      <div class="containerDiv">
+          
       </div>
-    </body>
-  </html>
-  
+    </div>
+  </body>
+</html>
