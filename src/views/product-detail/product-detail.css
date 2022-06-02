@@ -1,0 +1,13 @@
+.item-box {
+  border: 1px solid black;
+  width: 400px;
+  height: 500px;
+}
+
+.containerDiv {
+  width: 1024px;
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
