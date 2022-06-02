@@ -4,7 +4,8 @@ import { validatePhoneNumber } from "/useful-functions.js";
 // 요소(element), input 혹은 상수
 const submitButton = document.querySelector("#submitButton");
 const fullNameInput = document.querySelector("#fullNameInput");
-const passwordInput = document.querySelector("#passwordInput");
+const currentPasswordInput = document.querySelector("#currentPasswordInput");
+const changePasswordInput = document.querySelector("#changePasswordInput");
 const passwordConfirmInput = document.querySelector("#passwordConfirmInput");
 const checkAddressBtn = document.querySelector("#checkAddressBtn");
 const addressInput = document.querySelector("#addressInput");
@@ -29,7 +30,8 @@ function addAllEvents() {
 async function handleSubmit(e) {
   e.preventDefault();
   const fullName = fullNameInput.value;
-  const password = passwordInput.value;
+  const currentPassword = currentPasswordInput.value;
+  const changePassword = changePasswordInput.value;
   const passwordConfirm = passwordConfirmInput.value;
   const postalCode = addressInput.value;
   const address1 = address1Input.value;
@@ -43,8 +45,8 @@ async function handleSubmit(e) {
 
   // 잘 입력했는지 확인
   const isFullNameValid = fullName.length >= 2;
-  const isPasswordValid = password.length >= 4;
-  const isPasswordSame = password === passwordConfirm;
+  const isPasswordValid = changePassword.length >= 4;
+  const isPasswordSame = changePassword === passwordConfirm;
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
 
@@ -66,7 +68,13 @@ async function handleSubmit(e) {
 
   // 회원정보 수정 요청
   try {
-    const data = { fullName, password, address, phoneNumber };
+    const data = {
+      currentPassword,
+      ...(fullName && { fullName }),
+      ...(changePassword && { changePassword }),
+      ...(address && { address }),
+      ...(phoneNumber && { phoneNumber }),
+    };
     await Api.patch("/api/userInfo", data);
     alert(`정상적으로 수정되었습니다.`);
 

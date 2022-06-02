@@ -114,11 +114,24 @@
         </div>
 
         <div class="field">
-          <label class="label" for="passwordInput">비밀번호</label>
+          <label class="label" for="currentPasswordInput">현재 비밀번호</label>
           <div class="control">
             <input
               class="input"
-              id="passwordInput"
+              id="currentPasswordInput"
+              type="password"
+              placeholder="********"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="changePasswordInput">변경할 비밀번호</label>
+          <div class="control">
+            <input
+              class="input"
+              id="changePasswordInput"
               type="password"
               placeholder="********"
               autocomplete="off"
