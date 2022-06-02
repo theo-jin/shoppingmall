@@ -59,8 +59,22 @@ userRouter.post("/login", async function (req, res, next) {
     // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
     const userToken = await userService.getUserToken({ email, password });
 
+    // 일반 사용자일 경우 cookie를 설정하지 않음
+    // 관리자일 경우 cookie 설정
+    if (userToken.cookie !== null) {
+      res.cookie("role", userToken.cookie.role, {
+        // 현재시간으로부터 만료 시간(ms 단위) -> 7일
+        maxAge: 60 * 60 * 24 * 7 * 1000,
+        //web server에서만 쿠키에 접근할 수 있도록 설정
+        httpOnly: true,
+        // https에서만 cookie를 사용할 수 있게 설정
+        secure: true,
+        // 암호화
+        signed: true,
+      });
+    }
     // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).json(userToken);
+    res.status(200).json(userToken.token);
   } catch (error) {
     next(error);
   }
@@ -70,9 +84,9 @@ userRouter.post("/login", async function (req, res, next) {
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
 userRouter.get("/userlist", loginRequired, async function (req, res, next) {
   try {
-    const userRole = req.currentUserRole
-    if(userRole !== "admin"){
-      throw new Error("권한이 없습니다.")
+    const userRole = req.currentUserRole;
+    if (userRole !== "admin") {
+      throw new Error("권한이 없습니다.");
     }
     // 전체 사용자 목록을 얻음
     const users = await userService.getUsers();
@@ -165,23 +179,22 @@ userRouter.delete("/user", loginRequired, async function (req, res, next) {
 
     // 관리자 권한으로 user를 삭제하는 경우, 선택한 userId로 변경
     if (req.currentUserRole === "admin") {
+      // req.body가 비어있는 경우
       if (is.emptyObject(req.body)) {
         throw new Error(
           "headers의 Content-Type을 application/json으로 설정해주세요"
         );
       }
-      if(!req.body.userId){
-        userId = req.body.userId;
-      }
+      userId = req.body.userId;
     }
 
     const deleteUserInfo = await userService.deleteUser(userId);
-    
-    if(!deleteUserInfo){
-      throw new Error("사용자 정보 삭제 실패했습니다.")
+
+    if (!deleteUserInfo) {
+      throw new Error("사용자 정보 삭제 실패했습니다.");
     }
 
-    res.status(200).json({message: "OK"});
+    res.status(200).json({ message: "OK" });
   } catch (error) {
     next(error);
   }
