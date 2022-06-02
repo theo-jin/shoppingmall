@@ -13,6 +13,8 @@ viewsRouter.use("/login", serveStatic("login"));
 viewsRouter.use("/userInfo/changeUserInfo", serveStatic("changeUserInfo"));
 viewsRouter.use("/userInfo", serveStatic("userInfo"));
 viewsRouter.use("/userInfo/userSignOut", serveStatic("userSignOut"));
+viewsRouter.use("/product", serveStatic("product"));
+viewsRouter.use("/product/product-detail", serveStatic("product-detail"));
 
 
 viewsRouter.use("\cart", serveStatic("cart"));
