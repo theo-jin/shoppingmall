@@ -22,16 +22,21 @@ async function insertTextToLanding() {
 function createProductDetail(data) {
   return data.map(
     (el) =>
-      `<div class="item-box">
+      `<div class="itemBox">
         <img src="${el.productImage}" alt="${el.productName}">
         
       </div>
-      <div class="item-box">
+      <div class="descriptionBox">
+        <div class="description">
         <p>${el.productName}</p>
+        <hr />
         <p>${el.productContent}</p>
-        <p>${el.productPrice}</p>
-        <button>주문하기</button>
-        <button>장바구니 담기</button>
+        <p>${el.productPrice.toLocaleString()}원</p>
+        </div>
+        <div class="btnBox">
+          <button>주문하기</button>
+          <button>장바구니 담기</button>
+        </div>
       </div>`
   );
 }
@@ -62,9 +67,11 @@ async function getDataFromApi(productId) {
     {
       _id: "6296fcf15c1216a10e5d9bba",
       productName: "떡볶이",
-      productContent: "국민간식",
+      productContent: `재료 소개: 고추장 4T, 떡볶이용 떡 500g, 어묵 3장, 대파 1뿌리, 양파 1개, 고춧가루 1T, 다진 마늘 1T, 설탕 1T, 후추 적당량, 식용유 적당량, 다시다 스틱 1개
+      STEP1 떡 준비: 떡볶이용 떡을 떼어낸 후 물게 담가둔다.
+      STEP2 재료 준비: 어묵, 양파 대파를 먹기 좋은 크기로 썬다.`,
       productPrice: 10000,
-      productImage: "ddukboke.jpg",
+      productImage: "http://localhost:5000/image/steak.jpeg",
       category: "한식",
     },
   ];

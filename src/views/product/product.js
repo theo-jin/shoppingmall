@@ -24,10 +24,10 @@ function createProductList(data) {
   return data.map(
     (el) =>
       `<a href="/product/product-detail?id=${el._id}">
-        <div class="item-box">
+        <div class="itemBox">
           <img src="${el.productImage}" alt="${el.productName}">
           <p>${el.productName}</p>
-          <p>${el.productPrice}</p>
+          <p>${el.productPrice.toLocaleString()}원</p>
         </div>
       </a>`
   );
@@ -61,7 +61,7 @@ async function getDataFromApi(category) {
       productName: "떡볶이",
       productContent: "국민간식",
       productPrice: 10000,
-      productImage: "ddukboke.jpg",
+      productImage: "http://localhost:5000/image/steak.jpeg",
       category: "한식",
     },
     {
@@ -69,7 +69,7 @@ async function getDataFromApi(category) {
       productName: "떡국",
       productContent: "국민간식",
       productPrice: 12000,
-      productImage: "ddukboke.jpg",
+      productImage: "http://localhost:5000/image/steak.jpeg",
       category: "한식",
     },
   ];
