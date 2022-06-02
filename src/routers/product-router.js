@@ -19,13 +19,26 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // 상품 카테고리 별 조회
-productRouter.get("/productlist/:category", async function (req, res, next) {
+productRouter.get("", async function (req, res, next) {
   try {
-    const { category } = req.params;
+    const category = req.query.category
 
     const products = await productService.getProductsByCategory(category);
 
     res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 상품 상세 정보
+productRouter.get("", async function (req, res, next) {
+  try {
+    const productId = req.query.id;
+
+    const product = await productService.getProduct(productId);
+
+    res.status(200).json(product);
   } catch (error) {
     next(error);
   }
