@@ -4,6 +4,11 @@ import { CategorySchema } from "../schemas/category-schema";
 const Category = model("category", CategorySchema);
 
 export class CategoryModel {
+  async findAll() {
+    const categories = await Category.find({});
+    return categories;
+  }
+
   async findByFoodType(foodType) {
     const category = await Category.findOne({ foodType });
     return category;
@@ -14,18 +19,13 @@ export class CategoryModel {
     return createdNewCategory;
   }
 
-  async findByCategoryType(categoryType) {
-    const category = await Category.findOne({ foodType: categoryType });
-    return category;
-  }
-
   async delete(categoryType) {
     const deleteCategory = await Category.deleteOne({ foodType: categoryType });
     return deleteCategory;
   }
 
   async update({ foodType, update }) {
-    const filter = { foodType: foodType };
+    const filter = { foodType };
     const option = { returnOriginal: false };
 
     const updatedCategory = await Category.findOneAndUpdate(
