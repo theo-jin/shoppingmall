@@ -190,7 +190,8 @@ userRouter.delete("/user", loginRequired, async function (req, res, next) {
 
     const deleteUserInfo = await userService.deleteUser(userId);
 
-    if (!deleteUserInfo) {
+    // 삭제 실패
+    if (deleteUserInfo.deletedCount < 1) {
       throw new Error("사용자 정보 삭제 실패했습니다.");
     }
 
