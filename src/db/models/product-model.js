@@ -29,20 +29,20 @@ export class ProductModel {
     return products;
   }
 
-  async update({ productId, update }) {
-    const filter = { _id: productId };
+  async update({ productInfoRequired, toUpdate }) {
+    const filter = { productName: productInfoRequired.productName };
     const option = { returnOriginal: false };
 
     const updatedProduct = await Product.findOneAndUpdate(
       filter,
-      update,
+      toUpdate,
       option
     );
     return updatedProduct;
   }
 
-  async deleteProduct(productId) {
-    const deletedProduct = await Product.findOneAndDelete({ _id: productId });
+  async deleteProduct(productName) {
+    const deletedProduct = await Product.deleteOne({ productName });
     return deletedProduct;
   }
 }
