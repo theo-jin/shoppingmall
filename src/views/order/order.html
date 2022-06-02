@@ -70,7 +70,6 @@
       <!-- 주문자 정보 폼 -->
       <form class="box order-user-form-box" id="orderUserForm">
         <div class="field">
-          <label class="label" for="notice"> ※ 주문자 정보는 회원가입시 입력한 정보에서 변경할 수 없습니다. 배송메세지를 선택해주세요.</label>
           <label class="label" for="fullNameInput">주문자 이름</label>
           <div class="control">
             <input
@@ -80,13 +79,12 @@
               value="disable"
               placeholder="유재석"
               autocomplete="on"
-              readonly
             />
           </div>
         </div>
 
         <div class="field">
-          <label class="label" for="addressInput">배송주소</label>
+          <label class="label" for="addressInput">주소</label>
           <div class="control mb-3">
             <input
               style="width: 200px"
@@ -94,21 +92,26 @@
               id="addressInput"
               type="text"
               placeholder="우편번호"
-              readonly
+            />
+            <input
+              type="button"
+              id="checkAddressBtn"
+              class="button is-light ml-3"
+              value="주소 찾기"
             />
           </div>
           <div class="control mb-3">
-            <input class="input" id="address1Input" type="text" placeholder="주소" readonly/>
+            <input class="input" id="address1Input" type="text" placeholder="주소" />
           </div>
           <div class="control mb-3">
-            <input class="input" id="address2Input" type="text" placeholder="상세주소" readonly/>
+            <input class="input" id="address2Input" type="text" placeholder="상세주소" />
           </div>
         </div>
 
         <div class="field">
           <label class="label" for="phoneInput">휴대전화</label>
           <div class="control">
-            <input class="input" id="phoneInput" type="tel" placeholder="휴대전화 번호" readonly/>
+            <input class="input" id="phoneInput" type="tel" placeholder="휴대전화 번호"/>
           </div>
         </div>
 
@@ -144,7 +147,7 @@
 
         <div>
           <label class="label" for="totalPayment">총 합계</label>
-          <label class="totaPrice">결제가격</label>
+          <label class="totaPrice" id="totalUserPrice">결제가격</label>
         </div>
 
         <button class="button is-info is-fullwidth" id="submitButton">결제하기</button>
