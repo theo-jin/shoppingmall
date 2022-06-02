@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
-import { viewsRouter, userRouter, categoryRouter } from "./routers";
+import { viewsRouter, userRouter, productRouter, categoryRouter } from "./routers";
 import { errorHandler } from "./middlewares";
 
 const app = express();
@@ -25,6 +25,7 @@ app.use(viewsRouter);
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.
 app.use("/api", userRouter);
+app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
 
 // 순서 중요 (errorHandler은 다른 일반 라우팅보다 나중에 있어야 함)
