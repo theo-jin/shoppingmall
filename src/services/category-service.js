@@ -6,10 +6,16 @@ class CategoryService {
     this.categoryModel = categoryModel;
   }
 
+  // 카테고리 조회
+  async getCategoryList() {
+    const categories = await this.categoryModel.findAll();
+    return categories;
+  }
+
   // 카테고리 추가
   async addCategory(categoryInfo) {
     // 객체 destructuring
-    const { foodType, description } = categoryInfo;
+    const foodType = categoryInfo.foodType;
 
     // 카테고리 중복 확인
     const category = await this.categoryModel.findByFoodType(foodType);
@@ -26,10 +32,35 @@ class CategoryService {
     return createdNewCategory;
   }
 
+  // 카테고리 정보 수정
+  async setCategory(categoryInfoRequired, toUpdate) {
+    // 객체 destructuring
+
+    const { foodType } = categoryInfoRequired;
+
+    // 우선 해당 카테고리가 db에 있는지 확인
+    const category = await this.categoryModel.findByFoodType(foodType);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!category) {
+      throw new Error("카테고리가 없습니다. 다시 한 번 확인해 주세요.");
+    }
+
+    // 카테고리 수정 시작
+    // 업데이트 진행
+    category = await this.categoryModel.update({
+      foodType,
+      update: toUpdate,
+    });
+
+    return category;
+  }
+
   // 카테고리 삭제
   async deleteCategory(categoryType) {
     // 카테고리 유무 확인
-    const category = await this.categoryModel.findByCategoryType(categoryType);
+    const category = await this.categoryModel.findByFoodType(categoryType);
+
     if (!category) {
       throw new Error(
         "이 카테고리는 db에 없습니다. 다른 카테고리를 입력해 주세요."
@@ -41,30 +72,6 @@ class CategoryService {
     const deleteCategory = await this.categoryModel.delete(categoryType);
 
     return deleteCategory;
-  }
-
-  // 카테고리 정보 수정
-  async setCategory(categoryInfoRequired, toUpdate) {
-    // 객체 destructuring
-
-    const { categoryType } = categoryInfoRequired;
-
-    // 우선 해당 카테고리가 db에 있는지 확인
-    const category = await this.categoryModel.findByCategoryType(categoryType);
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!category) {
-      throw new Error("카테고리가 없습니다. 다시 한 번 확인해 주세요.");
-    }
-
-    // 카테고리 수정 시작
-    // 업데이트 진행
-    category = await this.categoryModel.update({
-      foodType: categoryType,
-      update: toUpdate,
-    });
-
-    return category;
   }
 }
 

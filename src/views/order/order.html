@@ -15,9 +15,9 @@
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="changeUserInfo.css" />
+    <link rel="stylesheet" href="order.css" />
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="changeUserInfo.js" type="module" defer></script>
+    <script src="order.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -61,20 +61,22 @@
     </nav>
 
 
-    <!-- 회원 정보 수정 -->
+    
     <div class="userTitle">
-      <h1 class="title" id="changeUserInfoTitle">회원정보 관리</h1>
+      <h1 class="title" id="orderUserTitle">주문/결제</h1>
     </div>
-    <hr />
-    <div class="change-user-form-container">
-      <form class="box change-user-form-box" id="changeUserForm">
+    <hr/>
+    <div class="order-user-form-container">
+      <!-- 주문자 정보 폼 -->
+      <form class="box order-user-form-box" id="orderUserForm">
         <div class="field">
-          <label class="label" for="fullNameInput">이름</label>
+          <label class="label" for="fullNameInput">주문자 이름</label>
           <div class="control">
             <input
               class="input"
               id="fullNameInput"
               type="text"
+              value="disable"
               placeholder="유재석"
               autocomplete="on"
             />
@@ -109,51 +111,48 @@
         <div class="field">
           <label class="label" for="phoneInput">휴대전화</label>
           <div class="control">
-            <input class="input" id="phoneInput" type="tel" placeholder="휴대전화 번호" />
+            <input class="input" id="phoneInput" type="tel" placeholder="휴대전화 번호"/>
           </div>
         </div>
 
+        <div class="field" id="requestMsgInputDiv">
+          <label class="label" for="requestMessage">요청사항</label>
+          <div class="control">
+            <select class="requestMessage" id="requestInput">
+              <option selected disabled>
+                배송시 요청사항을 선택해주세요.
+              </option>
+              <option>직접 수령하겠습니다.</option>
+              <option>부재 시 경비실에 맡겨주세요.</option>
+              <option>부재 시 문 앞에 놓아주세요.</option>
+              <option>직접 입력하기</option>
+            </select>
+            
+          </div>
+        </div>
+      </form>
+
+
+      <!-- 주문자 정보 폼 -->
+      <form class="box order-product-form-box" id="orderProductForm">
         <div class="field">
-          <label class="label" for="currentPasswordInput">현재 비밀번호</label>
-          <div class="control">
-            <input
-              class="input"
-              id="currentPasswordInput"
-              type="password"
-              placeholder="********"
-              autocomplete="off"
-            />
+          <label class="label" for="productPayment">주문정보</label>
+          <div class="control price-control">
+            <label class="productName">상품 이름</label>
+            <label class="productPrice">상품 가격</label>
+            <label class="productNumber">상품 갯수</label>
+            <label class="productTotal">총가격</label>
           </div>
         </div>
 
-        <div class="field">
-          <label class="label" for="changePasswordInput">변경할 비밀번호</label>
-          <div class="control">
-            <input
-              class="input"
-              id="changePasswordInput"
-              type="password"
-              placeholder="********"
-              autocomplete="off"
-            />
-          </div>
+        <div>
+          <label class="label" for="totalPayment">총 합계</label>
+          <label class="totaPrice" id="totalUserPrice">결제가격</label>
         </div>
 
-        <div class="field mb-5">
-          <label class="label" for="passwordConfirmInput">비밀번호 확인</label>
-          <div class="control">
-            <input
-              class="input"
-              id="passwordConfirmInput"
-              type="password"
-              placeholder="********"
-              autocomplete="off"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth" id="submitButton">저장하기</button>
+        <button class="button is-info is-fullwidth" id="submitButton">결제하기</button>
       </form>
     </div>
+
   </body>
 </html>

@@ -1,5 +1,4 @@
 import { Router } from "express";
-//type check
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired } from "../middlewares";
@@ -7,8 +6,37 @@ import { categoryService } from "../services";
 
 const categoryRouter = Router();
 
+// 카테고리 목록 조회
+categoryRouter.get("/list", loginRequired, async function (req, res, next) {
+  try {
+    // 관리자 권한 확인
+    if (req.currentUserRole !== "admin") {
+      throw new Error("권한이 없습니다.");
+    }
+
+    // 배열 형태
+    const categories = await categoryService.getCategoryList();
+    res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 카테고리 이름 조회
+categoryRouter.get("/name", async function (req, res, next) {
+  try {
+    const categories = await categoryService.getCategoryList();
+    const categoryNames = categories.map((category) => category.foodType);
+
+    //배열 형태
+    res.status(200).json(categoryNames);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // 카테고리 추가 api (아래는 /add이지만, 실제로는 /api/category/add로 요청해야 함.)
-categoryRouter.post("/add", loginRequired, async (req, res, next) => {
+categoryRouter.post("/add", loginRequired, async function (req, res, next) {
   try {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -19,8 +47,8 @@ categoryRouter.post("/add", loginRequired, async (req, res, next) => {
     }
 
     // 관리자 권한 확인
-    if(req.currentUserRole !== "admin"){
-      throw new Error("권한이 없습니다.")
+    if (req.currentUserRole !== "admin") {
+      throw new Error("권한이 없습니다.");
     }
 
     // req (request)의 body 에서 데이터 가져오기
@@ -41,38 +69,6 @@ categoryRouter.post("/add", loginRequired, async (req, res, next) => {
   }
 });
 
-// 카테고리 삭제 api (아래는 /:categoryType이지만, 실제로는 /api/category/:categoryType로 요청해야 함.)
-categoryRouter.delete(
-  "/:categoryType",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      // 관리자 권한 확인
-      if(req.currentUserRole !== "admin"){
-        throw new Error("권한이 없습니다.")
-      }
-      // req (request)의 params 에서 데이터 가져오기
-      const categoryType = req.params.categoryType;
-
-      // 위 데이터를 카테고리 db에서 삭제하기
-      const deletedCategory = await categoryService.deleteCategory(
-        categoryType
-      );
-
-      //삭제 성공
-      if (deletedCategory.deletedCount === 1) {
-        res.status(201).json({ message: "OK" });
-      }
-      //삭제 실패
-      else {
-        throw new Error(`${categoryType}을 삭제 실패했습니다.`);
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 // 카테고리 수정
 // (예를 들어 /api/category/한식123 로 요청하면 req.params.categoryType는 '한식123' 문자열로 됨)
 categoryRouter.patch(
@@ -89,8 +85,8 @@ categoryRouter.patch(
       }
 
       // 관리자 권한 확인
-      if(req.currentUserRole !== "admin"){
-        throw new Error("권한이 없습니다.")
+      if (req.currentUserRole !== "admin") {
+        throw new Error("권한이 없습니다.");
       }
 
       // params로부터 categoryType를 가져옴
@@ -119,6 +115,35 @@ categoryRouter.patch(
 
       // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌
       res.status(200).json(updatedCategoryInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// 카테고리 삭제 api (아래는 /:categoryType이지만, 실제로는 /api/category/:categoryType로 요청해야 함.)
+categoryRouter.delete(
+  "/:categoryType",
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      // 관리자 권한 확인
+      if (req.currentUserRole !== "admin") {
+        throw new Error("권한이 없습니다.");
+      }
+      // req (request)의 params 에서 데이터 가져오기
+      const categoryType = req.params.categoryType;
+
+      // 위 데이터를 카테고리 db에서 삭제하기
+      const deletedCategory = await categoryService.deleteCategory(
+        categoryType
+      );
+
+      //삭제 성공
+      if (deletedCategory.deletedCount !== 1) {
+        throw new Error(`${categoryType}을 삭제 실패했습니다.`);
+      }
+      res.status(201).json({ message: "OK" });
     } catch (error) {
       next(error);
     }
