@@ -69,13 +69,13 @@ async function handleSubmit(e) {
   // 회원정보 수정 요청
   try {
     const data = {
-      currentPassword,
+      currentPassword: currentPassword ? currentPassword : null,
       ...(fullName && { fullName }),
-      ...(changePassword && { changePassword }),
+      ...(changePassword && { password: changePassword }),
       ...(address && { address }),
       ...(phoneNumber && { phoneNumber }),
     };
-    await Api.patch("/api/userInfo", data);
+    await Api.patch("/api/usersInfo", "", data);
     alert(`정상적으로 수정되었습니다.`);
 
     // 회원 정보 페이지 이동
