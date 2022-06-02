@@ -4,6 +4,7 @@
 
 import * as Api from "/api.js";
 import { randomId } from "/useful-functions.js";
+import { changeNavbar } from "/changeNavbar.js";
 // 요소(element), input 혹은 상수
 const landingDiv = document.querySelector("#landingDiv");
 const navbar = document.querySelector("#navbar");
@@ -63,17 +64,4 @@ async function getDataFromApi() {
     },
   ];
   return data;
-}
-
-//sessionStore 내에 token이 존재할 시 home의 navbar 변경시키는 함수
-function changeNavbar() {
-  const firstList = navbar.children[0];
-  const secondList = navbar.children[1];
-  if (sessionStorage.getItem("token")) {
-    firstList.innerHTML = "<a href='/userInfo'>계정관리</a>";
-    secondList.innerHTML = "<a href='/'>로그아웃</a>";
-    secondList.addEventListener("click", () => {
-      sessionStorage.removeItem("token");
-    });
-  }
 }
