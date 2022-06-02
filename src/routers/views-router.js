@@ -13,6 +13,9 @@ viewsRouter.use("/login", serveStatic("login"));
 viewsRouter.use("/userInfo/changeUserInfo", serveStatic("changeUserInfo"));
 viewsRouter.use("/userInfo", serveStatic("userInfo"));
 viewsRouter.use("/userInfo/userSignOut", serveStatic("userSignOut"));
+viewsRouter.use("/product", serveStatic("product"));
+viewsRouter.use("/product/product-detail", serveStatic("product-detail"));
+
 // TODO:경로 재지정 필요
 // 임시로 만든 이동
 viewsRouter.use("/orderComplete", serveStatic("orderComplete"));
