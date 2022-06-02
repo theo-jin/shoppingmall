@@ -13,9 +13,7 @@ userRouter.post("/register", async (req, res, next) => {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
     }
 
     // req (request)의 body 에서 데이터 가져오기
@@ -47,9 +45,7 @@ userRouter.post("/login", async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
     }
 
     // req (request) 에서 데이터 가져오기
@@ -66,7 +62,9 @@ userRouter.post("/login", async function (req, res, next) {
         // 현재시간으로부터 만료 시간(ms 단위) -> 7일
         maxAge: 60 * 60 * 24 * 7 * 1000,
         //web server에서만 쿠키에 접근할 수 있도록 설정
-        httpOnly: true,
+        httpOnly: false,
+        //FIXME
+        // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
         // https에서만 cookie를 사용할 수 있게 설정
         secure: true,
         // 암호화
@@ -121,9 +119,7 @@ userRouter.patch("/usersInfo", loginRequired, async function (req, res, next) {
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
     }
 
     // token에서 decoded userId
@@ -159,10 +155,7 @@ userRouter.patch("/usersInfo", loginRequired, async function (req, res, next) {
     };
 
     // 사용자 정보를 업데이트함.
-    const updatedUserInfo = await userService.setUser(
-      userInfoRequired,
-      toUpdate
-    );
+    const updatedUserInfo = await userService.setUser(userInfoRequired, toUpdate);
 
     // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
     res.status(200).json(updatedUserInfo);
@@ -181,16 +174,15 @@ userRouter.delete("/user", loginRequired, async function (req, res, next) {
     if (req.currentUserRole === "admin") {
       // req.body가 비어있는 경우
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
       }
       userId = req.body.userId;
     }
 
     const deleteUserInfo = await userService.deleteUser(userId);
 
-    if (!deleteUserInfo) {
+    // 삭제 실패
+    if (deleteUserInfo.deletedCount < 1) {
       throw new Error("사용자 정보 삭제 실패했습니다.");
     }
 

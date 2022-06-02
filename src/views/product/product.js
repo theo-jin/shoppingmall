@@ -2,6 +2,7 @@ import * as Api from "/api.js";
 
 const navbar = document.querySelector("#navbar");
 const containerDiv = document.querySelector(".containerDiv");
+import { changeNavbar } from "/changeNavbar.js";
 
 addAllElements();
 // addAllEvents();
@@ -40,38 +41,7 @@ function getCategory() {
   return category;
 }
 
-//sessionStore 내에 token이 존재할 시 home의 navbar 변경시키는 함수
-function changeNavbar() {
-  const firstList = navbar.children[0];
-  const secondList = navbar.children[1];
-  if (sessionStorage.getItem("token")) {
-    firstList.innerHTML = "<a href='/userInfo'>계정관리</a>";
-    secondList.innerHTML = "<a href='/'>로그아웃</a>";
-    secondList.addEventListener("click", () => {
-      sessionStorage.removeItem("token");
-    });
-  }
-}
-
 async function getDataFromApi(category) {
-  // const data = await Api.get("/api/product/productlist/" + category);
-  const data = [
-    {
-      _id: "6296fcf15c1216a10e5d9bba",
-      productName: "떡볶이",
-      productContent: "국민간식",
-      productPrice: 10000,
-      productImage: "http://localhost:5000/image/steak.jpeg",
-      category: "한식",
-    },
-    {
-      _id: "asdasdasdasd",
-      productName: "떡국",
-      productContent: "국민간식",
-      productPrice: 12000,
-      productImage: "http://localhost:5000/image/steak.jpeg",
-      category: "한식",
-    },
-  ];
+  const data = await Api.get("/api/product/productlist", category);
   return data;
 }
