@@ -4,10 +4,14 @@
 .mainContainer {
   width: 1024px;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
+
+.mainContainer > div {
+  display: flex;
+  padding: 10px;
+}
+
 .userMenu {
   margin: 2% 2% 2% 2%;
 }

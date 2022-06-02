@@ -26,7 +26,7 @@ function createProductList(data) {
     (el) =>
       `<a href="/product/product-detail?id=${el._id}">
         <div class="itemBox">
-          <img src="${el.productImage}" alt="${el.productName}">
+          <img src="http://localhost:5000/users/${el.productImage}" alt="${el.productName}">
           <p>${el.productName}</p>
           <p>${el.productPrice.toLocaleString()}원</p>
         </div>

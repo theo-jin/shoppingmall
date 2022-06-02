@@ -23,8 +23,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="adminPage.css" />
-    <script src="adminPage.js" type="module" defer></script>
+    <link rel="stylesheet" href="manageCategory.css" />
+    <script src="manageCategory.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -68,54 +68,17 @@
     </nav>
 
     <div class="divContainer">
-      <div class="userTitle"><h3 class="title">페이지 관리</h3></div>
+      <div class="userTitle"><h3 class="title">카테고리 관리</h3></div>
       <hr>
       <div class="mainContainer">
-          <a class="userMenu" href="/">
-              <div class="menuIcon">
-                  <span class="userIcon">
-                      &#10004;
-                  </span>
-              </div>
-              <b class="menuName">주문관리</b><br>
-              <p class="desc">
-                  모든 주문 내역을 확인 및 관리할 수 있습니다.
-              </p>
-            </a>
-          <a class="userMenu" href="/">
-            <div class="menuIcon">
-                <span class="userIcon">
-                    &#9874;
-                </span>
-            </div>
-              <b class="menuName">회원관리</b>
-              <p class="desc">
-                 모든 회원정보를 확인, 수정할 수 있습니다.
-                </p>
-            </a>
-          <a class="userMenu" href="/admin/manageCategory">
-            <div class="menuIcon">
-                <span class="userIcon">
-                    &#9986;
-                </span>
-            </div>
-              <b class="menuName">카테고리 추가</b><br>
-              <p class="desc">
-                제품이 속할 수 있는 카테고리 정보를 추가할 수 있습니다.
-            </p>
-          </a>
-          <a class="userMenu" href="/">
-            <div class="menuIcon">
-                <span class="userIcon">
-                    &#10004;
-                </span>
-            </div>
-            <b class="menuName">상품 추가</b><br>
-            <p class="desc">
-                상품 정보를 추가할 수 있습니다.
-            </p>
-          </a>
-      </div>
+        <div class="columns notification is-info is-light is-mobile orders-top">
+          <div class="column is-2">날짜</div>
+          <div class="column is-4">주문정보</div>
+          <div class="column is-2">주문총액</div>
+          <div class="column is-2">상태관리</div>
+          <div class="column is-2">취소</div>
+        </div>
+      </div>  
     </div>
   </body>
 </html>
