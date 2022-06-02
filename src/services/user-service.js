@@ -157,8 +157,9 @@ class UserService {
 
     // 사용자 삭제
     // 삭제된 user 정보를 반환
-    const deletedUser = await this.userModel.deleteUser(userId);
-    return deletedUser;
+    const deletedResult = await this.userModel.deleteUser(userId);
+
+    return deletedResult;
   }
 }
 
