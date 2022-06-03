@@ -26,6 +26,7 @@ async function productDetailLanding() {
   // 주문정보 넘겨주기
   orderBtn.addEventListener("click", () => {
     const data = {
+      productId: productId,
       count: Number(productCount.value),
       name: getData.productName,
       price: getData.productPrice,
