@@ -6,6 +6,24 @@ import { orderService } from "../services";
 
 const orderRouter = Router();
 
+// 전체 주문 목록을 가져옴 (배열 형태임)
+// 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
+orderRouter.get("/orderlist", loginRequired, async function (req, res, next) {
+  try {
+    const userRole = req.currentUserRole;
+    if (userRole !== "admin") {
+      throw new Error("권한이 없습니다.");
+    }
+    // 전체 사용자 목록을 얻음
+    const orders = await orderService.getOrders();
+
+    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //사용자 주문 정보 조회
 orderRouter.get("/user", loginRequired, async function (req, res, next) {
   try {
@@ -58,13 +76,38 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
 });
 
 //사용자 주문 취소
+orderRouter.delete("/:userId/:orderId", loginRequired, async (req, res, next) => {
+  try {
+    // req (request)의 params 에서 데이터 가져오기
+    const { userId, orderId } = req.params;
+
+    // 위 데이터를 주문 정보 db에서 삭제하기
+    const deletedResult = await orderService.deleteOrder(userId,orderId);
+
+    //삭제 성공
+    if (deletedResult.deletedCount !== 1) {
+      throw new Error(`${deletedOrder}을 삭제 실패했습니다.`);
+    }
+    res.status(201).json({ message: "OK" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+//관리자가 주문 취소
 orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
   try {
+
+    const userRole = req.currentUserRole;
+    if (userRole !== "admin") {
+      throw new Error("권한이 없습니다.");
+    }
+
     // req (request)의 params 에서 데이터 가져오기
     const { orderId } = req.params;
 
     // 위 데이터를 주문 정보 db에서 삭제하기
-    const deletedResult = await orderService.deleteOrder(orderId);
+    const deletedResult = await orderService.deleteOrderId(orderId);
 
     //삭제 성공
     if (deletedResult.deletedCount !== 1) {

@@ -9,6 +9,11 @@ export class OrderModel {
     return order;
   }
 
+  async findAll() {
+    const orders = await Order.find({});
+    return orders;
+  }
+
   //userId 로 주문 정보 조회
   async findByUserId(userId) {
     const orders = await Order.find({ userId });
