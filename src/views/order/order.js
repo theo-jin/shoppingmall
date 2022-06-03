@@ -96,7 +96,6 @@ async function handleSubmit(e) {
   const postalCode = addressInput.value;
   const address1 = address1Input.value;
   const address2 = address2Input.value;
-  const status="Information Received";
   const address = {
     postalCode,
     address1,
@@ -104,6 +103,11 @@ async function handleSubmit(e) {
   };
   const phoneNumber = phoneInput.value;
   const totalPrice=totalProductPrice.value;
+  // product 이름 가져오기
+
+  var products=new Array();
+  products[0]="떡볶이"
+
 
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
@@ -119,9 +123,9 @@ async function handleSubmit(e) {
 
   // TODO : 주문 api 추가필요
   try {
-    const data = { fullName, phoneNumber, address, status, totalPrice };
+    const data = { fullName, phoneNumber, address,products, totalPrice };
 
-    await Api.post("/api/", data);
+    await Api.post("/api/order/complete", data);
 
     alert(`주문이 완료되었습니다.`);
 
