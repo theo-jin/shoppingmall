@@ -17,7 +17,7 @@ async function addAllElements() {
 async function productDetailLanding() {
   const productId = getProductId();
   const getData = await getDataFromApi(productId);
-  createProductDetail(getData).forEach((el) => (containerDiv.innerHTML += el));
+  containerDiv.innerHTML = createProductDetail(getData);
 
   const orderBtn = document.querySelector("#orderBtn");
   const putCartBtn = document.querySelector("#putCartBtn");
@@ -27,8 +27,8 @@ async function productDetailLanding() {
   orderBtn.addEventListener("click", () => {
     const data = {
       count: Number(productCount.value),
-      name: getData[0].productName,
-      price: getData[0].productPrice,
+      name: getData.productName,
+      price: getData.productPrice,
     };
     sessionStorage.setItem("product", JSON.stringify(data));
     window.location.href = "/order";
@@ -36,14 +36,15 @@ async function productDetailLanding() {
 
   //장바구니 넘겨주기
   putCartBtn.addEventListener("click", () => {
-    const productName = getData[0].productName;
+    const productName = getData.productName;
     const prevData = JSON.parse(sessionStorage.getItem(productName));
     const data = {
       count: prevData
         ? Number(prevData.count) + Number(productCount.value)
         : Number(productCount.value),
       name: productName,
-      price: getData[0].productPrice,
+      price: getData.productPrice,
+      Img: getData.productImage,
     };
 
     sessionStorage.setItem(productName, JSON.stringify(data));
@@ -53,18 +54,16 @@ async function productDetailLanding() {
 
 // api를 통해 상품 상세 정보를 받아온 후 html에 표시
 function createProductDetail(data) {
-  return data.map(
-    (el) =>
-      `<div class="itemBox">
-        <img src="${el.productImage}" alt="${el.productName}">
+  return `<div class="itemBox">
+        <img src="http://localhost:5000/users/${data.productImage}" alt="${data.productName}">
         
       </div>
       <div class="descriptionBox">
         <div class="description">
-        <p>${el.productName}</p>
+        <p>${data.productName}</p>
         <hr />
-        <p>${el.productContent}</p>
-        <p>${el.productPrice.toLocaleString()}원</p>
+        <p>${data.productContent}</p>
+        <p>${data.productPrice.toLocaleString()}원</p>
         </div>
         <div>
           <input id="productCount" type="number" value="1" min="1">
@@ -73,8 +72,7 @@ function createProductDetail(data) {
           <button id="orderBtn">주문하기</button>
           <button id="putCartBtn">장바구니 담기</button>
         </div>
-      </div>`
-  );
+      </div>`;
 }
 
 // api를 요청하기 위해서 쿼리를 통해 전달받은 카테고리를 변수로 사용
@@ -85,6 +83,6 @@ function getProductId() {
 }
 
 async function getDataFromApi(productId) {
-  const data = await Api.get("/api/product?id", productId, true);
+  const data = await Api.get("/api/product/detail?id", productId, true);
   return data;
 }
