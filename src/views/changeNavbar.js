@@ -33,7 +33,6 @@ function changeNavbar() {
     `;
   }
   const logOut = navbar.children[navbar.children.length - 2];
-  console.log(logOut);
   logOut.addEventListener("click", () => {
     deleteCookie("role");
     sessionStorage.removeItem("token");

@@ -47,7 +47,8 @@ async function handleSubmit(e) {
 
   // 잘 입력했는지 확인
   const isFullNameValid = fullName.length >= 2;
-  const isPasswordValid = changePassword.length >= 4;
+  // 패스워드를 4자리 이상 입력하거나, 변경하지 않을 경우에만 true값을 반환
+  const isPasswordValid = changePassword.length >= 4 || changePasswordInput.length === undefined;
   const isPasswordSame = changePassword === passwordConfirm;
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -90,14 +91,18 @@ async function handleSubmit(e) {
 
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
-  const data = await Api.get("/api/userInfo");
-
-  fullNameInput.value = data.fullName;
-  phoneInput.value = data.phoneNumber;
-  const getAddress = data.address;
-  addressInput.value = getAddress.postalCode;
-  address1Input.value = getAddress.address1;
-  address2Input.value = getAddress.address2;
+  try {
+    const data = await Api.get("/api/userInfo");
+    fullNameInput.value = data.fullName;
+    phoneInput.value = data.phoneNumber;
+    const getAddress = data.address;
+    addressInput.value = getAddress.postalCode;
+    address1Input.value = getAddress.address1;
+    address2Input.value = getAddress.address2;
+  } catch (err) {
+    alert(err);
+    window.location.href = "/login";
+  }
 }
 
 // 다음 API를 활용하여 우편번호 및 도로명 주소 찾기
