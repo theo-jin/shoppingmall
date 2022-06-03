@@ -25,11 +25,11 @@ const OrderSchema = new Schema(
       ),
       required: true,
     },
-    products: {
+    products: [{
       type: Schema.Types.ObjectId,
       ref: "products",
       required: true,
-    },
+    }],
     status: {
       type: String,
       required: true,
