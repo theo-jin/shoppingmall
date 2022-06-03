@@ -18,14 +18,43 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// 상품 카테고리 별 조회
-productRouter.get("/productlist/:category", async function (req, res, next) {
+// 상품 전체 조회
+productRouter.get("/list", loginRequired, async function (req, res, next) {
   try {
-    const { category } = req.params;
+    // 관리자만 조회 가능
+    if (req.currentUserRole !== "admin") {
+      throw new Error("권한이 없습니다.");
+    }
+    const products = await productService.getProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 상품 카테고리 별 조회
+//?category={}
+productRouter.get("", async function (req, res, next) {
+  try {
+    const category = req.query.category;
 
     const products = await productService.getProductsByCategory(category);
 
     res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 상품 상세 정보
+// ?id={}
+productRouter.get("", async function (req, res, next) {
+  try {
+    const productId = req.query.id;
+
+    const product = await productService.getProduct(productId);
+
+    res.status(200).json(product);
   } catch (error) {
     next(error);
   }
