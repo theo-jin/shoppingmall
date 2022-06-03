@@ -10,6 +10,11 @@ export class OrderModel {
     return order;
   }
 
+  async findAll() {
+    const orders = await Order.find({});
+    return orders;
+  }
+
   //userId 로 주문 정보 조회
   async findByUserId(userId) {
     const orders = await Order.find({ userId }).populate("products");
@@ -26,6 +31,15 @@ export class OrderModel {
   async deleteOrder(orderId) {
     const deletedOrder = await Order.deleteOne({ _id: orderId });
     return deletedOrder;
+  }
+
+  //주문 정보 수정
+  async update({ orderId, status }) {
+    const filter = { _id: orderId };
+    const option = { returnOriginal: false };
+
+    const updatedOrder = await Order.findOneAndUpdate(filter, status, option);
+    return updatedOrder;
   }
 }
 

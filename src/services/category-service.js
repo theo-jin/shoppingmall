@@ -34,9 +34,7 @@ class CategoryService {
 
   // 카테고리 정보 수정
   async setCategory(categoryInfoRequired, toUpdate) {
-    // 객체 destructuring
-
-    const { foodType } = categoryInfoRequired;
+    const foodType = categoryInfoRequired.categoryType;
 
     // 우선 해당 카테고리가 db에 있는지 확인
     const category = await this.categoryModel.findByFoodType(foodType);
@@ -46,14 +44,24 @@ class CategoryService {
       throw new Error("카테고리가 없습니다. 다시 한 번 확인해 주세요.");
     }
 
+    // 수정하려는 카테고리 중복 확인
+    const updateFoodType = toUpdate.foodType
+    if(updateFoodType){
+      const updateCategory = await this.categoryModel.findByFoodType(updateFoodType)
+      //존재하면 error
+      if(updateCategory){
+        throw new Error("이미 존재하는 카테고리입니다. 다른 이름을 입력해주세요.")
+      }
+    }
+
     // 카테고리 수정 시작
     // 업데이트 진행
-    category = await this.categoryModel.update({
+    const updatedCategory = await this.categoryModel.update({
       foodType,
       update: toUpdate,
     });
 
-    return category;
+    return updatedCategory;
   }
 
   // 카테고리 삭제
