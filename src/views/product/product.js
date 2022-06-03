@@ -38,7 +38,18 @@ function createProductList(data) {
 function getCategory() {
   let params = new URL(document.location).searchParams;
   let category = params.get("category");
-  return category;
+  switch (category) {
+    case "krFood":
+      return "한식";
+    case "jpFood":
+      return "일식";
+    case "chFood":
+      return "중식";
+    case "wsFood":
+      return "양식";
+    default:
+      return "기타";
+  }
 }
 
 async function getDataFromApi(category) {
