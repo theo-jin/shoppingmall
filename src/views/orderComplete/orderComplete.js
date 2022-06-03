@@ -21,11 +21,11 @@ function addAllEvents() {
 // TODO 주문정보 페이지로 이동
 async function orderList(e) {
   e.preventDefault();
-  window.location.href = "/userInfo";
+  window.location.href = "/userOrderList";
 }
 // 상품페이지로 이동
 async function homeReturn(e) {
   e.preventDefault();
-  window.location.href = "/product";
+  window.location.href = "/";
 }
 
