@@ -31,6 +31,15 @@ export class OrderModel {
     const deletedOrder = await Order.deleteOne({ _id: orderId });
     return deletedOrder;
   }
+
+  //주문 정보 수정
+  async update({ orderId, update }) {
+    const filter = { orderId };
+    const option = { returnOriginal: false };
+
+    const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
+    return updatedOrder;
+  }
 }
 
 const orderModel = new OrderModel();

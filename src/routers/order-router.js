@@ -99,12 +99,56 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
       deletedResult = await orderService.deleteOrderId(orderId);
     }
 
-
     //삭제 성공
     if (deletedResult.deletedCount !== 1) {
       throw new Error(`${deletedOrder}을 삭제 실패했습니다.`);
     }
     res.status(201).json({ message: "OK" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+//관리자가 주문 상태 수정
+orderRouter.patch("/:orderId", loginRequired, async function (req, res, next) {
+  try {
+    // content-type 을 application/json 로 프론트에서
+    // 설정 안 하고 요청하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    // 관리자 권한 확인
+    if (req.currentUserRole !== "admin") {
+      throw new Error("권한이 없습니다.");
+    }
+
+    // params로부터 orderId 가져옴
+    const orderId = req.params.orderId;
+
+    // body data 로부터 업데이트할 카테고리 정보를 추출함.
+    const status = req.body.status;
+
+    const orderInfoRequired = { orderId };
+
+    // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
+    // 보내주었다면, 업데이트용 객체에 삽입함.
+    const toUpdate = {
+      //if fullName = undefined, result = undefined
+      //if fullName = "String", result = { fullName: "String"}
+      ...(status && { status }),
+    };
+
+    // 주문 상태 정보를 업데이트함.
+    const updatedOrderInfo = await orderService.setOrder(
+      orderInfoRequired,
+      toUpdate
+    );
+
+    // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌
+    res.status(200).json(updatedOrderInfo);
   } catch (error) {
     next(error);
   }
