@@ -15,9 +15,9 @@
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="userOrderList.css" />
+    <link rel="stylesheet" href="adminOrderList.css" />
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="userOrderList.js" type="module" defer></script>
+    <script src="adminOrderList.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -69,6 +69,7 @@
             <span>주문날짜</span>
             <span>주문상품</span>
             <span>배송상태</span>
+            <span>배송상태 변경</span>
             <span>취소</span>
           </div>
             
@@ -76,21 +77,48 @@
             <span>주문자 이름1</span>
             <span>주문날짜1</span>
             <span>주문상품1</span>
-            <span>배송상태1</span>
+            <span>
+              <select class="requestMessage" id="requestInput">
+                <option>주문완료</option>
+                <option>상품준비중</option>
+                <option>배송준비중</option>
+                <option>배송중</option>
+                <option>배송완료</option>
+              </select>
+            </span>
+            <button class="changeButton">변경</button>
             <button class="deleteButton">X</button>
           </div>
           <div class="orderList">
             <span>주문자 이름2</span>
             <span>주문날짜2</span>
             <span>주문상품2</span>
-            <span>배송상태2</span>
+            <span>
+              <select class="requestMessage" id="requestInput">
+                <option>주문완료</option>
+                <option>상품준비중</option>
+                <option>배송준비중</option>
+                <option>배송중</option>
+                <option>배송완료</option>
+              </select>
+            </span>
+            <button class="changeButton">변경</button>
             <button class="deleteButton">X</button>
           </div>
           <div class="orderList">
             <span>주문자 이름3</span>
             <span>주문날짜3</span>
             <span>주문상품3</span>
-            <span>배송상태3</span>
+            <span>
+              <select class="requestMessage" id="requestInput">
+                <option>주문완료</option>
+                <option>상품준비중</option>
+                <option>배송준비중</option>
+                <option>배송중</option>
+                <option>배송완료</option>
+              </select>
+            </span>
+            <button class="changeButton">변경</button>
             <button class="deleteButton">X</button>
           </div>
         </div>

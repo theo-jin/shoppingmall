@@ -1,12 +1,6 @@
-const navbar = document.querySelector("#navbar");
 const orderList = document.querySelector("#orderlist-container");
 const deleteButton = document.getElementsByClassName("deleteButton");
-console.log(deleteButton);
 
-const secondList = navbar.children[1];
-secondList.addEventListener("click", () => {
-  sessionStorage.removeItem("token");
-});
 
 // getDataFromApi();
 
@@ -43,7 +37,7 @@ secondList.addEventListener("click", () => {
 //     </div>`})
 // }
 
-// TODO:취소버튼 누르면 api delete하기
+// TODO:취소버튼 누르면 관리자용 api delete하기
 async function deleteDataFromApi(e) {
   let target=e.target;
   // await Api.delete("/api/order/:orderId", target.dataset.orderId);
