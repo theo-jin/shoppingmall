@@ -128,23 +128,20 @@ orderRouter.patch("/:orderId", loginRequired, async function (req, res, next) {
     // params로부터 orderId 가져옴
     const orderId = req.params.orderId;
 
+    // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
+    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
     // body data 로부터 업데이트할 카테고리 정보를 추출함.
     const status = req.body.status;
 
-    const orderInfoRequired = { orderId };
-
-    // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
-    // 보내주었다면, 업데이트용 객체에 삽입함.
-    const toUpdate = {
-      //if fullName = undefined, result = undefined
-      //if fullName = "String", result = { fullName: "String"}
-      ...(status && { status }),
-    };
-
     // 주문 상태 정보를 업데이트함.
     const updatedOrderInfo = await orderService.setOrder(
-      orderInfoRequired,
-      toUpdate
+      orderId, {status}
     );
 
     // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌

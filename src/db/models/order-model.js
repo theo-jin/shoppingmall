@@ -33,11 +33,11 @@ export class OrderModel {
   }
 
   //주문 정보 수정
-  async update({ orderId, update }) {
-    const filter = { orderId };
+  async update({ orderId, status }) {
+    const filter = { _id: orderId };
     const option = { returnOriginal: false };
 
-    const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
+    const updatedOrder = await Order.findOneAndUpdate(filter, status, option);
     return updatedOrder;
   }
 }

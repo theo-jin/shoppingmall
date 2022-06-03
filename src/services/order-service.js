@@ -55,13 +55,9 @@ class OrderService {
   }
 
   //주문 상태 수정
-  async setOrder(orderInfoRequired, toUpdate) {
-    // 객체 destructuring
-
-    const { orderId } = orderInfoRequired;
-
+  async setOrder(orderId, status) {
     // 우선 해당 주문 정보가 db에 있는지 확인
-    let order = await this.orderModel.findById(orderId);
+    const order = await this.orderModel.findById(orderId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!order) {
@@ -70,12 +66,12 @@ class OrderService {
 
     // 주문 정보 수정 시작
     // 업데이트 진행
-    order = await this.orderModel.update({
+    const updatedOrder = await this.orderModel.update({
       orderId,
-      update: toUpdate,
+      status
     });
 
-    return order;
+    return updatedOrder;
   }
 }
 
