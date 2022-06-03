@@ -23,8 +23,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="manageCategory.css" />
-    <script src="manageCategory.js" type="module" defer></script>
+    <link rel="stylesheet" href="manageProduct.css" />
+    <script src="manageProduct.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -68,55 +68,98 @@
     </nav>
 
     <div class="divContainer">
-      <div class="userTitle"><h3 class="title">카테고리 관리</h3></div>
+      <div class="userTitle"><h3 class="title">상품 관리</h3></div>
       <hr>
       <div class="mainContainer">
         <div class="columns notification is-info is-light is-mobile orders-top">
-          <div class="column is-3">날짜</div>
-          <div class="column is-2">카테고리명</div>
-          <div class="column is-5">설명</div>
+          <div class="column is-2">등록 날짜</div>
+          <div class="column is-2">상품명</div>
+          <div class="column is-2">상품 카테고리</div>
+          <div class="column is-2">상품 설명</div>
+          <div class="column is-2">상품 가격</div>
           <div class="column is-1">수정</div>
           <div class="column is-1">삭제</div>
         </div>
       </div>  
     </div>
+    <!-- 상품 추가 모달 -->
     <div class="modal" id="addModal">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
           <div class="field mb-5">
-            <label class="label">카테고리명</label>
+            <label class="label">상품명</label>
             <div class="control">
-              <input id="categoryName1"class="input" type="text" placeholder="카테고리명을 입력해주세요">
+              <input id="productName1"class="input" type="text" placeholder="상품명을 입력해주세요">
             </div>
           </div>
-          
-          <div class="field mb-6">
-            <label class="label">설명</label>
+          <div class="field mb-5">
+            <label class="label">상품 카테고리</label>
             <div class="control">
-              <input id="categoryDescription1" class="input" type="text" placeholder="카테고리에 관한 설명을 작성해주세요.">
+              <select id="productCategory1">
+
+              </select>
             </div>
           </div>
+          <div class="field mb-5">
+            <label class="label">상품 설명</label>
+            <div class="control">
+              <input id="productDescription1" class="input" type="text" placeholder="상품에 관한 설명을 작성해주세요.">
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label">상품 가격</label>
+            <div class="control">
+              <input id="productPrice1" class="input" type="number" placeholder="상품 가격을 작성해주세요.">
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label fileUpload">파일 업로드</label>
+            <div class="control">
+              <input id="fileUpload1" name="productImage" class="input" type="file">
+            </div>
+          </div>
+
           <button class="button is-info is-fullwidth" id="addBtn">추가하기</button>
         </div>
       </div>
       <button id="addModalClose"class="modal-close is-large" aria-label="close"></button>
     </div>
+    <!-- 상품 수정 모달 -->
     <div class="modal " id="editModal">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
           <div class="field mb-5">
-            <label class="label">카테고리명</label>
+            <label class="label">상품명</label>
             <div class="control">
-              <input id="categoryName2"class="input" type="text" placeholder="카테고리명을 입력해주세요">
+              <input id="productName2"class="input" type="text" placeholder="상품명을 입력해주세요">
             </div>
           </div>
-          
-          <div class="field mb-6">
-            <label class="label">설명</label>
+          <div class="field mb-5">
+            <label class="label">상품 카테고리</label>
             <div class="control">
-              <input id="categoryDescription2" class="input" type="text" placeholder="카테고리에 관한 설명을 작성해주세요.">
+              <select id="productCategory2">
+
+              </select>
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label">상품 설명</label>
+            <div class="control">
+              <input id="productDescription2" class="input" type="text" placeholder="상품에 관한 설명을 작성해주세요.">
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label">상품 가격</label>
+            <div class="control">
+              <input id="productPrice2" class="input" type="number" placeholder="상품 가격을 작성해주세요.">
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label fileUpload">파일 업로드</label>
+            <div class="control">
+              <input id="fileUpload2" name="productImage" class="input" type="file">
             </div>
           </div>
           <button class="button is-info is-fullwidth" id="editBtn">수정하기</button>
@@ -124,7 +167,7 @@
       </div>
       <button id="editModalClose" class="modal-close is-large" aria-label="close"></button>
     </div>
-    <div id="addCategory">
+    <div id="addProduct">
       <i class="fas fa-plus"></i>
     </div>
   </body>

@@ -59,8 +59,6 @@
         </div>
       </div>
     </nav>
-
-
     
     <div class="userTitle">
       <h1 class="title" id="orderUserTitle">주문/결제</h1>
@@ -133,21 +131,25 @@
       </form>
 
 
-      <!-- 주문자 정보 폼 -->
+      <!-- 구매제품 폼 -->
       <form class="box order-product-form-box" id="orderProductForm">
         <div class="field">
           <label class="label" for="productPayment">주문정보</label>
           <div class="control price-control">
-            <label class="productName">상품 이름</label>
-            <label class="productPrice">상품 가격</label>
-            <label class="productNumber">상품 갯수</label>
-            <label class="productTotal">총가격</label>
+            <table id="productList">
+              <tr class="productTitle">
+                <td class="productName">상품명</td>
+                <td class="productPrice">가격</td>
+                <td class="productNumber">수량</td>
+                <td class="productTotal">총가격</td>
+              </tr>
+            </table>
           </div>
         </div>
 
         <div>
-          <label class="label" for="totalPayment">총 합계</label>
-          <label class="totaPrice" id="totalUserPrice">결제가격</label>
+          <label class="label" for="totalPayment" >총 합계</label>
+          <label class="label" id="totalProductPrice"></label>
         </div>
 
         <button class="button is-info is-fullwidth" id="submitButton">결제하기</button>

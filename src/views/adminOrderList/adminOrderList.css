@@ -36,13 +36,16 @@
   width: 20%;
 }
 .listTitle span:nth-child(3) {
-  width: 30%;
+  width: 25%;
 }
 .listTitle span:nth-child(4) {
   width: 15%;
 }
 .listTitle span:nth-child(5) {
-  width: 15%;
+  width: 10%;
+}
+.listTitle span:nth-child(6) {
+  width: 10%;
 }
 
 .orderList {
@@ -59,18 +62,20 @@
   width: 20%;
 }
 .orderList span:nth-child(3) {
-  width: 30%;
+  width: 25%;
 }
 .orderList span:nth-child(4) {
   width: 15%;
 }
+
 .orderList button {
-  width: 3%;
+  width: 5%;
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
   background-color: white;
 }
+
 .id{
   display: none;
 }

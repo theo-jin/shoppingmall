@@ -24,7 +24,7 @@
   height: 60px;
 }
 
-#addCategory {
+#addProduct {
   cursor: pointer;
   text-align: center;
   line-height: 50px;
@@ -37,6 +37,6 @@
   bottom: 100px;
 }
 
-#addCategory:hover {
+#addProduct:hover {
   background-color: #8ea5bd;
 }

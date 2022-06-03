@@ -1,6 +1,11 @@
 // api 로 GET 요청 (/endpoint/params 형태로 요청함)
-async function get(endpoint, params = "") {
-  const apiUrl = `${endpoint}/${params}`;
+async function get(endpoint, params = "", query = false) {
+  let apiUrl = `${endpoint}/${params}`;
+  // 쿼리로 GET 요청할 시
+  if (query) {
+    apiUrl = `${endpoint}=${params}`;
+  }
+
   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
 
   const res = await fetch(apiUrl, {
