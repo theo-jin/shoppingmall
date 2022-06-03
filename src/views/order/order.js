@@ -121,7 +121,7 @@ async function handleSubmit(e) {
   const status="Information Received"
   console.log(totalPrice);
   
-  // TODO:product 이름 가져오기
+  // TODO:productId 가져오기
   // var products=new Array();
 
 
@@ -139,7 +139,7 @@ async function handleSubmit(e) {
 
   // TODO : products추가 필요
   try {
-    const data = { fullName, phoneNumber, address, status , totalPrice };
+    const data = { fullName, phoneNumber, address, status, products , totalPrice };
 
     await Api.post("/api/order/complete", data);
 
