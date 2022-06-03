@@ -1,5 +1,7 @@
 const navbar = document.querySelector("#navbar");
 const containerDiv = document.querySelector(".containerDiv");
+import * as Api from "/api.js";
+
 import { changeNavbar } from "/changeNavbar.js";
 
 addAllElements();
@@ -8,7 +10,7 @@ addAllElements();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   changeNavbar();
-  productDetailLanding();
+  await productDetailLanding();
 }
 
 // html에 출력해주는 함수
@@ -83,6 +85,6 @@ function getProductId() {
 }
 
 async function getDataFromApi(productId) {
-  const data = await Api.get("/api/product/", productId);
+  const data = await Api.get("/api/product?id", productId, true);
   return data;
 }

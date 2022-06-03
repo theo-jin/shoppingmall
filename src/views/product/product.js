@@ -10,7 +10,7 @@ addAllElements();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   changeNavbar();
-  insertTextToLanding();
+  await insertTextToLanding();
 }
 
 // html에 출력해주는 함수
@@ -53,6 +53,6 @@ function getCategory() {
 }
 
 async function getDataFromApi(category) {
-  const data = await Api.get("/api/product/productlist", category);
+  const data = await Api.get("/api/product?category", category, true);
   return data;
 }
