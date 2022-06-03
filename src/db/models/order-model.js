@@ -4,14 +4,15 @@ import { OrderSchema } from "../schemas/order-schema";
 const Order = model("orders", OrderSchema);
 
 export class OrderModel {
+  // Id로 주문 조회
   async findById(orderId) {
-    const order = await Order.findOne({ _id: orderId });
+    const order = await Order.findOne({ _id: orderId }).populate("products");
     return order;
   }
 
   //userId 로 주문 정보 조회
   async findByUserId(userId) {
-    const orders = await Order.find({ userId });
+    const orders = await Order.find({ userId }).populate("products");
     return orders;
   }
 
