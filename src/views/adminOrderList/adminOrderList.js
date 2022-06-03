@@ -3,7 +3,7 @@ import * as Api from "/api.js";
 const orderList = document.querySelector("#orderlist-container");
 const deleteButton = document.getElementsByClassName("deleteButton");
 const changeButton = document.getElementsByClassName("changeButton");
-
+const optionStatus = document.getElementsByClassName("optionStatus");
 
 getDataFromApi();
 
@@ -11,27 +11,27 @@ getDataFromApi();
 async function getDataFromApi() {
   const data = await Api.get("/api/order/list");
   let userStatus='';
+  let status='';
   
   // 배송상태 확인
   data.forEach(el=> {
     let productList='';
-    const status=el.status;
+    const nowStatus=el.status;
+    console.log(el);
 
-    console.log(data);
-    if (status=="Information Received"){
-      console.log(status);
+    if (nowStatus=="Information Received"){
       userStatus="주문완료";
     }
-    else if (status=="Processing"){
+    else if (nowStatus=="Processing"){
       userStatus="상품준비중";
     }
-    else if (status=="Out of Delivery"){
+    else if (nowStatus=="Out of Delivery"){
       userStatus="배송준비중";
     }
-    else if (status=="In transit"){
+    else if (nowStatus=="In transit"){
       userStatus="배송중";
     }
-    else if (status=="Delivered"){
+    else if (nowStatus=="Delivered"){
       userStatus="배송완료";
     }
 
@@ -46,7 +46,7 @@ async function getDataFromApi() {
     <span>${productList}</span>
     <span>
       <select class="requestMessage" id="requestInput">
-        <option selected>${userStatus}</option>
+      <option selected>${userStatus}</option>
         <option>주문완료</option>
         <option>상품준비중</option>
         <option>배송준비중</option>
@@ -70,5 +70,35 @@ async function getDataFromApi() {
   
   for(var i=0;i<deleteButton.length;i++){
     deleteButton[i].addEventListener("click", deleteDataFromApi);
+  }
+
+  async function changeDataFromApi(e) {
+    let target=e.target;
+    let deliveryStatus=target.parentNode.children[3].children[0].value;
+    const orderId=target.parentNode.children[6].innerHTML;
+
+    if (deliveryStatus=="주문완료"){
+      status="Information Received";
+    }
+    else if (deliveryStatus=="상품준비중"){
+      status="Processing";
+    }
+    else if (deliveryStatus=="배송준비중"){
+      status="Out of Delivery";
+    }
+    else if (deliveryStatus=="배송중"){
+      status="In transit";
+    }
+    else if (deliveryStatus=="배송완료"){
+      status="Delivered";
+    }
+    console.log(status)
+
+    await Api.patch("/api/order", orderId, {status} );
+    alert("주문상태가 변경 되었습니다.");
+  }
+
+  for(var i=0;i<deleteButton.length;i++){
+    changeButton[i].addEventListener("click", changeDataFromApi);
   }
 }
