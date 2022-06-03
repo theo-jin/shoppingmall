@@ -82,6 +82,7 @@
         </div>
       </div>  
     </div>
+    <!-- 상품 추가 모달 -->
     <div class="modal" id="addModal">
       <div class="modal-background"></div>
       <div class="modal-content">
@@ -124,28 +125,48 @@
       </div>
       <button id="addModalClose"class="modal-close is-large" aria-label="close"></button>
     </div>
-    <!-- <div class="modal " id="editModal">
+    <!-- 상품 수정 모달 -->
+    <div class="modal " id="editModal">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
           <div class="field mb-5">
-            <label class="label">카테고리명</label>
+            <label class="label">상품명</label>
             <div class="control">
-              <input id="categoryName2"class="input" type="text" placeholder="카테고리명을 입력해주세요">
+              <input id="productName2"class="input" type="text" placeholder="상품명을 입력해주세요">
             </div>
           </div>
-          
-          <div class="field mb-6">
-            <label class="label">설명</label>
+          <div class="field mb-5">
+            <label class="label">상품 카테고리</label>
             <div class="control">
-              <input id="categoryDescription2" class="input" type="text" placeholder="카테고리에 관한 설명을 작성해주세요.">
+              <select id="productCategory2">
+
+              </select>
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label">상품 설명</label>
+            <div class="control">
+              <input id="productDescription2" class="input" type="text" placeholder="상품에 관한 설명을 작성해주세요.">
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label">상품 가격</label>
+            <div class="control">
+              <input id="productPrice2" class="input" type="number" placeholder="상품 가격을 작성해주세요.">
+            </div>
+          </div>
+          <div class="field mb-5">
+            <label class="label fileUpload">파일 업로드</label>
+            <div class="control">
+              <input id="fileUpload2" name="productImage" class="input" type="file">
             </div>
           </div>
           <button class="button is-info is-fullwidth" id="editBtn">수정하기</button>
         </div>
       </div>
       <button id="editModalClose" class="modal-close is-large" aria-label="close"></button>
-    </div> -->
+    </div>
     <div id="addProduct">
       <i class="fas fa-plus"></i>
     </div>

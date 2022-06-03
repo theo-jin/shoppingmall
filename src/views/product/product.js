@@ -17,21 +17,28 @@ async function addAllElements() {
 async function insertTextToLanding() {
   const category = getCategory();
   const getData = await getDataFromApi(category);
-  createProductList(getData).forEach((el) => (containerDiv.innerHTML += el));
+  const productList = createProductList(getData);
+  if (typeof productList == "object") {
+    productList.forEach((el) => (containerDiv.innerHTML += el));
+  } else {
+    containerDiv.innerHTML = productList;
+  }
 }
 
 // api를 통해 상품 정보를 받아온 후 html에 표시
 function createProductList(data) {
-  return data.map(
-    (el) =>
-      `<a href="/product/product-detail?id=${el._id}">
-        <div class="itemBox">
-          <img src="http://localhost:5000/users/${el.productImage}" alt="${el.productName}">
-          <p>${el.productName}</p>
-          <p>${el.productPrice.toLocaleString()}원</p>
-        </div>
-      </a>`
-  );
+  if (typeof data == "object") {
+    return data.map(
+      (el) =>
+        `<a href="/product/product-detail?id=${el._id}">
+          <div class="itemBox">
+            <img src="http://localhost:5000/users/${el.productImage}" alt="${el.productName}">
+            <p>${el.productName}</p>
+            <p>${el.productPrice.toLocaleString()}원</p>
+          </div>
+        </a>`
+    );
+  } else return `<div>${data}</div>`;
 }
 
 // api를 요청하기 위해서 쿼리를 통해 전달받은 카테고리를 변수로 사용
