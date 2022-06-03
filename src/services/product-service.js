@@ -5,12 +5,22 @@ class ProductService {
     this.productModel = productModel;
   }
 
+  // 상품 전체 목록 조회
+  async getProducts() {
+    const products = await productModel.findAll();
+    if (!products) {
+      throw new Error("상품이 존재하지 않습니다. 추가해주세요.");
+    }
+
+    return products;
+  }
+
   // 카테고리 별 상품 목록 조회
   async getProductsByCategory(category) {
     //category가 존재하는지 확인
     const categoryInfo = await categoryModel.findByFoodType(category);
     if (!categoryInfo) {
-      throw new Error `${category}는 존재하지 않는 카테고리입니다.`;
+      throw new Error(`${category}는 존재하지 않는 카테고리입니다.`);
     }
 
     // category로 검색
