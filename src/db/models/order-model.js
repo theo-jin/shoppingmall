@@ -10,8 +10,9 @@ export class OrderModel {
     return order;
   }
 
+  // 전체 조회
   async findAll() {
-    const orders = await Order.find({});
+    const orders = await Order.find({}).populate("products");
     return orders;
   }
 

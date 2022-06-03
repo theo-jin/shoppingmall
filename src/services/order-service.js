@@ -11,6 +11,7 @@ class OrderService {
     return orders;
   }
 
+  // orderId로 주문 정보 찾기
   async getOrder(orderId){
     const order = await this.orderModel.findById(orderId);
     if(!order){
