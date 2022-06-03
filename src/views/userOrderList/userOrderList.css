@@ -23,6 +23,7 @@
 .listTitle {
   border-bottom: 1px solid black;
   display: flex;
+  font-weight: bold;
 }
 .listTitle span {
   padding: 12px;
@@ -32,17 +33,41 @@
   width: 20%;
 }
 .listTitle span:nth-child(2) {
-  width: 50%;
+  width: 20%;
 }
 .listTitle span:nth-child(3) {
-  width: 15%;
+  width: 30%;
 }
 .listTitle span:nth-child(4) {
   width: 15%;
 }
-.listTitle span button {
-  border: 1px solid black;
+.listTitle span:nth-child(5) {
+  width: 15%;
+}
+
+.orderList {
+  display: flex;
+}
+.orderList span {
+  padding: 12px;
+  text-align: center;
+}
+.orderList span:nth-child(1) {
+  width: 20%;
+}
+.orderList span:nth-child(2) {
+  width: 20%;
+}
+.orderList span:nth-child(3) {
+  width: 30%;
+}
+.orderList span:nth-child(4) {
+  width: 15%;
+}
+.orderList button {
+  width: 3%;
+  height: 10%;
+  margin: 1% auto;
   border-radius: 5px;
-  background: none;
-  cursor: pointer;
+  background-color: white;
 }
