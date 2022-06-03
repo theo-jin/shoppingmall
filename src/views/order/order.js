@@ -23,7 +23,7 @@ secondList.addEventListener("click", () => {
 addAllElements();
 addAllEvents();
 checkLogin();
-getItemData();
+// getItemData();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
@@ -73,12 +73,12 @@ checkAddressBtn.addEventListener("click", findAddress);
 
 // TODO:이전경로 판별
 // TODO : 주문상품 데이터 받아오기(장바구니, 상품상세 페이지에서 바로결제)
-async function getItemData(){
-  const before=document.referrer;
-  console.log(before);
-  // if()
-}
-
+// async function getItemData(){
+//   const before=document.referrer;
+//   console.log(before);
+//   // if()
+// }
+getDirectData();
 
 // TODO : 각 상품들의 총액과 전체 총액을 계산
 async function getDirectData(){
@@ -122,7 +122,13 @@ async function handleSubmit(e) {
   console.log(totalPrice);
   
   // TODO:productId 가져오기
-  // var products=new Array();
+  if(sessionStorage.getItem("product")){
+    var products=new Array();
+    const data=sessionStorage.getItem("product");
+    const itemData=JSON.parse(data);
+    products[0]=itemData.productId;
+  }
+
 
 
   // 잘 입력했는지 확인
