@@ -1,5 +1,6 @@
 import * as Api from "/api.js";
 import { validatePhoneNumber } from "/useful-functions.js";
+import { changeNavbar } from "/changeNavbar.js";
 
 // 요소(element), input 혹은 상수
 const submitButton = document.querySelector("#submitButton");
@@ -19,6 +20,7 @@ addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   await getDataFromApi();
+  changeNavbar();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -69,13 +71,13 @@ async function handleSubmit(e) {
   // 회원정보 수정 요청
   try {
     const data = {
-      currentPassword,
+      currentPassword: currentPassword ? currentPassword : null,
       ...(fullName && { fullName }),
-      ...(changePassword && { changePassword }),
+      ...(changePassword && { password: changePassword }),
       ...(address && { address }),
       ...(phoneNumber && { phoneNumber }),
     };
-    await Api.patch("/api/userInfo", data);
+    await Api.patch("/api/usersInfo", "", data);
     alert(`정상적으로 수정되었습니다.`);
 
     // 회원 정보 페이지 이동

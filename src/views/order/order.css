@@ -46,9 +46,33 @@ form{
   margin: 2% 40% 4% 45%;
 }
 
-.productTotal{
+#totalProductPrice{
   float:right;
 }
-.productName, .productPrice{
-  margin: 0% 3% 3% 0%;
+/* table */
+.productName{
+  clear: both;
+  width:25% !important;
+}
+.productPrice{
+  width:25% !important;
+}
+.productNumber{
+  width:15%;
+}
+.productTotal{
+  width: 25% !important;
+  text-align: right;
+}
+.productTitle{
+  background-color: #dee8e6;
+  font-weight: bold;
+}
+#submitButton{
+  margin-top: 15%;
+}
+/* table */
+table{
+  table-layout: fixed;
+  width:100%;
 }

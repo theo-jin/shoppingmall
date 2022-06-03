@@ -48,7 +48,7 @@ productRouter.get("", async function (req, res, next) {
 
 // 상품 상세 정보
 // ?id={}
-productRouter.get("", async function (req, res, next) {
+productRouter.get("/detail", async function (req, res, next) {
   try {
     const productId = req.query.id;
 
@@ -74,9 +74,7 @@ productRouter.post(
 
       // req.body가 비어있는 경우 error
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
       }
 
       //req.body 데이터 가져오기
@@ -118,9 +116,7 @@ productRouter.patch(
 
       // req.body가 비어있는 경우 error
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
       }
 
       // 현재 productName
@@ -160,28 +156,24 @@ productRouter.patch(
 );
 
 // 상품 삭제
-productRouter.delete(
-  "/:productName",
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      // 관리자 권한이 아니면 error
-      if (req.currentUserRole !== "admin") {
-        throw new Error("권한이 없습니다.");
-      }
-
-      const productName = req.params.productName;
-
-      const result = await productService.deleteProduct(productName);
-      if (result.deletedCount !== 1) {
-        throw new Error(`${productName} 삭제 실패했습니다.`);
-      }
-
-      res.status(200).json({ message: "OK" });
-    } catch (error) {
-      next(error);
+productRouter.delete("/:productName", loginRequired, async function (req, res, next) {
+  try {
+    // 관리자 권한이 아니면 error
+    if (req.currentUserRole !== "admin") {
+      throw new Error("권한이 없습니다.");
     }
+
+    const productName = req.params.productName;
+
+    const result = await productService.deleteProduct(productName);
+    if (result.deletedCount !== 1) {
+      throw new Error(`${productName} 삭제 실패했습니다.`);
+    }
+
+    res.status(200).json({ message: "OK" });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 export { productRouter };

@@ -66,83 +66,69 @@
         </div>
       </div>
     </nav>
-  <!-- 장바구니 -->
-  <section class="cart">
-    <div class="cart-wrap">
-      <div class="info-wrapper">
-        <div class="items">
-          <div class="select">
-            <label class="checkbox">
-              <input type="checkbox" id="allSelectCheckbox" />
-              <p>전체 선택</p>
-            </label>
-            <label class="delete-part" id="partialDeleteLabel">
-              <p>선택 삭제</p>
-            </label>
-          </div>
-          <div id="cart"></div>
-        </div>
-        <div class="info">
-          <h2>결제 정보</h2>
-          <div class="data total">
-            <p>총 결제 금액</p>
-            <p id="total">원</p>
-          </div>
-          <button class="button" id="purchaseButton">구매하기</button>
-        </div>
-      </div>
-    </div>
-  </section>
-    
+    <body>
+      <div id="wrap">
+        <!-- 헤더 -->
+        <nav></nav>
+        <!-- 주문정보 -->
+        <section class="cart">
+          <div class="cartContainer">
+            <div class="cartContainerInfo">
+              <div class="items">
+                <div class="select">
+                  <label class="checkbox">
+                    <input type="checkbox" id="allSelectCheckbox" />
+                    <p>전체 선택</p>
+                  </label>
+                  <label class="selectionDelete" id="selectDelete">
+                    <p>선택 삭제</p>
+                  </label>
+                </div>
+                <div id="cart">
 
-        <!-- 선택한 상품 총 요약 -->
-        <div class="orderSummary">
-          <div class="boxOrderSummary">
-            <div class="header">
-              <p>결제정보</p>
-            </div>
-            <div class="orderInfo">
-              <div class="productsCount">
-                <p>상품수</p>
-                <p id="productsCountValue">
-                  <!-- 총 상품수 -->
-                  10개
-                </p>
-      
+                <!-- 선택한 상품 javascript에서 랜더링 -->
+
+                </div>
               </div>
-              <div class="totalCost">
-                <p>상품금액</p>
-                <span id="totalCostValue">
-                  <!-- 총 상품 금액 -->
-                  200,000원
-                </span>
-      
+
+              <!-- 선택한 상품 총 요약 -->
+              <div class="orderSummary">
+                <p>결제 정보</p>
+                <div class="orderInfo">
+                  <div class="productsCount">
+                    <p>상품수</p>
+                    <p id="productsCountValue">
+                      <!-- 총 상품수 -->
+                      개
+                    </p>
+          
+                  </div>
+                  <div class="productCost">
+                    <p>상품금액</p>
+                    <span id="productCostValue">
+                      <!-- 총 상품 금액 -->
+                      원
+                    </span>
+          
+                  </div>
+                  <div class="deliveryFee">
+                    <p>배송비</p>
+                    <p id="deliveryFeeValue">
+                      3,000원
+                  </p>
+                  </div>
+                </div>
+                <div class="data total">
+                  <p>총 결제 금액</p>
+                  <p id="totalCostValue">원</p>
+                </div>
+                <button class="button is-info is-fullwidth" id="purchaseButton">결제하기</button>
               </div>
-              <div class="deliveryFee">
-                <p>배송비</p>
-                <p id="deliveryFeeValue">
-                  3000원
-              </p>
-              </div>
-            </div>
-            <div class="totalCostAndDeliveryFee">
-              <p>총 금액</p>
-              <p id="totalCostAndDeliveryFeeValue">
-                <!-- 상품금액 + 배송비 -->
-              203,000원
-              </p>
-            </div>
-            <div class="purchase">
-              <button class="button is-info" id="purchaseButton">
-                구매하기
-              </button>
             </div>
           </div>
-        </div>
+        </section>
+        <footer></footer>
       </div>
-    </div>
-  </section>
-
+    </body>
+  </html>
   
-
-</body></html>

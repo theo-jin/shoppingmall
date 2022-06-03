@@ -1,31 +1,30 @@
-import * as Api from '/api.js';
-
 const purchaseButton = document.querySelector("#purchaseButton");
-const totalCost = document.querySelector("#totalCostAndDeliveryFeeValue");
+const cart = document.querySelector("#cart");
+const productsCountValue = document.querySelector("#productsCountValue");
+const productCostValue = document.querySelector("#productCostValue");
+const deliveryFeeValue = document.querySelector("#deliveryFeeValue");
+const totalCostValue = document.querySelector("#totalCostValue");
+const cartContainer = document.querySelector("#cartContainer");
+const selectDelete = document.querySelector("#selectDelete");
 
 
-const totalCost = document.querySelector("#totalCostAndDeliveryFeeValue");
-const deliveryFee = document.querySelector("#deliveryFeeValue");
-const productsCount = document.querySelector("#productsCountValue");
-const allSelectCheckBox = document.querySelector("#allSelectCheckBox");
 
 
-addAllElements();
-addAllEvents();
 
 
-//purchasebutton
+// 구매버튼
 async function purchase(e) {
   e.preventDefault();
+  if (!confirm(ㅇ)) return;
 
+  console.log(data);
 
   try {
-    const res = await 
- 
-  
-    window.location.href = '/order';
+
+    //주문창으로 이동.
+    window.location.href = "/order";
   } catch (err) {
-    alert(err.message);
+    alert(`${err.message}`);
   }
 }
-purchaseButton.addEventListener('click', purchase);
+purchaseButton.addEventListener("click", purchase);
