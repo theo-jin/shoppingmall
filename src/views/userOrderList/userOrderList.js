@@ -15,6 +15,7 @@ async function getDataFromApi() {
   const data = await Api.get("/api/order/user");
   let userStatus='';
   
+  // 배송상태 확인
   data.forEach(el=> {
     let productList='';
     const status=el.status;
@@ -35,9 +36,11 @@ async function getDataFromApi() {
     else if (status=="Delivered"){
       userStatus="배송완료";
     }
+
     // TODO: 장바구니 데이터 들어오면 수정필요
+    // 상품리스트 출력
     el.products.forEach(data=>{
-      productList+=data.productName
+      productList+=" "+ data.productName
     })
     
     orderList.innerHTML+=
@@ -49,6 +52,7 @@ async function getDataFromApi() {
       <button class="deleteButton">X</button>
        <span class="id">${el._id}</span>
     </div>`});
+
     // 취소버튼 누르면 주문데이터 삭제
     async function deleteDataFromApi(e) {
       let target=e.target;
