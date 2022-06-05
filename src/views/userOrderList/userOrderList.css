@@ -1,76 +1,60 @@
-.orderlistpage-container {
+.orderlistpageContainer {
   display: flex;
+  height: 100vh;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  height: 100vh;
 }
 
 .orderlistpageInfo {
-  margin: 30px;
   display: flex;
-  flex-direction: column;
   width: 80%;
+  margin: 30px;
+  flex-direction: column;
 }
 
 .orderListTitle {
+  margin-bottom: 30px;
   font-size: 30px;
   font-weight: 600;
-  margin-bottom: 30px;
   text-align: center;
 }
 
 .listTitle {
-  border-bottom: 1px solid black;
   display: flex;
+  border-bottom: 1px solid black;
   font-weight: bold;
 }
-.listTitle span {
+
+.listTitle span, .orderItem span {
   padding: 12px;
   text-align: center;
 }
-.listTitle span:nth-child(1) {
+
+.listTitle span:nth-child(1), .listTitle span:nth-child(2), .orderItem span:nth-child(1), .orderItem span:nth-child(2) {
   width: 20%;
 }
-.listTitle span:nth-child(2) {
-  width: 20%;
-}
-.listTitle span:nth-child(3) {
+
+
+.listTitle span:nth-child(3),.orderItem span:nth-child(3) {
   width: 30%;
 }
-.listTitle span:nth-child(4) {
-  width: 15%;
-}
-.listTitle span:nth-child(5) {
+
+.listTitle span:nth-child(4), .listTitle span:nth-child(5), .orderItem span:nth-child(4){
   width: 15%;
 }
 
-.orderList {
+.orderItem {
   display: flex;
 }
-.orderList span {
-  padding: 12px;
-  text-align: center;
-}
-.orderList span:nth-child(1) {
-  width: 20%;
-}
-.orderList span:nth-child(2) {
-  width: 20%;
-}
-.orderList span:nth-child(3) {
-  width: 30%;
-}
-.orderList span:nth-child(4) {
-  width: 15%;
-}
-.orderList button {
+
+.orderItem button {
   width: 3%;
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
   background-color: white;
 }
+
 .id{
   display: none;
 }
