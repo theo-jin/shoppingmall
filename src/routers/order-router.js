@@ -1,19 +1,15 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
-import { loginRequired } from "../middlewares";
+import { loginRequired, adminAuthorized, } from "../middlewares";
 import { orderService } from "../services";
 
 const orderRouter = Router();
 
 // 전체 주문 목록을 가져옴 (배열 형태임)
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
-orderRouter.get("/list", loginRequired, async function (req, res, next) {
+orderRouter.get("/list", loginRequired, adminAuthorized, async function (req, res, next) {
   try {
-    const userRole = req.currentUserRole;
-    if (userRole !== "admin") {
-      throw new Error("권한이 없습니다.");
-    }
     // 전체 사용자 목록을 얻음
     const orders = await orderService.getOrders();
 
@@ -51,12 +47,8 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
     const userId = req.currentUserId;
 
     // req (request)의 body 에서 데이터 가져오기
-    const fullName = req.body.fullName;
-    const phoneNumber = req.body.phoneNumber;
-    const address = req.body.address;
-    const products = req.body.products;
-    const status = req.body.status;
-    const totalPrice = req.body.totalPrice;
+    const { fullName, phoneNumber, address, products, status, totalPrice } =
+      req.body;
 
     // 위 데이터를 주문 정보 db에 추가하기
     const newOrder = await orderService.addOrder({
@@ -88,16 +80,16 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
     const userRole = req.currentUserRole;
 
     // 주문한 사용자와 일치하지 않을 경우
-    const order = await orderService.getOrder(orderId)
-    const orderUserId = order.userId
-    
-    if(userRole !== "admin" && orderUserId !== userId){
-      throw new Error("주문하신 사용자와 일치하지 않습니다.")
+    const order = await orderService.getOrder(orderId);
+    const orderUserId = order.userId;
+
+    if (userRole !== "admin" && orderUserId !== userId) {
+      throw new Error("주문하신 사용자와 일치하지 않습니다.");
     }
 
     // 관리자 권한이거나 사용자 정보가 일치할 때 삭제
     let deletedResult;
-    if(userRole === "admin" || orderUserId === userId){
+    if (userRole === "admin" || orderUserId === userId) {
       deletedResult = await orderService.deleteOrderId(orderId);
     }
 
@@ -112,7 +104,7 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
 });
 
 //관리자가 주문 상태 수정
-orderRouter.patch("/:orderId", loginRequired, async function (req, res, next) {
+orderRouter.patch("/:orderId", loginRequired, adminAuthorized, async function (req, res, next) {
   try {
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.
@@ -120,11 +112,6 @@ orderRouter.patch("/:orderId", loginRequired, async function (req, res, next) {
       throw new Error(
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
-    }
-
-    // 관리자 권한 확인
-    if (req.currentUserRole !== "admin") {
-      throw new Error("권한이 없습니다.");
     }
 
     // params로부터 orderId 가져옴
@@ -142,9 +129,7 @@ orderRouter.patch("/:orderId", loginRequired, async function (req, res, next) {
     const status = req.body.status;
 
     // 주문 상태 정보를 업데이트함.
-    const updatedOrderInfo = await orderService.setOrder(
-      orderId, {status}
-    );
+    const updatedOrderInfo = await orderService.setOrder(orderId, { status });
 
     // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌
     res.status(200).json(updatedOrderInfo);
