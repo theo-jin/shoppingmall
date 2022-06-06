@@ -1,0 +1,87 @@
+section.cart {
+  display: flex;
+  flex-direction: column;
+}
+
+div.cartContainer {
+  width: 100%;
+  margin: 10px auto;
+}
+
+
+div.cartContainerInfo {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+div.items {
+  width: 60%;
+  margin-left:10px
+}
+
+div.select {
+  display: flex;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+  margin-right: 1rem;
+}
+
+div.select > * {
+  margin-right: 1rem;
+}
+
+.checkbox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center; 
+}  
+
+.selectionDelete{
+display: flex;
+gap: 0.5rem;
+align-items: center;
+cursor: pointer;
+}
+
+div.orderSummary {
+  width: 30%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+div.orderSummary > p {
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+div.data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+div.total {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 2rem 0;
+  align-items: flex-end;
+}
+
+#purchaseButton {
+  width: 100%;
+  height: 7vh;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+
+}
+

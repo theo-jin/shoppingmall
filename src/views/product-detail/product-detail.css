@@ -1,0 +1,27 @@
+.itemBox {
+  width: 600px;
+}
+
+.descriptionBox {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 400px;
+  height: 500px;
+}
+.descriptionBox .description {
+  flex-grow: 3;
+}
+
+.descriptionBox .btnBox {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.containerDiv {
+  width: 1024px;
+  margin: 50px auto;
+  display: flex;
+  justify-content: space-between;
+}
