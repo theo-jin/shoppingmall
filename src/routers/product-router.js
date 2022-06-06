@@ -2,7 +2,7 @@ import { Router } from "express";
 import is from "@sindresorhus/is";
 import multer from "multer";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
-import { loginRequired } from "../middlewares";
+import { loginRequired, adminAuthorized } from "../middlewares";
 import { productService } from "../services";
 
 const productRouter = Router();
@@ -19,18 +19,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // 상품 전체 조회
-productRouter.get("/list", loginRequired, async function (req, res, next) {
-  try {
-    // 관리자만 조회 가능
-    if (req.currentUserRole !== "admin") {
-      throw new Error("권한이 없습니다.");
+productRouter.get(
+  "/list",
+  loginRequired,
+  adminAuthorized,
+  async function (req, res, next) {
+    try {
+      const products = await productService.getProducts();
+      res.status(200).json(products);
+    } catch (error) {
+      next(error);
     }
-    const products = await productService.getProducts();
-    res.status(200).json(products);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 // 상품 카테고리 별 조회
 //?category={}
@@ -60,21 +61,40 @@ productRouter.get("/detail", async function (req, res, next) {
   }
 });
 
-// 상품 추가 api (관리자만 접근 가능)
-productRouter.post(
-  "/add",
-  loginRequired,
+// 신상품 조회
+productRouter.get(
+  "/new",
   upload.single("productImage"),
   async function (req, res, next) {
     try {
-      // 관리자 권한이 아니면 error
-      if (req.currentUserRole !== "admin") {
-        throw new Error("권한이 없습니다.");
-      }
+      const now = new Date();
+      // 한 달 전
+      const date = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      const newProducts = await productService.getNewProduct(date);
+      res.status(200).json(newProducts);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
+// 상품 추가 api (관리자만 접근 가능)
+productRouter.post(
+  "/",
+  loginRequired,
+  adminAuthorized,
+  upload.single("productImage"),
+  async function (req, res, next) {
+    try {
       // req.body가 비어있는 경우 error
       if (is.emptyObject(req.body)) {
-        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
       }
 
       //req.body 데이터 가져오기
@@ -106,17 +126,15 @@ productRouter.post(
 productRouter.patch(
   "/:productName",
   loginRequired,
+  adminAuthorized,
   upload.single("productImage"),
   async function (req, res, next) {
     try {
-      // 관리자 권한이 아니면 error
-      if (req.currentUserRole !== "admin") {
-        throw new Error("권한이 없습니다.");
-      }
-
       // req.body가 비어있는 경우 error
       if (is.emptyObject(req.body)) {
-        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
       }
 
       // 현재 productName
@@ -124,11 +142,13 @@ productRouter.patch(
       const productInfoRequired = { productName: productCurrentName };
 
       // 수정할 data
-      const productName = req.body.productName;
-      const productPrice = req.body.productPrice;
-      const productContent = req.body.productContent;
-      const productImage = req.file.filename;
-      const category = req.body.category;
+      const {
+        productName,
+        productPrice,
+        productContent,
+        productImage,
+        category,
+      } = req.body;
 
       // 데이터가 undefined가 아닌 값만 업데이트용 객체에 삽입
       const toUpdate = {
@@ -139,16 +159,17 @@ productRouter.patch(
         ...(category && { category }),
       };
 
-      const updatedProductInfo = await productService.setProduct({
+      const updatedResult = await productService.setProduct({
         productInfoRequired,
         toUpdate,
       });
 
-      if (!updatedProductInfo) {
-        throw new Error(`${productName} 수정 실패했습니다.`);
+      if (updatedResult.modifiedCount !== 1) {
+        throw new Error("카테고리 수정에 실패했습니다.");
       }
 
-      res.status(200).json(updatedProductInfo);
+      // 업데이트 이후의 상품 데이터를 프론트에 보내 줌
+      res.status(200).json({ message: "OK" });
     } catch (error) {
       next(error);
     }
@@ -156,24 +177,24 @@ productRouter.patch(
 );
 
 // 상품 삭제
-productRouter.delete("/:productName", loginRequired, async function (req, res, next) {
-  try {
-    // 관리자 권한이 아니면 error
-    if (req.currentUserRole !== "admin") {
-      throw new Error("권한이 없습니다.");
+productRouter.delete(
+  "/:productName",
+  loginRequired,
+  adminAuthorized,
+  async function (req, res, next) {
+    try {
+      const productName = req.params.productName;
+
+      const result = await productService.deleteProduct(productName);
+      if (result.deletedCount !== 1) {
+        throw new Error(`${productName} 삭제 실패했습니다.`);
+      }
+
+      res.status(200).json({ message: "OK" });
+    } catch (error) {
+      next(error);
     }
-
-    const productName = req.params.productName;
-
-    const result = await productService.deleteProduct(productName);
-    if (result.deletedCount !== 1) {
-      throw new Error(`${productName} 삭제 실패했습니다.`);
-    }
-
-    res.status(200).json({ message: "OK" });
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 export { productRouter };

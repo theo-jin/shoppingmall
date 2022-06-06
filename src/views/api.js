@@ -8,12 +8,7 @@ async function get(endpoint, params = "", query = false) {
 
   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
 
-  const res = await fetch(apiUrl, {
-    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-    headers: {
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-    },
-  });
+  const res = await fetch(apiUrl);
 
   // 응답 코드가 4XX 계열일 때 (400, 403 등)
   if (!res.ok) {
@@ -41,7 +36,6 @@ async function post(endpoint, data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: bodyData,
   });
@@ -73,7 +67,6 @@ async function patch(endpoint, params = "", data) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: bodyData,
   });
@@ -104,7 +97,6 @@ async function del(endpoint, data = {}) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: bodyData,
   });
