@@ -16,6 +16,8 @@ viewsRouter.use("/userInfo/userSignOut", serveStatic("userSignOut"));
 viewsRouter.use("/product", serveStatic("product"));
 viewsRouter.use("/product/product-detail", serveStatic("product-detail"));
 
+viewsRouter.use("/new", serveStatic("newProductPage"));
+
 viewsRouter.use("/admin", serveStatic("adminPage"));
 viewsRouter.use("/admin/manageCategory", serveStatic("manageCategory"));
 viewsRouter.use("/admin/manageProduct", serveStatic("manageProduct"));
