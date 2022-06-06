@@ -71,9 +71,9 @@ sessionStorage.removeItem(product)
 
 
 
-productsCountValue.innerText = `총 ${}개`;
-productCostValue.innerText = `${addCommas(())}원`;
-productCostValue.innerText = `${addCommas(())}원`;
+// productsCountValue.innerText = `총 ${}개`;
+// productCostValue.innerText = `${addCommas(())}원`;
+// productCostValue.innerText = `${addCommas(())}원`;
 //구매하기 버튼
 function moveToOrderPage() {
 

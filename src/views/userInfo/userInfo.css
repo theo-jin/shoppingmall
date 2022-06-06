@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
-* {
-  font-size: large;
-  font-family: "Jua", sans-serif;
-  color:#434373 !important;
+*{
+    color:#434373 !important;
+    font-family: "Jua", sans-serif;
+    font-size: large;
 }
 .brandLogo {
     font-size: xx-large;
@@ -12,6 +12,7 @@
 }
 .userTitle{
     margin: 2% 40% 4% 45%;
+    
 }
 .mainContainer{
     display: flex;
@@ -30,11 +31,14 @@
     height: 60px;
 }
 .mainContainer b{
-    font-size: 30px !important;
-}
-.mainContainer p{
+    font-family: "Poor+Story", sans-serif;
     font-size: 25px !important;
 }
+.mainContainer p{
+    font-family: "Poor+Story", sans-serif;
+    font-size: 20px !important;
+}
 .mainContainer span{
-    font-size: 50px !important;
+    font-family: "Poor+Story", sans-serif;
+    font-size: 40px !important;
 }
