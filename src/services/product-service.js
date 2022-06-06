@@ -72,12 +72,12 @@ class ProductService {
     }
 
     // 수정
-    const updatedProduct = await this.productModel.update({
+    const updatedResult = await this.productModel.update({
       productInfoRequired,
       toUpdate,
     });
 
-    return updatedProduct;
+    return updatedResult;
   }
 
   async deleteProduct(productName) {
