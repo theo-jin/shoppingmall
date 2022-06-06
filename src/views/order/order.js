@@ -34,7 +34,7 @@ function checkLogin(){
 
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
-  const data = await Api.get("/api/userInfo");
+  const data = await Api.get("/api/user");
   $("#fullNameInput").value = data.fullName;
   $("#phoneInput").value = data.phoneNumber;
   const getAddress = data.address;
@@ -77,6 +77,9 @@ async function getDirectItem(){
             <td class="productTotal">${itemData.price*itemData.count}</td></tr>`
   $("#totalProductPrice").insertAdjacentHTML('beforeend',
   `<label class="totaPrice" id="totalUserPrice">${itemData.price*itemData.count}</label>`)
+
+  const products=new Array();
+  products.push({productName:itemData.name, productCount:itemData.count});
 }
 
 // TODO:카트에서 주문상품 데이터 받아오기
@@ -100,19 +103,6 @@ async function handleSubmit(e) {
   const phoneNumber = $("#phoneInput").value;
   const totalPrice=$("#totalUserPrice").innerHTML;
   const status="Information Received"
-  console.log(totalPrice);
-  
-  // TODO:productId 가져오기
-  if(sessionStorage.getItem("product")){
-    const products=new Array();
-    const data=sessionStorage.getItem("product");
-    const itemData=JSON.parse(data);
-    products.push({productName:itemData.name, productCount:itemData.count});
-    products.push({productName:"짜장면",productCount:4})
-  
-    console.log(products);
-  }
-
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -129,12 +119,12 @@ async function handleSubmit(e) {
     const data = { fullName, phoneNumber, address, status, products , totalPrice };
     console.log(data);
 
-    // await Api.post("/api/order/complete", data);
+    await Api.post("/api/order/complete", data);
 
-    // alert(`주문이 완료되었습니다.`);
+    alert(`주문이 완료되었습니다.`);
 
-    // // 주문완료 페이지 이동
-    // window.location.href = "/orderComplete";
+    // 주문완료 페이지 이동
+    window.location.href = "/orderComplete";
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
