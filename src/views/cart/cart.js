@@ -1,4 +1,5 @@
-import { addCommas} from './../useful-functions.js';
+import { addCommas } from "./../useful-functions.js";
+import { changeNavbar } from "/changeNavbar.js";
 
 const purchaseButton = document.querySelector("#purchaseButton");
 const selectDelete = document.querySelector("#selectDelete");
@@ -12,6 +13,7 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할.
 async function addAllElements() {
+  changeNavbar();
   await getDataFromApi();
   await getItemData();
   await getProductData();
@@ -21,16 +23,14 @@ async function addAllElements() {
 function addAllEvents() {
   purchaseButton.addEventListener("click", moveToOrderPage);
   selectDelete.addEventListener("click", selectDelete);
-};
- //sssion에서 데이터 가져오기. 
-const cartData=JSON.parse(sessionStorage.getItem("product"));
- 
-  async function getProductData(){
-  
-    console.log(cartData);
+}
+//sssion에서 데이터 가져오기.
+const cartData = JSON.parse(sessionStorage.getItem("product"));
 
-    cartShow.innerHTML+=
-    `<div class = "cartInfo">
+async function getProductData() {
+  console.log(cartData);
+
+  cartShow.innerHTML += `<div class = "cartInfo">
     <div class="itemBox">
       <img src="${productImage}" alt="${cartData.Name}"> 
     </div>
@@ -49,38 +49,31 @@ const cartData=JSON.parse(sessionStorage.getItem("product"));
   </div>
   </div>
   </div>`;
-  
-  }
-
+}
 
 //카트계산하기
 function getTotalPrice() {
   let count = cartData.count;
   let price = cartData.price;
-    count*price;
-  };
+  count * price;
+}
 totalCostValue.innerText = `${addCommas(getTotalPrice(data))}원`;
 
-
 //삭제하기 버튼
-sessionStorage.removeItem(product)
- //전체 삭제하기
- sessionStorage.clear()
+sessionStorage.removeItem(product);
+//전체 삭제하기
+sessionStorage.clear();
 //plus 버튼
 //minus 버튼
-
-
 
 // productsCountValue.innerText = `총 ${}개`;
 // productCostValue.innerText = `${addCommas(())}원`;
 // productCostValue.innerText = `${addCommas(())}원`;
 //구매하기 버튼
 function moveToOrderPage() {
-
   sessionStorage.setItem("cart", JSON.stringify());
 
-    //oder로 이동.
-    window.location.href = "/order";
-  }
-  purchaseButton.addEventListener("click", moveToOrderPage);
-
+  //oder로 이동.
+  window.location.href = "/order";
+}
+purchaseButton.addEventListener("click", moveToOrderPage);
