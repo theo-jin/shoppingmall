@@ -138,16 +138,17 @@ productRouter.patch(
         ...(category && { category }),
       };
 
-      const updatedProductInfo = await productService.setProduct({
+      const updatedResult = await productService.setProduct({
         productInfoRequired,
         toUpdate,
       });
 
-      if (!updatedProductInfo) {
-        throw new Error(`${productName} 수정 실패했습니다.`);
+      if (updatedResult.modifiedCount !== 1) {
+        throw new Error("카테고리 수정에 실패했습니다.");
       }
 
-      res.status(200).json(updatedProductInfo);
+      // 업데이트 이후의 상품 데이터를 프론트에 보내 줌
+      res.status(200).json({ message: "OK" });
     } catch (error) {
       next(error);
     }

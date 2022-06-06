@@ -6,19 +6,19 @@ const Order = model("orders", OrderSchema);
 export class OrderModel {
   // Id로 주문 조회
   async findById(orderId) {
-    const order = await Order.findOne({ _id: orderId }).populate("products");
+    const order = await Order.findOne({ _id: orderId });
     return order;
   }
 
   // 전체 조회
   async findAll() {
-    const orders = await Order.find({}).populate("products");
+    const orders = await Order.find({});
     return orders;
   }
 
   //userId 로 주문 정보 조회
   async findByUserId(userId) {
-    const orders = await Order.find({ userId }).populate("products");
+    const orders = await Order.find({ userId });
     return orders;
   }
 
@@ -39,8 +39,8 @@ export class OrderModel {
     const filter = { _id: orderId };
     const option = { returnOriginal: false };
 
-    const updatedOrder = await Order.findOneAndUpdate(filter, status, option);
-    return updatedOrder;
+    const updatedResult = await Order.updateOne(filter, status, option);
+    return updatedResult;
   }
 }
 

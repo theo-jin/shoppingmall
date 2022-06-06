@@ -102,13 +102,17 @@ categoryRouter.patch(
       };
 
       // 카테고리 정보를 업데이트함.
-      const updatedCategoryInfo = await categoryService.setCategory(
+      const updatedResult = await categoryService.setCategory(
         categoryInfoRequired,
         toUpdate
       );
 
+      if(updatedResult.modifiedCount !== 1){
+        throw new Error("카테고리 수정에 실패했습니다.")
+      }
+
       // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌
-      res.status(200).json(updatedCategoryInfo);
+      res.status(200).json({message: "OK"});
     } catch (error) {
       next(error);
     }

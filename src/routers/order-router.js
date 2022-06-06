@@ -1,24 +1,29 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
-import { loginRequired, adminAuthorized, } from "../middlewares";
+import { loginRequired, adminAuthorized } from "../middlewares";
 import { orderService } from "../services";
 
 const orderRouter = Router();
 
 // 전체 주문 목록을 가져옴 (배열 형태임)
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
-orderRouter.get("/list", loginRequired, adminAuthorized, async function (req, res, next) {
-  try {
-    // 전체 사용자 목록을 얻음
-    const orders = await orderService.getOrders();
+orderRouter.get(
+  "/list",
+  loginRequired,
+  adminAuthorized,
+  async function (req, res, next) {
+    try {
+      // 전체 사용자 목록을 얻음
+      const orders = await orderService.getOrders();
 
-    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(orders);
-  } catch (error) {
-    next(error);
+      // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
+      res.status(200).json(orders);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 //사용자 주문 정보 조회
 orderRouter.get("/user", loginRequired, async function (req, res, next) {
@@ -104,38 +109,47 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
 });
 
 //관리자가 주문 상태 수정
-orderRouter.patch("/:orderId", loginRequired, adminAuthorized, async function (req, res, next) {
-  try {
-    // content-type 을 application/json 로 프론트에서
-    // 설정 안 하고 요청하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+orderRouter.patch(
+  "/:orderId",
+  loginRequired,
+  adminAuthorized,
+  async function (req, res, next) {
+    try {
+      // content-type 을 application/json 로 프론트에서
+      // 설정 안 하고 요청하면, body가 비어 있게 됨.
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+
+      // params로부터 orderId 가져옴
+      const orderId = req.params.orderId;
+
+      // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
+      // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+
+      // body data 로부터 업데이트할 주문 정보를 추출함.
+      const status = req.body.status;
+
+      // 주문 상태 정보를 업데이트함.
+      const updatedResult = await orderService.setOrder(orderId, { status });
+
+      if (updatedResult.modifiedCount !== 1) {
+        throw new Error("주문 수정에 실패했습니다.");
+      }
+
+      // 업데이트 이후의 주문 데이터를 프론트에 보내 줌
+      res.status(200).json({ message: "OK" });
+    } catch (error) {
+      next(error);
     }
-
-    // params로부터 orderId 가져옴
-    const orderId = req.params.orderId;
-
-    // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
-    // body data 로부터 업데이트할 카테고리 정보를 추출함.
-    const status = req.body.status;
-
-    // 주문 상태 정보를 업데이트함.
-    const updatedOrderInfo = await orderService.setOrder(orderId, { status });
-
-    // 업데이트 이후의 카테고리 데이터를 프론트에 보내 줌
-    res.status(200).json(updatedOrderInfo);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 export { orderRouter };

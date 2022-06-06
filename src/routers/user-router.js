@@ -57,7 +57,19 @@ userRouter.post("/login", async function (req, res, next) {
 
     // 일반 사용자일 경우 cookie를 설정하지 않음
     // 관리자일 경우 cookie 설정
-    res.cookie("user", userToken, {
+    res.cookie("token", userToken.token, {
+      // 현재시간으로부터 만료 시간(ms 단위) -> 7일
+      maxAge: 60 * 60 * 24 * 7 * 1000,
+      // FIXME
+      // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
+      // web server에서만 쿠키에 접근할 수 있도록 설정
+      httpOnly: false,
+      // https에서만 cookie를 사용할 수 있게 설정
+      secure: false,
+      // 암호화
+      signed: true,
+    });
+    res.cookie("role", userToken.role, {
       // 현재시간으로부터 만료 시간(ms 단위) -> 7일
       maxAge: 60 * 60 * 24 * 7 * 1000,
       // FIXME
@@ -70,7 +82,7 @@ userRouter.post("/login", async function (req, res, next) {
       signed: true,
     });
     // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).end();
+    res.status(200).json({ message: "OK" });
   } catch (error) {
     next(error);
   }

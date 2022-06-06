@@ -67,12 +67,12 @@ class OrderService {
 
     // 주문 정보 수정 시작
     // 업데이트 진행
-    const updatedOrder = await this.orderModel.update({
+    const updatedResult = await this.orderModel.update({
       orderId,
       status
     });
 
-    return updatedOrder;
+    return updatedResult;
   }
 }
 
