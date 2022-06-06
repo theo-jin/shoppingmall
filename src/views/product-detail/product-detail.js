@@ -60,17 +60,17 @@ function createProductDetail(data) {
       </div>
       <div class="descriptionBox">
         <div class="description">
-        <p>${data.productName}</p>
-        <hr />
-        <p>${data.productContent}</p>
-        <p>${data.productPrice.toLocaleString()}원</p>
+          <p class="productTitle">${data.productName}</p>
+          <hr />
+          <p>조리법 : ${data.productContent}</p>
         </div>
-        <div>
-          <input id="productCount" type="number" value="1" min="1">
+        <div class="priceBox">
+          <p>가격 : ${data.productPrice.toLocaleString()}원</p>
+          <span>수량: <input id="productCount" type="number" value="1" min="1"></span>
         </div>
         <div class="btnBox">
-          <button id="orderBtn">주문하기</button>
-          <button id="putCartBtn">장바구니 담기</button>
+          <button class="btn orderBtn" id="orderBtn">주문하기</button>
+          <button class="btn putCartBtn" id="putCartBtn">장바구니 담기</button>
         </div>
       </div>`;
 }
