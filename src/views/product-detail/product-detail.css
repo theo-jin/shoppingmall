@@ -12,8 +12,23 @@
   font-family: "Jua", sans-serif;
 }
 
+.menuNav {
+  background-color: #b8dff8;
+}
+
+.menuNav a {
+  line-height: 52px;
+  width: 100px;
+  color: black;
+}
+
+.menuNav a:hover {
+  background-color: #e1f3fe;
+}
+
 .container {
   justify-content: center;
+  text-align: center;
 }
 
 .itemBox {
