@@ -75,7 +75,7 @@ async function getDirectItem(){
             <td class="productPrice">${itemData.price}</td>
             <td class="productNumber">${itemData.count}</td>
             <td class="productTotal">${itemData.price*itemData.count}</td></tr>`
-            $("#totalProductPrice").insertAdjacentHTML('beforeend',
+  $("#totalProductPrice").insertAdjacentHTML('beforeend',
   `<label class="totaPrice" id="totalUserPrice">${itemData.price*itemData.count}</label>`)
 }
 
@@ -104,10 +104,13 @@ async function handleSubmit(e) {
   
   // TODO:productId 가져오기
   if(sessionStorage.getItem("product")){
-    var products=new Array();
+    const products=new Array();
     const data=sessionStorage.getItem("product");
     const itemData=JSON.parse(data);
-    products[0]=itemData.productId;
+    products.push({productName:itemData.name, productCount:itemData.count});
+    products.push({productName:"짜장면",productCount:4})
+  
+    console.log(products);
   }
 
   // 잘 입력했는지 확인
@@ -124,13 +127,14 @@ async function handleSubmit(e) {
 
   try {
     const data = { fullName, phoneNumber, address, status, products , totalPrice };
+    console.log(data);
 
-    await Api.post("/api/order/complete", data);
+    // await Api.post("/api/order/complete", data);
 
-    alert(`주문이 완료되었습니다.`);
+    // alert(`주문이 완료되었습니다.`);
 
-    // 주문완료 페이지 이동
-    window.location.href = "/orderComplete";
+    // // 주문완료 페이지 이동
+    // window.location.href = "/orderComplete";
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
