@@ -37,17 +37,9 @@ export class UserModel {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    const { email, fullName, password, phoneNumber, address, createdAt } =
-      await User.findOneAndUpdate(filter, update, option);
-    const updatedUser = {
-      email,
-      fullName,
-      password,
-      phoneNumber,
-      address,
-      createdAt,
-    };
-    return updatedUser;
+    const updatedResult =
+      await User.updateOne(filter, update, option);
+    return updatedResult;
   }
 
   async deleteUser(email) {

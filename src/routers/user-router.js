@@ -57,7 +57,7 @@ userRouter.post("/login", async function (req, res, next) {
 
     // 일반 사용자일 경우 cookie를 설정하지 않음
     // 관리자일 경우 cookie 설정
-    res.cookie("token", userToken, {
+    res.cookie("user", userToken, {
       // 현재시간으로부터 만료 시간(ms 단위) -> 7일
       maxAge: 60 * 60 * 24 * 7 * 1000,
       // FIXME
@@ -152,13 +152,14 @@ userRouter.patch("/user", loginRequired, async function (req, res, next) {
     };
 
     // 사용자 정보를 업데이트함.
-    const updatedUserInfo = await userService.setUser(
-      userInfoRequired,
-      toUpdate
-    );
+    const updatedResult = await userService.setUser(userInfoRequired, toUpdate);
+
+    if (updatedResult.modifiedCount !== 1) {
+      throw new Error("회원 정보 수정을 실패했습니다.");
+    }
 
     // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
-    res.status(200).json(updatedUserInfo);
+    res.status(200).json({ message: "OK" });
   } catch (error) {
     next(error);
   }

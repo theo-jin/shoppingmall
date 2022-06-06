@@ -80,11 +80,11 @@ class UserService {
     if (user.role == "admin") {
       return {
         token,
-        cookie: { role: user.role },
+        role: user.role,
       };
     }
 
-    return { token, cookie: null };
+    return { token, role: null };
   }
 
   // 사용자 목록을 받음.
