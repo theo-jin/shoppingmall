@@ -36,8 +36,8 @@ async function handleSubmit(e) {
   try {
     const data = { email, password };
 
-    const result = await Api.post("/api/login", data);
-    const token = result;
+    // api 요청 결과 token 값을 반환함
+    const token = await Api.post("/api/login", data);
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 물론 다른 스토리지여도 됨
@@ -51,6 +51,6 @@ async function handleSubmit(e) {
     window.location.href = "/";
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(err.message);
   }
 }

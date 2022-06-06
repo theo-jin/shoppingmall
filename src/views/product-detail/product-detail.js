@@ -1,4 +1,3 @@
-const navbar = document.querySelector("#navbar");
 const containerDiv = document.querySelector(".containerDiv");
 import * as Api from "/api.js";
 
@@ -10,7 +9,7 @@ addAllElements();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   changeNavbar();
-  await productDetailLanding();
+  productDetailLanding();
 }
 
 // html에 출력해주는 함수
@@ -23,7 +22,7 @@ async function productDetailLanding() {
   const putCartBtn = document.querySelector("#putCartBtn");
   const productCount = document.querySelector("#productCount");
 
-  // 주문정보 넘겨주기
+  // 현재 상품에 대한 정보를 주문하기 페이지로 넘겨주기
   orderBtn.addEventListener("click", () => {
     const data = {
       productId: productId,
@@ -35,7 +34,7 @@ async function productDetailLanding() {
     window.location.href = "/order";
   });
 
-  //장바구니 넘겨주기
+  // 현재 상품에 대한 정보를 장바구니 페이지로 넘겨주기
   putCartBtn.addEventListener("click", () => {
     const productName = getData.productName;
     const prevData = JSON.parse(sessionStorage.getItem(productName));

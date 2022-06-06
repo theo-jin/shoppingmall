@@ -1,6 +1,5 @@
 import * as Api from "/api.js";
 
-const navbar = document.querySelector("#navbar");
 const containerDiv = document.querySelector(".containerDiv");
 import { changeNavbar } from "/changeNavbar.js";
 
@@ -38,7 +37,8 @@ function createProductList(data) {
           </div>
         </a>`
     );
-  } else return `<div>${data}</div>`;
+  }
+  return `<div id="noProduct"><h1>${data}</h1></div>`;
 }
 
 // api를 요청하기 위해서 쿼리를 통해 전달받은 카테고리를 변수로 사용

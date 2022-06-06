@@ -1,5 +1,6 @@
 import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
+
 const mainContainer = document.querySelector(".mainContainer");
 const addCategory = document.querySelector("#addCategory");
 const addModal = document.querySelector("#addModal");

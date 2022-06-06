@@ -48,7 +48,7 @@ async function handleSubmit(e) {
   // 잘 입력했는지 확인
   const isFullNameValid = fullName.length >= 2;
   // 패스워드를 4자리 이상 입력하거나, 변경하지 않을 경우에만 true값을 반환
-  const isPasswordValid = changePassword.length >= 4 || changePasswordInput.length === undefined;
+  const isPasswordValid = changePassword.length >= 4 || !changePassword;
   const isPasswordSame = changePassword === passwordConfirm;
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
