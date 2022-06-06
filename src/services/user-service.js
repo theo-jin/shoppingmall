@@ -80,11 +80,11 @@ class UserService {
     if (user.role == "admin") {
       return {
         token,
-        cookie: { role: user.role },
+        role: user.role,
       };
     }
 
-    return { token, cookie: null };
+    return { token, role: null };
   }
 
   // 사용자 목록을 받음.
@@ -147,8 +147,8 @@ class UserService {
   }
 
   //유저 정보 삭제
-  async deleteUser(userId) {
-    const user = await this.userModel.findById(userId);
+  async deleteUser(email) {
+    const user = await this.userModel.findByEmail(email);
 
     // 삭제하려는 사용자가 존재하지 않는 경우
     if (!user) {
@@ -157,7 +157,7 @@ class UserService {
 
     // 사용자 삭제
     // 삭제된 user 정보를 반환
-    const deletedResult = await this.userModel.deleteUser(userId);
+    const deletedResult = await this.userModel.deleteUser(email);
 
     return deletedResult;
   }

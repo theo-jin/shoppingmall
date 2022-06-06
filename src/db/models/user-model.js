@@ -15,10 +15,10 @@ export class UserModel {
   }
 
   async create(userInfo) {
-    const { userEmail, fullName, password, phoneNumber, address, createdAt } =
+    const { email, fullName, password, phoneNumber, address, createdAt } =
       await User.create(userInfo);
     const createdNewUser = {
-      email: userEmail,
+      email,
       fullName,
       password,
       phoneNumber,
@@ -37,21 +37,13 @@ export class UserModel {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    const { userEmail, fullName, password, phoneNumber, address, createdAt } =
-      await User.findOneAndUpdate(filter, update, option);
-    const updatedUser = {
-      email: userEmail,
-      fullName,
-      password,
-      phoneNumber,
-      address,
-      createdAt,
-    };
-    return updatedUser;
+    const updatedResult =
+      await User.updateOne(filter, update, option);
+    return updatedResult;
   }
 
-  async deleteUser(userId) {
-    const deleteResult = await User.deleteOne({ _id: userId });
+  async deleteUser(email) {
+    const deleteResult = await User.deleteOne({ email });
     return deleteResult;
   }
 }

@@ -28,12 +28,12 @@ export class CategoryModel {
     const filter = { foodType };
     const option = { returnOriginal: false };
 
-    const updatedCategory = await Category.findOneAndUpdate(
+    const updatedResult = await Category.updateOne(
       filter,
       update,
       option
     );
-    return updatedCategory;
+    return updatedResult;
   }
 }
 

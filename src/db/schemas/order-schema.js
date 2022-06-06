@@ -25,11 +25,20 @@ const OrderSchema = new Schema(
       ),
       required: true,
     },
-    products: [{
-      type: Schema.Types.ObjectId,
-      ref: "products",
-      required: true,
-    }],
+    //FIXME
+    products: [
+      {
+        productName: {
+          type: String,
+          required: true,
+        },
+        productCount: {
+          type: Number,
+          required: true,
+        },
+      },
+      {required: true}
+    ],
     status: {
       type: String,
       required: true,
