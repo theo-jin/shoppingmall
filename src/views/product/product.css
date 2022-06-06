@@ -11,3 +11,14 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
+
+#noProduct {
+  text-align: center;
+  grid-column: 1 / 4;
+  height: 300px;
+  line-height: 300px;
+}
+
+#noProduct h1 {
+  font-size: x-large;
+}

@@ -1,5 +1,6 @@
 import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
+
 // 요소(element), input 혹은 상수
 const mainContainer = document.querySelector(".mainContainer");
 const addProduct = document.querySelector("#addProduct");
@@ -18,8 +19,8 @@ const addProductImage = document.querySelector("#fileUpload1");
 const editModal = document.querySelector("#editModal");
 const editModalClose = document.querySelector("#editModalClose");
 const editProductBtn = document.querySelector("#editBtn");
-const editCategoryName = document.querySelector("#productName2");
-const editCategoryDescription = document.querySelector("#productDescription2");
+const editProductName = document.querySelector("#productName2");
+const editProductDescription = document.querySelector("#productDescription2");
 const editProductCategory = document.querySelector("#productCategory2");
 const editProductPrice = document.querySelector("#productPrice2");
 const editProductImage = document.querySelector("#fileUpload2");
@@ -64,6 +65,7 @@ async function allProductsLanding() {
   editButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
+      //FIXME path, children 대신 클래스로 사용해보기
       const prevProductName = e.path[2].children[1].innerText;
 
       // 카테고리 수정 이벤트 리스너
@@ -86,8 +88,8 @@ async function allProductsLanding() {
             category = "기타";
             break;
         }
-        const productName = editCategoryName.value;
-        const productContent = editCategoryDescription.value;
+        const productName = editProductName.value;
+        const productContent = editProductDescription.value;
         const productPrice = editProductPrice.value;
         const formData = new FormData();
         formData.append("productImage", editProductImage.files[0]);
@@ -95,9 +97,8 @@ async function allProductsLanding() {
         formData.append("productContent", productContent);
         formData.append("productPrice", productPrice);
         formData.append("category", category);
-        for (let key of formData.keys()) {
-          console.log(key, ":", formData.get(key));
-        }
+
+        // api 수정 요청
         const apiUrl = `/api/product/${prevProductName}`;
         console.log(`%cPATCH 요청: ${apiUrl}`, "color: #296aba;");
         console.log(`%cPATCH 요청 데이터: ${apiUrl}`, "color: #296aba;");
@@ -127,6 +128,7 @@ async function allProductsLanding() {
   // 클릭 시 상품 삭제 api 요청 후 상품 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
+      //FIXME path, children 대신 클래스로 사용해보기
       const productName = e.path[2].children[1].innerText;
       if (confirm("상품을 삭제하시겠습니까?")) {
         await Api.delete("/api/product/" + productName);
@@ -177,6 +179,7 @@ async function addProductFn() {
       category = "기타";
       break;
   }
+
   const formData = new FormData();
   const productName = addProductName.value;
   const productContent = addProductDescription.value;
@@ -188,6 +191,7 @@ async function addProductFn() {
   formData.append("productPrice", productPrice);
   formData.append("category", category);
 
+  // api 추가 요청
   console.log(`%cPOST 요청: /api/product/add`, "color: #296aba;");
   console.log(`%cPOST 요청 데이터: /api/product/add`, "color: #296aba;");
 
