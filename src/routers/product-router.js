@@ -1,22 +1,41 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
+import AWS from "aws-sdk";
 import multer from "multer";
+import multerS3 from "multer-s3";
+import path from "path";
+import dotenv from "dotenv";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired, adminAuthorized } from "../middlewares";
 import { productService } from "../services";
 
 const productRouter = Router();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
+// AWS setting
+AWS.config.update({
+  region: "ap-northeast-2",
+  accessKeyId: process.env.AWS_ACCESS_KEYID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-const upload = multer({ storage: storage });
+const s3 = new AWS.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    dirname: "/products",
+    bucket: "my-kit",
+    cacheControl: "max-age=31536000",
+    // contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: "public-read",
+    limits: { fileSize: 5 * 1024 * 1024 },
+    key: (req, file, cb) => {
+      let extension = path.extname(file.originalname);
+      cb(null, "profileimage/" + Date.now().toString() + extension);
+    },
+  }),
+  //
+});
 
 // 상품 전체 조회
 productRouter.get(
@@ -101,10 +120,12 @@ productRouter.post(
       const productName = req.body.productName;
       const productContent = req.body.productContent;
       const productPrice = req.body.productPrice;
-      const productImage = req.file.filename;
+      const productImage = req.file.location;
       // TODO: 선택하기
       // const productImage = req.file.path;
       const category = req.body.category;
+
+      console.log(productImage);
 
       //생성된 데이터 product DB에 추가하기
       const newProduct = await productService.addProduct({
