@@ -33,7 +33,7 @@ function createMainpageSlider(data) {
 
 async function getDataFromApi() {
   //db에서 img파일 get 요청
-  const data = await Api.get("/api/product/list");
-  const slideImage = data.slice(0, 3);
+  const data = await Api.get("/api/product/new");
+  const slideImage = data.slice(1, 4);
   return slideImage;
 }

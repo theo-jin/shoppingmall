@@ -31,20 +31,25 @@
   text-align: center;
 }
 
-.itemBox {
-  width: 800px;
+.imgDiv {
+  width: 700px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.267);
 }
 
-.itemBox .productImage {
+.imgDiv .productImage {
   width: 800px;
-  height: 550px;
+  height: 100%;
 }
 
 .descriptionBox {
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.267);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
   width: 400px;
   height: 500px;
 }
@@ -74,7 +79,7 @@
   width: 1300px;
   margin: 50px auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .btnBox {

@@ -31,11 +31,13 @@ function createProductList(data) {
       (el) =>
         `<a href="/product/product-detail?id=${el._id}">
           <div class="itemBox">
-            <img class="productImage" src="${el.productImage}" alt="${el.productName}">
-          </div>
-          <div class="contentDiv">
-            <p>${el.productName}</p>
-            <p>${el.productPrice.toLocaleString()}원</p>
+            <div class="imgDiv">
+              <img class="productImage" src="${el.productImage}" alt="${el.productName}">
+            </div>
+            <div class="contentDiv">
+              <p>${el.productName}</p>
+              <p>${el.productPrice.toLocaleString()}원</p>
+            </div>
           </div>
         </a>`
     );
