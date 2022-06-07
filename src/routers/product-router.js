@@ -34,7 +34,6 @@ const upload = multer({
       cb(null, "profileimage/" + Date.now().toString() + extension);
     },
   }),
-  //
 });
 
 // 상품 전체 조회
@@ -117,15 +116,8 @@ productRouter.post(
       }
 
       //req.body 데이터 가져오기
-      const productName = req.body.productName;
-      const productContent = req.body.productContent;
-      const productPrice = req.body.productPrice;
+      const { productName, productContent, productPrice, category } = req.body;
       const productImage = req.file.location;
-      // TODO: 선택하기
-      // const productImage = req.file.path;
-      const category = req.body.category;
-
-      console.log(productImage);
 
       //생성된 데이터 product DB에 추가하기
       const newProduct = await productService.addProduct({
@@ -136,7 +128,7 @@ productRouter.post(
         category,
       });
 
-      res.status(201).json(newProduct);
+      // res.status(201).json(newProduct);
     } catch (error) {
       next(error);
     }
