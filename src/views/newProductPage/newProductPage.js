@@ -24,7 +24,6 @@ async function getDataFromApi(category) {
 // html에 출력해주는 함수
 async function insertTextToLanding() {
   const getData = await getDataFromApi();
-  console.log(getData);
   const productList = createProductList(getData);
   if (typeof productList == "object") {
     productList.forEach((el) => (containerDiv.innerHTML += el));
@@ -40,7 +39,7 @@ function createProductList(data) {
       (el) =>
         `<a href="/product/product-detail?id=${el._id}">
           <div class="itemBox">
-            <img src="http://localhost:5000/users/${el.productImage}" alt="${el.productName}">
+            <img class="productImage" src="${el.productImage}" alt="${el.productName}">
           </div>
           <div class="contentDiv">
             <p>${el.productName}</p>

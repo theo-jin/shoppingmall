@@ -55,7 +55,7 @@ async function productDetailLanding() {
 // api를 통해 상품 상세 정보를 받아온 후 html에 표시
 function createProductDetail(data) {
   return `<div class="itemBox">
-        <img src="http://localhost:5000/users/${data.productImage}" alt="${data.productName}">
+        <img class="productImage"  src="${data.productImage}" alt="${data.productName}">
         
       </div>
       <div class="descriptionBox">
