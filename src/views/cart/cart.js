@@ -1,86 +1,165 @@
 import { addCommas} from './../useful-functions.js';
 
-const purchaseButton = document.querySelector("#purchaseButton");
-const selectDelete = document.querySelector("#selectDelete");
 
 const productsCountValue = document.querySelector("#productsCountValue");
 const productCostValue = document.querySelector("#productCostValue");
+const deliveryFeeValue = document.querySelector("#deliveryFeeValue");
 const totalCostValue = document.querySelector("#totalCostValue");
 
-addAllElements();
-addAllEvents();
 
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할.
-async function addAllElements() {
-  await getDataFromApi();
-  await getItemData();
-  await getProductData();
+ //sssion에서 데이터 가져오기. 
+ const store = {
+  setSessionStorage(product) {
+    sessionStorage.setItem("product", JSON.stringify(product));
+  },
+  getSessionStorage() {
+    return JSON.parse(sessionStorage.getItem("product"));
+  },
+};
+
+function App() {
+  // 상태
+  this.product = [];
+
+  // 스토리지에서 카트 리스트 불러오기
+  this.init = () => {
+    {
+      this.product = store.getSessionStorage();
+      render();
+    }
+  };
+
+
+  // 카트 리스트 목록
+  const render = () => {
+    const cartLists = this.product
+      .map((item, index) => {
+        return `
+        <div class="box">
+          <li data-item-id="${index}" class="cart-list-item media">
+            <div class="media-left">
+            <input type="checkbox" class="cart-item" ${item.product}>
+              <figure class="image is-64x64"><img alt="Image" src="${
+                item.image
+              }" /></figure>
+            </div>
+            <div class="media-content product-info">
+              <div class="content">
+                <p>
+                  <strong class="title is-6"> ${item.name} </strong> 
+                  <small class="subtitle is-6"> ${addCommas(
+                    item.price
+                  )} 원 </small>
+                </p>
+                <p>
+                ${addCommas(item.price)} 원 x ${item.count} 
+                = ${addCommas(item.price * item.count)} 원
+                </p>
+              </div>
+              <nav class="level">
+              <button class="decrease-item button is-rounded"> - </button>
+              <span class="menu-count">${item.count}</span>
+              <button class="increase-item button is-rounded"> + </button>
+              <button class="delete-item button is-rounded"> 삭제 </button>
+              </nav>
+            </div>
+          </li>
+        </div>
+      `;
+  })
+  .join('');
+    document.querySelector("#cartShow").innerHTML = cartLists;
+
+let itemCounts = 0;
+let itemPrices = 0;
+let orderedItem = '';
+let deliveryFee = 0;
+this.cart.map((item) => {
+  if (item.cart === 'checked') {
+    itemCounts += item.count;
+    itemPrices += item.price * item.count;
+    orderedItem += `${item.name} / ${item.count}개<br />`;
+    deliveryFee = 3000;
+  }
+  productsCountValue.innerHTML = orderedItem;
+  productCostValue.innerText = `${addCommas(itemPrices)} 원`;
+  deliveryFeeValue.innerText = `${addCommas(deliveryFee)} 원`;
+  totalCostValue.innerText = `${addCommas(itemPrices + deliveryFee)} 원`;
+});
+};
+
+// 상품 상태 변경
+document.querySelector("#cartShow").addEventListener('click', (e) => {
+const itemId = e.target.closest('li').dataset.itemId;
+
+// 상품 개수 증가
+if (e.target.classList.contains('increase-item')) {
+  this.cart[itemId].count++;
+  store.setSessionStorage(this.cart); 
+  render();
 }
 
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할.
-function addAllEvents() {
-  purchaseButton.addEventListener("click", moveToOrderPage);
-  selectDelete.addEventListener("click", selectDelete);
-};
- //sssion에서 데이터 가져오기. 
-const cartData=JSON.parse(sessionStorage.getItem("product"));
- 
-  async function getProductData(){
-  
-    console.log(cartData);
-
-    cartShow.innerHTML+=
-    `<div class = "cartInfo">
-    <div class="itemBox">
-      <img src="${productImage}" alt="${cartData.Name}"> 
-    </div>
-    <div class="descriptionBox">
-      <div class="description">
-      <label class="checkbox">
-      <input type="checkbox" id="selectCheckbox" />
-    </label>
-        <p>${cartData.Name}</p>
-        <p>${cartData.count}</p>
-        <p>${addCommas(cartData.price)}원</p>
-      </div>
-      <p>${addCommas(cartData.count * cartData.price)}원</p>
-  <div class="btnBox">
-    <button id="deleteButton">삭제하기</button>
-  </div>
-  </div>
-  </div>`;
-  
+// 상품 개수 감소
+if (e.target.classList.contains('decrease-item')) {
+  if (this.cart[itemId].count > 2) {
+    this.cart[itemId].count--;
+  } else {
+    this.cart[itemId].count = 1;
   }
+  store.setSessionStorage(this.cart);
+  render();
+}
 
-
-//카트계산하기
-function getTotalPrice() {
-  let count = cartData.count;
-  let price = cartData.price;
-    count*price;
-  };
-totalCostValue.innerText = `${addCommas(getTotalPrice(data))}원`;
-
-
-//삭제하기 버튼
-sessionStorage.removeItem(product)
- //전체 삭제하기
- sessionStorage.clear()
-//plus 버튼
-//minus 버튼
-
-
-
-productsCountValue.innerText = `총 ${}개`;
-productCostValue.innerText = `${addCommas(())}원`;
-productCostValue.innerText = `${addCommas(())}원`;
-//구매하기 버튼
-function moveToOrderPage() {
-
-  sessionStorage.setItem("cart", JSON.stringify());
-
-    //oder로 이동.
-    window.location.href = "/order";
+// 상품 삭제
+if (e.target.classList.contains('delete-item')) {
+  if (confirm('삭제하시겠습니까?')) {
+    this.cart.splice(itemId, 1);
+    e.target.closest('li').remove();
+    store.setSessionStorage(this.cart);
+    render();
   }
-  purchaseButton.addEventListener("click", moveToOrderPage);
+}
 
+// 상품 선택
+if (e.target.classList.contains('cart-item')) {
+  if (this.cart[itemId].cart === 'checked') {
+    this.cart[itemId].cart = '';
+  } else {
+    this.cart[itemId].cart = 'checked';
+  }
+  store.setSessionStorage(this.cart);
+  render();
+}
+});
+
+// 상품 전체 삭제
+const deleteAll = document.querySelector("#allDelete");
+deleteAll.addEventListener('click', () => {
+alert('장바구니에 있는 모든 상품을 삭제합니다.');
+this.cart = [];
+sessionStorage.clear();
+render();
+});
+
+// 상품 선택 삭제
+const deleteSelection = document.querySelector("#selectDelete");
+deleteSelection.addEventListener('click', () => {
+alert('선택한 상품을 삭제합니다.');
+this.cart = this.cart.filter((item) => item.cart !== 'checked');
+store.setSessionStorage(this.cart) 
+
+render();
+});
+}
+
+//결제버튼
+const purchaseButton = document.querySelector("#purchaseButton");
+purchaseButton.addEventListener('click', () => {
+  if (!confirm("정말 구매하시겠습니까?")) return;
+  window.location.href = "/order";
+  render();
+  });
+  
+
+const app = new App();
+app.init();
