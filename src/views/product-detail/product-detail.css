@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -13,13 +14,13 @@
 }
 
 .menuNav {
-  background-color: #b8dff8;
+  background-color: #b8e0f837;
 }
 
 .menuNav a {
   line-height: 52px;
   width: 100px;
-  color: black;
+  color: black !important;
 }
 
 .menuNav a:hover {
@@ -52,6 +53,11 @@
   flex-direction: column;
   width: 400px;
   height: 500px;
+}
+
+.descriptionBox p,
+.descriptionBox span {
+  color: black !important;
 }
 
 .descriptionBox .description {
@@ -99,19 +105,19 @@
 }
 
 .btn.orderBtn {
-  background-color: #2781d9;
-  color: white;
+  background-color: #2781d9 !important;
+  color: white !important;
 }
 
 .btn.orderBtn:hover {
-  background-color: #2373c3;
+  background-color: #2373c3 !important;
 }
 
 .btn.putCartBtn {
-  background-color: #434373;
-  color: white;
+  background-color: #434373 !important;
+  color: white !important;
 }
 
 .btn.putCartBtn:hover {
-  background-color: #37375e;
+  background-color: #37375e !important;
 }

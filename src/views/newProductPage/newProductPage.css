@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -13,13 +14,13 @@
 }
 
 .menuNav {
-  background-color: #b8dff8;
+  background-color: #b8e0f837;
 }
 
 .menuNav a {
   line-height: 52px;
   width: 100px;
-  color: black;
+  color: black !important;
 }
 
 .menuNav a:hover {
@@ -64,8 +65,8 @@
   gap: 100px 70px;
 }
 
-.contentDiv {
-  color: black;
+.contentDiv p {
+  color: black !important;
   text-align: center;
 }
 

@@ -59,7 +59,7 @@ async function handleSubmit(e) {
   }
 
   if (!isAddressValid) {
-    return alert("주소를 입력해주세요.");
+    return alert("주소를 정확히 입력해주세요.");
   }
 
   if (!isPhoneNumberValid) {
