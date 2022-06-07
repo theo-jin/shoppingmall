@@ -25,7 +25,6 @@ const OrderSchema = new Schema(
       ),
       required: true,
     },
-    //FIXME
     products: [
       {
         productName: {
