@@ -23,7 +23,7 @@ function App() {
 
   // 스토리지에서 카트 리스트 불러오기
   this.init = () => {
-    {
+    if (store.getSessionStorage().length > 0) {
       this.product = store.getSessionStorage();
       render();
     }
