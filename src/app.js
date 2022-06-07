@@ -1,6 +1,8 @@
 import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
+import passport from "passport";
+import passportConfig from "./passport";
 import {
   viewsRouter,
   userRouter,
@@ -21,12 +23,15 @@ app.use(express.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
 
+app.use(passport.initialize());
+passportConfig();
+
 // cookie 암호화 설정
 app.use(cookieParser("ElIcEkEy"));
 
 // html, css, js 라우팅
 app.use(viewsRouter);
-app.use('/users', express.static('uploads'))
+app.use("/users", express.static("uploads"));
 
 // api 라우팅
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서

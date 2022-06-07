@@ -63,7 +63,7 @@ userRouter.post("/login", async function (req, res, next) {
       // FIXME
       // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
       // web server에서만 쿠키에 접근할 수 있도록 설정
-      httpOnly: false,
+      httpOnly: true,
       // https에서만 cookie를 사용할 수 있게 설정
       secure: false,
       // 암호화
@@ -77,7 +77,7 @@ userRouter.post("/login", async function (req, res, next) {
         // FIXME
         // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
         // web server에서만 쿠키에 접근할 수 있도록 설정
-        httpOnly: false,
+        httpOnly: true,
         // https에서만 cookie를 사용할 수 있게 설정
         secure: false,
         // 암호화
