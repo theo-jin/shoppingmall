@@ -6,7 +6,7 @@ const GradeSchema = new Schema(
       type: String,
       required: true,
     },
-    projectId: {
+    productId: {
       type: String,
       required: true,
     },

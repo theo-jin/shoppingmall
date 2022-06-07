@@ -17,13 +17,15 @@ gradeRouter.post("/", loginRequired, async function (req, res, next) {
       );
     }
 
+    const userId = req.currentUserId;
+
     // req (request)의 body 에서 데이터 가져오기
-    const { userId, projectId, reviewScore } = req.body;
+    const { productId, reviewScore } = req.body;
 
     // 위 데이터를 평점 db에 추가하기
     const newGrade = await gradeService.addGrade({
       userId,
-      projectId,
+      productId,
       reviewScore,
     });
 
@@ -35,45 +37,53 @@ gradeRouter.post("/", loginRequired, async function (req, res, next) {
 });
 
 // 평점 수정
-gradeRouter.patch("/", loginRequired, async function (req, res, next) {
-  try {
-    // req.body가 비어있는 경우 error
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
-    // body에서 정보 받아오기
-    const { userId, projectId, reviewScore } = req.body;
-
-    const updatedResult = await gradeService.setGrade(
-      userId,
-      projectId,
-      reviewScore
-    );
-
-    if (updatedResult.modifiedCount !== 1) {
-      throw new Error("평점 반영에 실패했습니다.");
-    }
-
-    // 업데이트 이후의 상품 데이터를 프론트에 보내 줌
-    res.status(200).json({ message: "OK" });
-  } catch (error) {
-    next(error);
-  }
-});
-
-//상품 평점 가져오기
-gradeRouter.get("/:product", async function (req, res, next) {
+gradeRouter.patch(
+  "/:productId",
+  loginRequired,
+  async function (req, res, next) {
     try {
-      const {product} = req.params;
-      // 배열 형태
-      const grades = await gradeService.getGradesProduct(product);
-      res.status(200).json(grades);
+      // req.body가 비어있는 경우 error
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+
+      const userId = req.currentUserId;
+      const productId = req.params.productId;
+
+      // body에서 정보 받아오기
+      const { reviewScore } = req.body;
+
+      const updatedResult = await gradeService.setGrade(
+        userId,
+        productId,
+        reviewScore
+      );
+
+      if (updatedResult.modifiedCount !== 1) {
+        throw new Error("평점 반영에 실패했습니다.");
+      }
+
+      // 업데이트 이후의 상품 데이터를 프론트에 보내 줌
+      res.status(200).json({ message: "OK" });
     } catch (error) {
       next(error);
     }
+  }
+);
+
+//상품 평점 가져오기
+gradeRouter.get("/:productId", async function (req, res, next) {
+  try {
+    const { productId } = req.params;
+    // 배열 형태
+    const grades = await gradeService.getGradesProduct(productId);
+
+    res.status(200).json(grades);
+  } catch (error) {
+    next(error);
+  }
 });
 
 export { gradeRouter };

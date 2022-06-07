@@ -10,9 +10,17 @@ export class GradeModel {
     return grade;
   }
 
-  //유저가 평점 남긴 품목 조회
-  async findByProjectId(projectId) {
-    const grade = await Grade.findOne({ projectId });
+  // 상품의 평점 조회
+  async findByProductId(productId) {
+    const grade = await Grade.findOne({ productId });
+    return grade;
+  }
+
+  // 유저가 별점 남긴 상품 조회
+  async findByUserAndProduct(userId, productId) {
+    const grade = await Grade.findOne({
+      userId, productId
+    });
     return grade;
   }
 
@@ -23,8 +31,8 @@ export class GradeModel {
   }
 
   //평점 수정
-  async updateGrade({ projectId, reviewScore }) {
-    const filter = { projectId };
+  async updateGrade({ productId, reviewScore }) {
+    const filter = { productId };
     const option = { returnOriginal: false };
     const update = { reviewScore };
 
@@ -33,8 +41,8 @@ export class GradeModel {
   }
 
   //상품 평점 가져오기
-  async findByProduct(product) {
-    const grade = await Grade.find({ projectId: product });
+  async findByProduct(productId) {
+    const grade = await Grade.find({ productId });
     return grade;
   }
 }
