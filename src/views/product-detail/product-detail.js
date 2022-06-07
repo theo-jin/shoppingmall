@@ -39,12 +39,13 @@ async function productDetailLanding() {
     const productName = getData.productName;
     const prevData = JSON.parse(sessionStorage.getItem(productName));
     const data = {
+      id: productId,
       count: prevData
         ? Number(prevData.count) + Number(productCount.value)
         : Number(productCount.value),
       name: productName,
       price: getData.productPrice,
-      Img: getData.productImage,
+      img: getData.productImage,
     };
 
     sessionStorage.setItem(productName, JSON.stringify(data));
@@ -74,6 +75,10 @@ function createProductDetail(data) {
         </div>
       </div>`;
 }
+// TODO 상품 수량 증감 버튼 만들기
+//<button class="decrease-item button is-rounded"> - </button>
+//  <span class="menu-count">${el.count}</span>
+/* <button class="increase-item button is-rounded"> + </button> */
 
 // api를 요청하기 위해서 쿼리를 통해 전달받은 카테고리를 변수로 사용
 function getProductId() {
