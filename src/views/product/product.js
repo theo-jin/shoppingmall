@@ -32,6 +32,8 @@ function createProductList(data) {
         `<a href="/product/product-detail?id=${el._id}">
           <div class="itemBox">
             <img src="http://localhost:5000/users/${el.productImage}" alt="${el.productName}">
+          </div>
+          <div class="contentDiv">
             <p>${el.productName}</p>
             <p>${el.productPrice.toLocaleString()}원</p>
           </div>

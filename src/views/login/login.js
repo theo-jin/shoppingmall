@@ -37,16 +37,10 @@ async function handleSubmit(e) {
     const data = { email, password };
 
     // api 요청 결과 token 값을 반환함
-    const token = await Api.post("/api/login", data);
+    const result = await Api.post("/api/login", data);
 
-    // 로그인 성공, 토큰을 세션 스토리지에 저장
-    // 물론 다른 스토리지여도 됨
-    sessionStorage.setItem("token", token);
-
-    alert(`정상적으로 로그인되었습니다.`);
-
-    // 로그인 성공
-
+    // 로그인 성공, 토큰은 쿠키에 저장
+    if (result.message === "OK") alert(`정상적으로 로그인되었습니다.`);
     // 기본 페이지로 이동
     window.location.href = "/";
   } catch (err) {

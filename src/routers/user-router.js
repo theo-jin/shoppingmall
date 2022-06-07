@@ -69,18 +69,22 @@ userRouter.post("/login", async function (req, res, next) {
       // 암호화
       signed: true,
     });
-    res.cookie("role", userToken.role, {
-      // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-      maxAge: 60 * 60 * 24 * 7 * 1000,
-      // FIXME
-      // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-      // web server에서만 쿠키에 접근할 수 있도록 설정
-      httpOnly: false,
-      // https에서만 cookie를 사용할 수 있게 설정
-      secure: false,
-      // 암호화
-      signed: true,
-    });
+
+    if (userToken.role !== null) {
+      res.cookie("role", userToken.role, {
+        // 현재시간으로부터 만료 시간(ms 단위) -> 7일
+        maxAge: 60 * 60 * 24 * 7 * 1000,
+        // FIXME
+        // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
+        // web server에서만 쿠키에 접근할 수 있도록 설정
+        httpOnly: false,
+        // https에서만 cookie를 사용할 수 있게 설정
+        secure: false,
+        // 암호화
+        signed: true,
+      });
+    }
+
     // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
     res.status(200).json({ message: "OK" });
   } catch (error) {
@@ -180,24 +184,24 @@ userRouter.patch("/user", loginRequired, async function (req, res, next) {
 //유저 정보 삭제
 userRouter.delete("/", loginRequired, async function (req, res, next) {
   try {
-    // 사용자가 자신의 계정을 탈퇴하는 경우
-    const email = req.body.email;
-
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
+    let userId = req.currentUserId;
 
     //FIXME
     const deleteUser = await userService.getUserInfo(req.currentUserId);
 
     // 관리자 권한으로 user를 삭제하는 경우, 선택한 userId로 변경
-    if (req.currentUserRole !== "admin" && deleteUser.email !== email) {
-      throw new Error("삭제할 수 없습니다.");
+    if (req.currentUserRole === "admin") {
+      // req.body가 비어있는 경우
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+      // 회원 id
+      userId = req.body.userId;
     }
 
-    const deleteResult = await userService.deleteUser(email);
+    const deleteResult = await userService.deleteUser(userId);
 
     // 삭제 실패
     if (deleteResult.deletedCount < 1) {

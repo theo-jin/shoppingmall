@@ -33,6 +33,7 @@ class ProductService {
     return products;
   }
 
+  // 상품 상세 조회
   async getProduct(productId) {
     const product = await this.productModel.findById(productId);
     if (!product) {
@@ -40,6 +41,15 @@ class ProductService {
     }
 
     return product;
+  }
+
+  // 신상품 조회
+  async getNewProduct(date) {
+    const products = await this.productModel.findByDate(date);
+    if (!products) {
+      throw new Error(`신상품이 존재하지 않습니다.`);
+    }
+    return products;
   }
 
   //상품 추가

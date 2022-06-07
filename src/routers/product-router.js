@@ -61,6 +61,27 @@ productRouter.get("/detail", async function (req, res, next) {
   }
 });
 
+// 신상품 조회
+productRouter.get(
+  "/new",
+  upload.single("productImage"),
+  async function (req, res, next) {
+    try {
+      const now = new Date();
+      // 한 달 전
+      const date = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      const newProducts = await productService.getNewProduct(date);
+      res.status(200).json(newProducts);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // 상품 추가 api (관리자만 접근 가능)
 productRouter.post(
   "/",

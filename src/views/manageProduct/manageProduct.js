@@ -65,9 +65,7 @@ async function allProductsLanding() {
   editButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
-      //FIXME path, children 대신 클래스로 사용해보기
-      const prevProductName = e.path[2].children[1].innerText;
-
+      const prevProductName = e.target.classList[0];
       // 카테고리 수정 이벤트 리스너
       editProductBtn.addEventListener("click", async () => {
         let category = editProductCategory.value;
@@ -128,8 +126,7 @@ async function allProductsLanding() {
   // 클릭 시 상품 삭제 api 요청 후 상품 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
-      //FIXME path, children 대신 클래스로 사용해보기
-      const productName = e.path[2].children[1].innerText;
+      const productName = e.target.classList[0];
       if (confirm("상품을 삭제하시겠습니까?")) {
         await Api.delete("/api/product/" + productName);
         window.location.href = "/admin/manageProduct/";
@@ -149,10 +146,10 @@ function createProductList(data) {
     <div class="column is-2">${el.productContent}</div>
     <div class="column is-2">${el.productPrice.toLocaleString()}원</div>
     <div class="column is-1">
-      <button class="button editButton">수정</button>
+      <button class="${el.productName} button editButton ">수정</button>
     </div>
     <div class="column is-1">
-      <button class="button deleteButton">삭제</button>
+      <button class="${el.productName} button deleteButton">삭제</button>
     </div>
   </div>
   `

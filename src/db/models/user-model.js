@@ -37,13 +37,12 @@ export class UserModel {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    const updatedResult =
-      await User.updateOne(filter, update, option);
+    const updatedResult = await User.updateOne(filter, update, option);
     return updatedResult;
   }
 
-  async deleteUser(email) {
-    const deleteResult = await User.deleteOne({ email });
+  async deleteUser(userId) {
+    const deleteResult = await User.deleteOne({ _id: userId });
     return deleteResult;
   }
 }

@@ -1,3 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+}
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
+.container {
+  justify-content: center;
+}
+
 .itemBox {
   width: 600px;
 }
@@ -10,8 +28,21 @@
   width: 400px;
   height: 500px;
 }
+
 .descriptionBox .description {
-  flex-grow: 3;
+  flex-grow: 4;
+}
+
+.descriptionBox .description .productTitle {
+  font-size: 40px;
+}
+
+.descriptionBox .priceBox {
+  flex-grow: 1;
+}
+
+.descriptionBox #productCount {
+  width: 50px;
 }
 
 .descriptionBox .btnBox {
@@ -24,4 +55,38 @@
   margin: 50px auto;
   display: flex;
   justify-content: space-between;
+}
+
+.btnBox {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.btn {
+  border-radius: 10px;
+  border: transparent;
+  width: 170px;
+  height: 50px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn.orderBtn {
+  background-color: #2781d9;
+  color: white;
+}
+
+.btn.orderBtn:hover {
+  background-color: #2373c3;
+}
+
+.btn.putCartBtn {
+  background-color: #434373;
+  color: white;
+}
+
+.btn.putCartBtn:hover {
+  background-color: #37375e;
 }
