@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
+}
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+.reviewPageContainer {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reviewPageInfo {
+  display: flex;
+  width: 80%;
+  margin: 30px;
+  flex-direction: column;
+}
+
+.reviewTitle {
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.listTitle {
+  display: flex;
+  border-bottom: 1px solid black;
+  font-weight: bold;
+}
+
+.listTitle span,
+.orderItem span {
+  padding: 10px;
+  text-align: center;
+}
+
+.listTitle span:nth-child(1),
+.listTitle span:nth-child(2),
+.orderItem span:nth-child(1),
+.orderItem span:nth-child(2) {
+  width: 20%;
+}
+
+.listTitle span:nth-child(3),
+.orderItem span:nth-child(3) {
+  width: 20%;
+}
+
+.listTitle span:nth-child(4),
+.listTitle span:nth-child(5),
+.listTitle span:nth-child(6),
+.orderItem span:nth-child(4),
+.orderItem span:nth-child(5),
+.orderItem span:nth-child(6) {
+  width: 13.3%;
+}
+
+.orderItem {
+  display: flex;
+}
+
+.orderItem button {
+  width: 5%;
+  height: 10%;
+  margin: 1% auto;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.id {
+  display: none;
+}
+
+.orderItem button {
+  width: 3%;
+  height: 10%;
+  margin: 1% auto;
+  border-radius: 5px;
+  background-color: #434373;
+  color: white !important;
+}
+button:hover {
+  background-color: #2781d9;
+}
+
+span.starSpan {
+  padding: 0;
+}
+
+button.btn {
+  width: 50px;
+}
