@@ -25,11 +25,11 @@ app.use(express.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
 
-app.use(passport.initialize());
-passportConfig();
-
 // cookie 암호화 설정
 app.use(cookieParser("ElIcEkEy"));
+
+app.use(passport.initialize());
+passportConfig();
 
 // html, css, js 라우팅
 app.use(viewsRouter);
