@@ -26,7 +26,7 @@ function addAllEvents() {
 
 // 로그인시에만 주문이 가능함
 function checkLogin(){
-  if (!sessionStorage.getItem("token")){
+  if (!document.cookie){
     alert("로그인 후 이용가능한 서비스입니다.");
     window.location.href = "/login";
   }
@@ -90,6 +90,10 @@ async function getCartItem(){
 // 주문자 데이터와 주문상품 데이터 DB에 보내기(주문자 이름, 연락처, 주소, 총액), 
 async function handleSubmit(e) {
   e.preventDefault();
+  const data=sessionStorage.getItem("product");
+  const itemData=JSON.parse(data);
+  const products=new Array();
+  products.push({productName:itemData.name, productCount:itemData.count});
 
   const fullName = $("#fullNameInput").value;
   const postalCode = $("#addressInput").value;
@@ -114,10 +118,8 @@ async function handleSubmit(e) {
   if (!isPhoneNumberValid) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
-
   try {
     const data = { fullName, phoneNumber, address, status, products , totalPrice };
-    console.log(data);
 
     await Api.post("/api/order/complete", data);
 

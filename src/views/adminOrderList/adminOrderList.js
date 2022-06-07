@@ -27,11 +27,10 @@ async function renderDataFromApi() {
   data.forEach(el=> {
     let productList='';
     const nowStatus=el.status;
-    console.log(el.products);
     userStatus=optionStatus[nowStatus];
 
     el.products.forEach(data=>{
-      productList+=" "+ data[0]
+      productList+=" "+ data.productName
     })
     
    $("#orderlistContainer").innerHTML+=
