@@ -192,7 +192,7 @@ async function addProductFn() {
   console.log(`%cPOST 요청: /api/product/add`, "color: #296aba;");
   console.log(`%cPOST 요청 데이터: /api/product/add`, "color: #296aba;");
 
-  const res = await fetch("/api/product/add", {
+  const res = await fetch("/api/product/", {
     method: "POST",
     headers: {
       // "Content-Type": "multipart/form-data",

@@ -27,7 +27,6 @@ async function renderDataFromApi() {
   data.forEach(el=> {
     let productList='';
     const nowStatus=el.status;
-    console.log(el);
     userStatus=optionStatus[nowStatus];
 
     el.products.forEach(data=>{

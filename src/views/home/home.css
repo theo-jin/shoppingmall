@@ -17,7 +17,7 @@
   /* align-items: center; */
   justify-content: center;
   height: 550px;
-  background-color: antiquewhite;
+  background-color: #b8dff8;
   margin: 3% auto;
 }
 
@@ -36,6 +36,7 @@
 
 #slideContainer .slides img {
   width: 800px;
+  height: 550px;
 }
 
 #slideContainer .slides li {
@@ -43,7 +44,48 @@
   list-style-type: none;
 }
 
-/* 슬라이드 버튼 */
-#slideContainer .slide-dots {
-  clear: both;
+.newItemImg{
+  margin: 0 15%;
 }
+
+.newItem{
+  text-align: center;
+  margin-top: 5%;
+}
+
+.img{
+  box-shadow: 5px 5px 5px gray;
+}
+#img1{
+  position: static;
+  width: 60%;
+  
+  
+}
+#img2{
+  position: relative;
+  width: 60%;
+  top: -50px;
+  left: 390px;
+}
+#img3{
+  position: relative;
+  width: 60%;
+  top:-100px;
+}
+#img1:hover, #img2:hover, #img3:hover{
+  transform:scale(1.01);
+}
+
+.img
+{
+    opacity:0;
+}
+/* .index{
+  display: flex;
+  margin-top: 5%;
+} */
+.newItemImg{
+  margin-top: 20px;
+}
+ 

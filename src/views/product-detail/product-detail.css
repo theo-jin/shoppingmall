@@ -12,12 +12,32 @@
   font-family: "Jua", sans-serif;
 }
 
+.menuNav {
+  background-color: #b8dff8;
+}
+
+.menuNav a {
+  line-height: 52px;
+  width: 100px;
+  color: black;
+}
+
+.menuNav a:hover {
+  background-color: #e1f3fe;
+}
+
 .container {
   justify-content: center;
+  text-align: center;
 }
 
 .itemBox {
-  width: 600px;
+  width: 800px;
+}
+
+.itemBox .productImage {
+  width: 800px;
+  height: 550px;
 }
 
 .descriptionBox {
@@ -51,7 +71,7 @@
 }
 
 .containerDiv {
-  width: 1024px;
+  width: 1300px;
   margin: 50px auto;
   display: flex;
   justify-content: space-between;

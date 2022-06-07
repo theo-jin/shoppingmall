@@ -26,7 +26,7 @@ function addAllEvents() {
 
 // 로그인시에만 주문이 가능함
 function checkLogin(){
-  if (!sessionStorage.getItem("token")){
+  if (!document.cookie){
     alert("로그인 후 이용가능한 서비스입니다.");
     window.location.href = "/login";
   }
@@ -34,7 +34,7 @@ function checkLogin(){
 
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
-  const data = await Api.get("/api/userInfo");
+  const data = await Api.get("/api/user");
   $("#fullNameInput").value = data.fullName;
   $("#phoneInput").value = data.phoneNumber;
   const getAddress = data.address;
@@ -75,8 +75,11 @@ async function getDirectItem(){
             <td class="productPrice">${itemData.price}</td>
             <td class="productNumber">${itemData.count}</td>
             <td class="productTotal">${itemData.price*itemData.count}</td></tr>`
-            $("#totalProductPrice").insertAdjacentHTML('beforeend',
+  $("#totalProductPrice").insertAdjacentHTML('beforeend',
   `<label class="totaPrice" id="totalUserPrice">${itemData.price*itemData.count}</label>`)
+
+  const products=new Array();
+  products.push({productName:itemData.name, productCount:itemData.count});
 }
 
 // TODO:카트에서 주문상품 데이터 받아오기
@@ -87,6 +90,10 @@ async function getCartItem(){
 // 주문자 데이터와 주문상품 데이터 DB에 보내기(주문자 이름, 연락처, 주소, 총액), 
 async function handleSubmit(e) {
   e.preventDefault();
+  const data=sessionStorage.getItem("product");
+  const itemData=JSON.parse(data);
+  const products=new Array();
+  products.push({productName:itemData.name, productCount:itemData.count});
 
   const fullName = $("#fullNameInput").value;
   const postalCode = $("#addressInput").value;
@@ -100,16 +107,6 @@ async function handleSubmit(e) {
   const phoneNumber = $("#phoneInput").value;
   const totalPrice=$("#totalUserPrice").innerHTML;
   const status="Information Received"
-  console.log(totalPrice);
-  
-  // TODO:productId 가져오기
-  if(sessionStorage.getItem("product")){
-    var products=new Array();
-    const data=sessionStorage.getItem("product");
-    const itemData=JSON.parse(data);
-    products[0]=itemData.productId;
-  }
-
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -121,7 +118,6 @@ async function handleSubmit(e) {
   if (!isPhoneNumberValid) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
-
   try {
     const data = { fullName, phoneNumber, address, status, products , totalPrice };
 

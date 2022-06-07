@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-4팀</title>
+    <title>마이키트</title>
     <!-- 아이콘 -->
     <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
     <!-- bulma css 관련 -->
@@ -15,9 +15,9 @@
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="userOrderList.css" />
+    <link rel="stylesheet" href="manageRating.css" />
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="userOrderList.js" type="module" defer></script>
+    <script src="manageRating.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -31,8 +31,8 @@
         </div>
         <div class="navbar-menu navMenuContainer">
           <a class="navbar-item" href="#공지">공지사항</a>
-          <a class="navbar-item" href="#new">신상품</a>
-          <a class="navbar-item" >제품</a>
+          <a class="navbar-item" href="/new">신상품</a>
+          <a class="navbar-item" href="/product?category=krFood">제품</a>
         </div>
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
@@ -52,16 +52,17 @@
       </div>
     </nav>
 
-    <section class="orderlistpageContainer">
-      <div class="orderlistpageInfo">
-        <h1 class="orderListTitle">주문조회</h1>
-        <div id="orderlistContainer" class="orderlistContainer">
+    <section class="reviewPageContainer">
+      <div class="reviewPageInfo">
+        <h1 class="reviewTitle">리뷰 관리</h1>
+        <div id="reviewContainer" class="reviewContainer">
           <div class="listTitle">
-            <span>주문자 이름</span>
             <span>주문날짜</span>
             <span>주문상품</span>
-            <span>배송상태</span>
-            <span>취소</span>
+            <span>평점</span>
+            <span>등록</span>
+            <span>수정</span>
+            <span>삭제</span>
           </div>
         </div>
       </div>
