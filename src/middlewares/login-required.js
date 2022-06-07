@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 function loginRequired(req, res, next) {
   // request 헤더로부터 authorization bearer 토큰을 받음.
-  const userToken = req.headers["authorization"]?.split(" ")[1];
+  const userToken = req.signedCookies.token;
 
   // 이 토큰은 jwt 토큰 문자열이거나, 혹은 "null" 문자열이거나, undefined임.
   // 토큰이 "null" 일 경우, login_required 가 필요한 서비스 사용을 제한함.
@@ -24,13 +24,13 @@ function loginRequired(req, res, next) {
     const jwtDecoded = jwt.verify(userToken, secretKey);
 
     const userId = jwtDecoded.userId;
-    const userRole = jwtDecoded.role
+    const userRole = jwtDecoded.role;
 
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
     req.currentUserId = userId;
 
     //라우터에서 req.currentUserRole을 통해 유저의 role에 접근 가능하게 됨
-    req.currentUserRole = userRole
+    req.currentUserRole = userRole;
 
     next();
   } catch (error) {

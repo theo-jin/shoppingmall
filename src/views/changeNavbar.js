@@ -1,9 +1,20 @@
+// 쿠키에서 토큰을 찾는 함수
+function getToken() {
+  const cookieList = document.cookie.split(";");
+  for (let i = 0; i < cookieList.length; i++) {
+    if (cookieList[i].split("=")[0].trim() === "token") {
+      return cookieList[i].split("=")[1].trim();
+    }
+  }
+}
+const token = getToken();
+
 //home의 navbar 변경시키는 함수
 function changeNavbar() {
   const navbar = document.querySelector("#navbar");
 
   // sessionStore 내에 token이 존재할 시(로그인 되었을 시) navbar 변경
-  if (sessionStorage.getItem("token")) {
+  if (token) {
     navbar.innerHTML = `<li><a href='/userInfo'>계정관리</a></li>
     <li><a>로그아웃</a></li>
     <li>
@@ -35,14 +46,17 @@ function changeNavbar() {
   const logOut = navbar.children[navbar.children.length - 2];
   logOut.addEventListener("click", () => {
     deleteCookie("role");
-    sessionStorage.removeItem("token");
+    deleteCookie("token");
     window.location.href = "/";
   });
 
   // admin 여부를 확인하기 위해서 쿠키유무 체크하는 함수
   function isCookie(name) {
-    if (document.cookie.split("=")[0] === name) {
-      return true;
+    const cookieList = document.cookie.split(";");
+    for (let i = 0; i < cookieList.length; i++) {
+      if (cookieList[i].split("=")[0].trim() === name) {
+        return true;
+      }
     }
     return false;
   }

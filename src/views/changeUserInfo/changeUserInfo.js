@@ -19,7 +19,7 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
-  await getDataFromApi();
+  getDataFromApi();
   changeNavbar();
 }
 
@@ -48,7 +48,7 @@ async function handleSubmit(e) {
   // 잘 입력했는지 확인
   const isFullNameValid = fullName.length >= 2;
   // 패스워드를 4자리 이상 입력하거나, 변경하지 않을 경우에만 true값을 반환
-  const isPasswordValid = changePassword.length >= 4 || changePasswordInput.length === undefined;
+  const isPasswordValid = changePassword.length >= 4 || !changePassword;
   const isPasswordSame = changePassword === passwordConfirm;
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -78,7 +78,7 @@ async function handleSubmit(e) {
       ...(address && { address }),
       ...(phoneNumber && { phoneNumber }),
     };
-    await Api.patch("/api/usersInfo", "", data);
+    await Api.patch("/api/user", "", data);
     alert(`정상적으로 수정되었습니다.`);
 
     // 회원 정보 페이지 이동
@@ -92,7 +92,7 @@ async function handleSubmit(e) {
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
   try {
-    const data = await Api.get("/api/userInfo");
+    const data = await Api.get("/api/user");
     fullNameInput.value = data.fullName;
     phoneInput.value = data.phoneNumber;
     const getAddress = data.address;

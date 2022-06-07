@@ -1,29 +1,17 @@
 import * as Api from "/api.js";
 import { validatePhoneNumber} from "/useful-functions.js";
 
-// 요소(element), input 혹은 상수
-const submitButton = document.querySelector("#submitButton");
-const fullNameInput = document.querySelector("#fullNameInput");
-const addressInput = document.querySelector("#addressInput");
-const address1Input = document.querySelector("#address1Input");
-const address2Input = document.querySelector("#address2Input");
-const phoneInput = document.querySelector("#phoneInput");
-const requestInput = document.querySelector("#requestInput");
-var requestValue = requestInput.options[requestInput.selectedIndex].value;
-const navbar = document.querySelector("#navbar");
-const secondList = navbar.children[1];
-const productList= document.querySelector("#productList");
-const totalProductPrice= document.querySelector("#totalProductPrice");
+const $ = selector => document.querySelector(selector);
+const $$ = selector => document.querySelectorAll(selector);
 
-
-secondList.addEventListener("click", () => {
+const logout = $("#navbar").children[1];
+logout.addEventListener("click", () => {
   sessionStorage.removeItem("token");
 });
 
 addAllElements();
 addAllEvents();
 checkLogin();
-// getItemData();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
@@ -32,7 +20,8 @@ async function addAllElements() {
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  submitButton.addEventListener("click", handleSubmit);
+  $("#submitButton").addEventListener("click", handleSubmit);
+  $("#checkAddressBtn").addEventListener("click", findAddress);
 }
 
 // 로그인시에만 주문이 가능함
@@ -40,19 +29,18 @@ function checkLogin(){
   if (!sessionStorage.getItem("token")){
     alert("로그인 후 이용가능한 서비스입니다.");
     window.location.href = "/login";
-}
+  }
 }
 
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
-  const data = await Api.get("/api/userInfo");
-
-  fullNameInput.value = data.fullName;
-  phoneInput.value = data.phoneNumber;
+  const data = await Api.get("/api/user");
+  $("#fullNameInput").value = data.fullName;
+  $("#phoneInput").value = data.phoneNumber;
   const getAddress = data.address;
-  addressInput.value = getAddress.postalCode;
-  address1Input.value = getAddress.address1;
-  address2Input.value = getAddress.address2;
+  $("#addressInput").value = getAddress.postalCode;
+  $("#address1Input").value = getAddress.address1;
+  $("#address2Input").value = getAddress.address2;
 }
 
 //주소검색(daum api)
@@ -61,15 +49,12 @@ function findAddress(e) {
   new daum.Postcode({
     oncomplete: function (data) {
       // 우편번호
-      addressInput.value = data.zonecode;
-
+      $("#addressInput").value = data.zonecode;
       // 도로명 주소
-      address1Input.value = data.roadAddress;
+      $("#address1Input").value = data.roadAddress;
     },
   }).open();
 }
-
-checkAddressBtn.addEventListener("click", findAddress);
 
 // TODO:이전경로 판별
 // TODO : 주문상품 데이터 받아오기(장바구니, 상품상세 페이지에서 바로결제)
@@ -78,27 +63,27 @@ checkAddressBtn.addEventListener("click", findAddress);
 //   console.log(before);
 //   // if()
 // }
-getDirectData();
+getDirectItem();
 
-// TODO : 각 상품들의 총액과 전체 총액을 계산
-async function getDirectData(){
+// 바로구매시 실행되는 함수
+async function getDirectItem(){
   const data=sessionStorage.getItem("product");
-  console.log(data);
   const itemData=JSON.parse(data);
-  console.log(itemData);
-  console.log(itemData.name);
 
-  productList.innerHTML+=
+  $("#productList").innerHTML+=
   `<tr><td class="productName">${itemData.name}</td>
             <td class="productPrice">${itemData.price}</td>
             <td class="productNumber">${itemData.count}</td>
             <td class="productTotal">${itemData.price*itemData.count}</td></tr>`
-  totalProductPrice.insertAdjacentHTML('beforeend',
+  $("#totalProductPrice").insertAdjacentHTML('beforeend',
   `<label class="totaPrice" id="totalUserPrice">${itemData.price*itemData.count}</label>`)
+
+  const products=new Array();
+  products.push({productName:itemData.name, productCount:itemData.count});
 }
 
 // TODO:카트에서 주문상품 데이터 받아오기
-async function getCartData(){
+async function getCartItem(){
 
 }
 
@@ -106,31 +91,18 @@ async function getCartData(){
 async function handleSubmit(e) {
   e.preventDefault();
 
-  const fullName = fullNameInput.value;
-  const postalCode = addressInput.value;
-  const address1 = address1Input.value;
-  const address2 = address2Input.value;
+  const fullName = $("#fullNameInput").value;
+  const postalCode = $("#addressInput").value;
+  const address1 = $("#address1Input").value;
+  const address2 = $("#address2Input").value;
   const address = {
     postalCode,
     address1,
     address2,
   };
-  const phoneNumber = phoneInput.value;
-  const totalUserPrice= document.querySelector("#totalUserPrice");
-  const totalPrice=totalUserPrice.innerHTML;
+  const phoneNumber = $("#phoneInput").value;
+  const totalPrice=$("#totalUserPrice").innerHTML;
   const status="Information Received"
-  console.log(totalPrice);
-  
-  // TODO:productId 가져오기
-  if(sessionStorage.getItem("product")){
-    var products=new Array();
-    const data=sessionStorage.getItem("product");
-    const itemData=JSON.parse(data);
-    products[0]=itemData.productId;
-  }
-
-
-
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -143,9 +115,9 @@ async function handleSubmit(e) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
 
-  // TODO : products추가 필요
   try {
     const data = { fullName, phoneNumber, address, status, products , totalPrice };
+    console.log(data);
 
     await Api.post("/api/order/complete", data);
 

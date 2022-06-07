@@ -56,12 +56,12 @@ class CategoryService {
 
     // 카테고리 수정 시작
     // 업데이트 진행
-    const updatedCategory = await this.categoryModel.update({
+    const updatedResult = await this.categoryModel.update({
       foodType,
       update: toUpdate,
     });
 
-    return updatedCategory;
+    return updatedResult;
   }
 
   // 카테고리 삭제

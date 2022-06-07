@@ -11,7 +11,7 @@ let Timer = setInterval(function () {
     { duration: 1000, easing: "ease-in-out", iterations: 1, fill: "both" }
   );
   cnt++;
-  if (cnt === slide.length - 1) {
+  if (cnt === slides.childNodes.length - 1) {
     cnt = 0;
   }
-}, 7000);
+}, 5000);

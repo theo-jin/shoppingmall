@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color:#434373 !important;
+}
+.brandLogo {
+    font-size: xx-large;
+    font-weight: bold;
+    font-family: "Jua", sans-serif;
+}
 .order-user-form-container {
   display: flex;
   align-items: center;
@@ -70,6 +82,8 @@ form{
 }
 #submitButton{
   margin-top: 15%;
+  background-color:#434373;
+  color: white !important;
 }
 /* table */
 table{

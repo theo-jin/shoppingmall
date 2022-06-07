@@ -19,6 +19,17 @@ export class ProductModel {
     return products;
   }
 
+  async findByDate(date) {
+    const products = await Product.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: date, $lte: new Date() },
+        },
+      },
+    ]);
+    return products;
+  }
+
   async create(productInfo) {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
@@ -33,12 +44,8 @@ export class ProductModel {
     const filter = { productName: productInfoRequired.productName };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.findOneAndUpdate(
-      filter,
-      toUpdate,
-      option
-    );
-    return updatedProduct;
+    const updatedResult = await Product.updateOne(filter, toUpdate, option);
+    return updatedResult;
   }
 
   async deleteProduct(productName) {
