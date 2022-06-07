@@ -3,11 +3,8 @@
 // 코드 예시를 남겨 두었습니다.
 
 import * as Api from "/api.js";
-import { randomId } from "/useful-functions.js";
 import { changeNavbar } from "/changeNavbar.js";
 // 요소(element), input 혹은 상수
-const landingDiv = document.querySelector("#landingDiv");
-const navbar = document.querySelector("#navbar");
 const slidesList = document.querySelector(".slides");
 
 addAllElements();
@@ -36,32 +33,7 @@ function createMainpageSlider(data) {
 
 async function getDataFromApi() {
   //db에서 img파일 get 요청
-  // const data = await Api.get("/api/product/productlist/mainpageImage");
-  const data = [
-    {
-      _id: "6296fcf15c1216a10e5d9bba",
-      productName: "떡볶이",
-      productContent: "국민간식",
-      productPrice: 10000,
-      productImage: "http://localhost:5000/image/mealKit1.jpeg",
-      category: "한식",
-    },
-    {
-      _id: "6296fcf15c1216a10e5d9bba",
-      productName: "떡볶이",
-      productContent: "국민간식",
-      productPrice: 10000,
-      productImage: "http://localhost:5000/image/steak.jpeg",
-      category: "한식",
-    },
-    {
-      _id: "6296fcf15c1216a10e5d9bba",
-      productName: "떡볶이",
-      productContent: "국민간식",
-      productPrice: 10000,
-      productImage: "http://localhost:5000/image/friedRice.jpeg",
-      category: "한식",
-    },
-  ];
-  return data;
+  const data = await Api.get("/api/product/list");
+  const slideImage = data.slice(0, 3);
+  return slideImage;
 }

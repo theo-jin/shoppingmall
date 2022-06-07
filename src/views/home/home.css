@@ -17,7 +17,7 @@
   /* align-items: center; */
   justify-content: center;
   height: 550px;
-  background-color: antiquewhite;
+  background-color: #b8dff8;
   margin: 3% auto;
 }
 
@@ -36,14 +36,10 @@
 
 #slideContainer .slides img {
   width: 800px;
+  height: 550px;
 }
 
 #slideContainer .slides li {
   float: left;
   list-style-type: none;
-}
-
-/* 슬라이드 버튼 */
-#slideContainer .slide-dots {
-  clear: both;
 }

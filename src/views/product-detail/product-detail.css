@@ -32,7 +32,12 @@
 }
 
 .itemBox {
-  width: 600px;
+  width: 800px;
+}
+
+.itemBox .productImage {
+  width: 800px;
+  height: 550px;
 }
 
 .descriptionBox {
@@ -66,7 +71,7 @@
 }
 
 .containerDiv {
-  width: 1024px;
+  width: 1300px;
   margin: 50px auto;
   display: flex;
   justify-content: space-between;
