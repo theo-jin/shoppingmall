@@ -2,9 +2,10 @@ import { Schema } from "mongoose";
 
 const NoticeSchema = new Schema(
   {
-    userId: {
+    author: {
       type: String,
       required: true,
+      default: "관리자",
     },
     title: {
       type: String,
@@ -13,11 +14,6 @@ const NoticeSchema = new Schema(
     content: {
       type: String,
       required: true,
-    },
-    author: {
-      type: String,
-      required: true,
-      default: "관리자",
     },
   },
   {
