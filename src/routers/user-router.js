@@ -186,9 +186,6 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
   try {
     let userId = req.currentUserId;
 
-    //FIXME
-    const deleteUser = await userService.getUserInfo(req.currentUserId);
-
     // 관리자 권한으로 user를 삭제하는 경우, 선택한 userId로 변경
     if (req.currentUserRole === "admin") {
       // req.body가 비어있는 경우
