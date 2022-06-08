@@ -1,7 +1,7 @@
 import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
 
-const mainContainer = document.querySelector(".mainContainer");
+const categoryContainer = document.querySelector(".categoryContainer");
 const addCategory = document.querySelector("#addCategory");
 const addModal = document.querySelector("#addModal");
 const editModal = document.querySelector("#editModal");
@@ -45,7 +45,9 @@ function addAllEvents() {
 // html에 카테고리 목록을 출력해주는 함수
 async function categoryLanding() {
   const getData = await getDataFromApi();
-  createCategoryList(getData).forEach((el) => mainContainer.insertAdjacentHTML("beforeend", el));
+  createCategoryList(getData).forEach((el) =>
+    categoryContainer.insertAdjacentHTML("beforeend", el)
+  );
   const deleteButtons = document.querySelectorAll(".deleteButton");
   const editButtons = document.querySelectorAll(".editButton");
 
@@ -104,19 +106,13 @@ async function addCategoryFn() {
 // api를 통해 상품 정보를 받아온 후 html에 표시
 function createCategoryList(data) {
   return data.map(
-    (el) => `
-  <div class="columns orders-item" id="order">
-    <div class="column is-3">${el.createdAt.split("T")[0]}</div>
-    <div class="column is-2 order-summary">${el.foodType}</div>
-    <div class="column is-5">${el.description}</div>
-    <div class="column is-1">
-      <button class="${el.foodType} button editButton">수정</button>
-    </div>
-    <div class="column is-1">
-      <button class="${el.foodType} button deleteButton">삭제</button>
-    </div>
-  </div>
-  `
+    (el) => `<div class="orderItem">
+    <span>${el.createdAt.split("T")[0]}</span>
+    <span>${el.foodType}</span>
+    <span>${el.description}</span>
+    <button class="${el.foodType} button editButton">수정</button>
+    <button class="${el.foodType} button deleteButton">삭제</button>
+    </div>`
   );
 }
 

@@ -33,20 +33,13 @@
         <div class="navbar-brand">
           <a class="navbar-item" href="/">
             <img src="/title.png" width="30" height="30" />
-            <span class="has-text-link">마이키트</span>
+            <span class="has-text-link brandLogo">마이키트</span>
           </a>
-
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
+          <div class="navbar-menu navMenuContainer">
+            <a class="navbar-item" href="#공지">공지사항</a>
+            <a class="navbar-item" href="/new">신상품</a>
+            <a class="navbar-item" href="/product?category=1" >제품</a>
+          </div>
         </div>
 
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
@@ -66,20 +59,23 @@
         </div>
       </div>
     </nav>
-
-    <div class="divContainer">
-      <div class="userTitle"><h3 class="title">카테고리 관리</h3></div>
-      <hr>
-      <div class="mainContainer">
-        <div class="columns notification is-info is-light is-mobile orders-top">
-          <div class="column is-3">날짜</div>
-          <div class="column is-2">카테고리명</div>
-          <div class="column is-5">설명</div>
-          <div class="column is-1">수정</div>
-          <div class="column is-1">삭제</div>
+    <section class="categoryPageContainer">
+      <div class="categoryPageInfo">
+        <h1 class="title categoryTitle">카테고리 관리</h1>
+        <div id="categoryContainer" class="categoryContainer">
+          <div class="listTitle">
+            <span>생성 날짜</span>
+            <span>카테고리명</span>
+            <span>상세 설명</span>
+            <span>수정</span>
+            <span>삭제</span>
+          </div>
+            
         </div>
-      </div>  
-    </div>
+      </div>
+    </section>
+    
+    <!-- 카테고리 추가 모달 -->
     <div class="modal" id="addModal">
       <div class="modal-background"></div>
       <div class="modal-content">
@@ -102,6 +98,8 @@
       </div>
       <button id="addModalClose"class="modal-close is-large" aria-label="close"></button>
     </div>
+
+    <!-- 카테고리 수정 모달 -->
     <div class="modal " id="editModal">
       <div class="modal-background"></div>
       <div class="modal-content">

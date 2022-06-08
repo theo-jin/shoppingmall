@@ -101,13 +101,11 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
       productId: ratingContainer.id,
       reviewScore: ratingValue,
     };
-
     sessionStorage.setItem("data", JSON.stringify(data));
   }
   // 등록, 수정 관련 기능
   // 등록
-  const buttons = e.target.closest("button");
-  if (buttons.classList.contains("add")) {
+  if (e.target.classList.contains("add")) {
     try {
       const data = JSON.parse(sessionStorage.getItem("data"));
       await Api.post("/api/grade/", data);
@@ -119,7 +117,7 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
   }
 
   // 수정
-  if (buttons.classList.contains("edit")) {
+  if (e.target.classList.contains("edit")) {
     try {
       const data = JSON.parse(sessionStorage.getItem("data"));
       await Api.patch("/api/grade", data.productId, data);
