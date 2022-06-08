@@ -2,7 +2,7 @@ import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
 
 // 요소(element), input 혹은 상수
-const mainContainer = document.querySelector(".mainContainer");
+const productContainer = document.querySelector(".productContainer");
 const addProduct = document.querySelector("#addProduct");
 
 // 상품 추가 모달 관련 요소
@@ -57,7 +57,7 @@ function addAllEvents() {
 // html에 상품 전체 목록을 출력해주는 함수
 async function allProductsLanding() {
   const getData = await getProductListFromApi();
-  createProductList(getData).forEach((el) => mainContainer.insertAdjacentHTML("beforeend", el));
+  createProductList(getData).forEach((el) => productContainer.insertAdjacentHTML("beforeend", el));
   const deleteButtons = document.querySelectorAll(".deleteButton");
   const editButtons = document.querySelectorAll(".editButton");
 
@@ -66,7 +66,7 @@ async function allProductsLanding() {
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
       const prevProductName = e.target.classList[0];
-      // 카테고리 수정 이벤트 리스너
+      // 상품 수정 이벤트 리스너
       editProductBtn.addEventListener("click", async () => {
         let category = editProductCategory.value;
         switch (category) {
@@ -138,21 +138,15 @@ async function allProductsLanding() {
 // api를 통해 상품 전체 목록을 받아온 후 html에 표시
 function createProductList(data) {
   return data.map(
-    (el) => `
-  <div class="columns orders-item" id="order">
-    <div class="column is-2">${el.createdAt.split("T")[0]}</div>
-    <div class="column is-2">${el.productName}</div>
-    <div class="column is-2">${el.category}</div>
-    <div class="column is-2">${el.productContent}</div>
-    <div class="column is-2">${el.productPrice.toLocaleString()}원</div>
-    <div class="column is-1">
-      <button class="${el.productName} button editButton ">수정</button>
-    </div>
-    <div class="column is-1">
-      <button class="${el.productName} button deleteButton">삭제</button>
-    </div>
-  </div>
-  `
+    (el) => `<div class="orderItem">
+    <span>${el.createdAt.split("T")[0]}</span>
+    <span>${el.productName}</span>
+    <span>${el.category}</span>
+    <span>${el.productContent}</span>
+    <span>${el.productPrice.toLocaleString()}</span>
+    <button class="${el.foodType} button editButton">수정</button>
+    <button class="${el.foodType} button deleteButton">삭제</button>
+    </div>`
   );
 }
 
