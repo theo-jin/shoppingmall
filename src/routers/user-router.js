@@ -71,7 +71,7 @@ userRouter.post("/login", async function (req, res, next) {
           // FIXME
           // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
           // web server에서만 쿠키에 접근할 수 있도록 설정
-          httpOnly: true,
+          httpOnly: false,
           // https에서만 cookie를 사용할 수 있게 설정
           secure: false,
           // 암호화
@@ -85,7 +85,7 @@ userRouter.post("/login", async function (req, res, next) {
             // FIXME
             // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
             // web server에서만 쿠키에 접근할 수 있도록 설정
-            httpOnly: true,
+            httpOnly: false,
             // https에서만 cookie를 사용할 수 있게 설정
             secure: false,
             // 암호화
@@ -94,7 +94,7 @@ userRouter.post("/login", async function (req, res, next) {
         }
 
         // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-        res.status(200).json({ message: "OK" });
+        res.status(200).json({message: "OK"});
       });
     })(req, res);
   } catch (error) {
@@ -221,17 +221,19 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
   }
 });
 
-userRouter.get("/logout", async function(req, res, next){
-  try{
-    res.cookie('token', null, {
-      maxAge: 0
-    })
-    res.cookie('role', null, {
-      maxAge: 0
-    })
-  }catch(error){
-    next(error)
+userRouter.get("/logout", async function (req, res, next) {
+  try {
+    res.cookie("token", null, {
+      maxAge: 0,
+    });
+    res.cookie("role", null, {
+      maxAge: 0,
+    });
+
+    res.status(200).json({ message: "OK" });
+  } catch (error) {
+    next(error);
   }
-})
+});
 
 export { userRouter };

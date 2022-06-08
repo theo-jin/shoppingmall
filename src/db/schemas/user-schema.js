@@ -16,7 +16,7 @@ const UserSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      required: true,
+      required: false,
     },
     address: {
       type: new Schema(
@@ -29,7 +29,7 @@ const UserSchema = new Schema(
           _id: false,
         }
       ),
-      required: true,
+      required: false,
     },
     role: {
       type: String,

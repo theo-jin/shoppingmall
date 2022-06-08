@@ -2,7 +2,6 @@ import passportJWT from "passport-jwt";
 import { userModel } from "../../db";
 
 const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
 
 const cookieExtractor = function(req){
   let token = null;
