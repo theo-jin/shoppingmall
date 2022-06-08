@@ -36,7 +36,7 @@ function checkLogin(){
 async function getDataFromApi() {
   const data = await Api.get("/api/user");
   $("#fullNameInput").value = data.fullName;
-  $("#phoneInput").value = data.phoneNumber;
+  $("#phoneInput").value = data.phoneNumber?data.phoneNumber:"";
   const getAddress = data.address;
   $("#addressInput").value = getAddress.postalCode;
   $("#address1Input").value = getAddress.address1;

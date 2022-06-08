@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap');
 
 * {
   font-size: large;
@@ -44,13 +44,12 @@
   list-style-type: none;
 }
 
-.newItemImg{
+.commentImg{
   margin: 0 15%;
 }
 
-.newItem{
+.commentTitle{
   text-align: center;
-  margin-top: 5%;
 }
 
 .img{
@@ -59,14 +58,12 @@
 #img1{
   position: static;
   width: 60%;
-  
-  
 }
 #img2{
   position: relative;
   width: 60%;
   top: -50px;
-  left: 390px;
+  left: 130px;
 }
 #img3{
   position: relative;
@@ -76,16 +73,22 @@
 #img1:hover, #img2:hover, #img3:hover{
   transform:scale(1.01);
 }
-
 .img
 {
-    opacity:0;
+  opacity:0;
 }
-/* .index{
+.index{
   display: flex;
-  margin-top: 5%;
-} */
-.newItemImg{
-  margin-top: 20px;
+}
+
+#comment1, #comment2, #comment3{
+  margin: 30% 8%;
+  font-family: 'Noto Serif KR', serif;
+}
+.commentTitle{
+  font-family: 'Noto Serif KR', serif;
+  margin:8% 0;
+  font-size: 25px;
+  color: #434373;
 }
  

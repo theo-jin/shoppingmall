@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
 * {
   font-size: large;
   font-family: "Poor+Story", sans-serif;
@@ -69,7 +70,7 @@
   color: white !important;
 }
 button:hover{
-  background-color: #2781d9;
+  background-color:rgb(106, 107, 109);
 }
 
 .id{
