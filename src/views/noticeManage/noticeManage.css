@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+}
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
+.div-container {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  height: 550px;
+  background-color: #b8dff8;
+  margin: 3% auto;
+}
+
+.landing {
+  margin-top: 7px;
+}
+.userTitle {
+  margin: 2% 40% 4% 45%;
+}
+.mainContainer {
+  width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mainContainer > div {
+  display: flex;
+  padding: 10px;
+}
+
+.userMenu {
+  margin: 2% 2% 2% 2%;
+}
+
+.userIcon {
+  align-items: flex-start;
+  font-size: 40px;
+}
+.menuIcon {
+  height: 60px;
+}
+
+#addNotice {
+  cursor: pointer;
+  text-align: center;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d5e5f5;
+  position: fixed;
+  right: 10%;
+  bottom: 100px;
+}
+
+#addNotice:hover {
+  background-color: #8ea5bd;
+}

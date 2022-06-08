@@ -20,6 +20,9 @@ viewsRouter.use("/new", serveStatic("newProductPage"));
 
 viewsRouter.use("/userInfo/review", serveStatic("manageRating"));
 
+viewsRouter.use("/noticeManage", serveStatic("noticeManage"));
+viewsRouter.use("/noticeShow", serveStatic("noticeShow"));
+
 viewsRouter.use("/admin", serveStatic("adminPage"));
 viewsRouter.use("/admin/manageCategory", serveStatic("manageCategory"));
 viewsRouter.use("/admin/manageProduct", serveStatic("manageProduct"));
