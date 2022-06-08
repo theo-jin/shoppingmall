@@ -20,7 +20,7 @@ async function insertTextToLanding() {
   if (typeof productList == "object") {
     productList.forEach((el) => (containerDiv.innerHTML += el));
   } else {
-    containerDiv.innerHTML = productList;
+    containerDiv.innerHTML= productList;
   }
 }
 
