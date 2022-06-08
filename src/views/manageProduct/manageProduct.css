@@ -83,14 +83,6 @@
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
-  background-color: white;
-}
-
-.orderItem button {
-  width: 3%;
-  height: 10%;
-  margin: 1% auto;
-  border-radius: 5px;
   background-color: #434373;
   color: white !important;
 }
@@ -99,7 +91,7 @@ button:hover {
   background-color: #2781d9;
 }
 
-#addCategory {
+#addProduct {
   cursor: pointer;
   text-align: center;
   line-height: 50px;
@@ -112,6 +104,30 @@ button:hover {
   bottom: 100px;
 }
 
-#addCategory:hover {
+#addProduct:hover {
   background-color: #8ea5bd;
+}
+
+#addModal label,
+#editModal label {
+  font-weight: 400;
+  font-size: large;
+}
+
+#addModal label,
+#productName1,
+#productDescription1,
+#productCategory1,
+#productPrice1,
+#editModal label,
+#productName2,
+#productDescription2,
+#productCategory2,
+#productPrice2 {
+  color: black !important;
+}
+
+#addBtn,
+#editBtn {
+  color: white !important;
 }

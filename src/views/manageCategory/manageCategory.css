@@ -79,14 +79,6 @@
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
-  background-color: white;
-}
-
-.orderItem button {
-  width: 3%;
-  height: 10%;
-  margin: 1% auto;
-  border-radius: 5px;
   background-color: #434373;
   color: white !important;
 }
@@ -110,4 +102,24 @@ button:hover {
 
 #addCategory:hover {
   background-color: #8ea5bd;
+}
+
+#addModal label,
+#editModal label {
+  font-weight: 400;
+  font-size: large;
+}
+
+#addModal label,
+#categoryName1,
+#categoryDescription1,
+#editModal label,
+#categoryName2,
+#categoryDescription1 {
+  color: black !important;
+}
+
+#addBtn,
+#editBtn {
+  color: white !important;
 }

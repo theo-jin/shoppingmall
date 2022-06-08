@@ -19,7 +19,6 @@ function addAllEvents() {
 
 // 이전 페이지 url
 const prevUrl = document.referrer;
-console.log(prevUrl);
 
 // 로그인 진행
 async function handleSubmit(e) {
