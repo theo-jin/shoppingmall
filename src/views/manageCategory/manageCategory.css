@@ -1,27 +1,90 @@
-.userTitle {
-  margin: 2% 40% 4% 45%;
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
-.mainContainer {
-  width: 1024px;
-  margin: 0 auto;
-  text-align: center;
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
 }
 
-.mainContainer > div {
+.categoryPageContainer {
   display: flex;
-  padding: 10px;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
 }
 
-.userMenu {
-  margin: 2% 2% 2% 2%;
+.categoryPageInfo {
+  display: flex;
+  width: 80%;
+  margin: 30px;
+  flex-direction: column;
 }
 
-.userIcon {
-  align-items: flex-start;
-  font-size: 40px;
+.categoryTitle {
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
-.menuIcon {
-  height: 60px;
+
+.listTitle {
+  display: flex;
+  border-bottom: 1px solid black;
+  font-weight: bold;
+}
+
+.listTitle span,
+.orderItem span {
+  padding: 12px;
+  text-align: center;
+  color: black !important;
+  font-family: "Poor+Story", sans-serif !important;
+}
+
+.listTitle span:nth-child(1),
+.listTitle span:nth-child(2),
+.orderItem span:nth-child(1),
+.orderItem span:nth-child(2) {
+  width: 15%;
+}
+
+.listTitle span:nth-child(3),
+.orderItem span:nth-child(3) {
+  width: 40%;
+}
+
+.listTitle span:nth-child(4),
+.orderItem span:nth-child(4) {
+  width: 15%;
+}
+
+.listTitle span:nth-child(5),
+.orderItem span:nth-child(5) {
+  width: 15%;
+}
+
+.orderItem {
+  display: flex;
+}
+
+.orderItem button {
+  width: 5%;
+  height: 10%;
+  margin: 1% auto;
+  border-radius: 5px;
+  background-color: #434373;
+  color: white !important;
+}
+
+button:hover {
+  background-color: #2781d9;
 }
 
 #addCategory {
@@ -39,4 +102,24 @@
 
 #addCategory:hover {
   background-color: #8ea5bd;
+}
+
+#addModal label,
+#editModal label {
+  font-weight: 400;
+  font-size: large;
+}
+
+#addModal label,
+#categoryName1,
+#categoryDescription1,
+#editModal label,
+#categoryName2,
+#categoryDescription1 {
+  color: black !important;
+}
+
+#addBtn,
+#editBtn {
+  color: white !important;
 }

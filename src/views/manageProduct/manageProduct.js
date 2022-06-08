@@ -2,7 +2,7 @@ import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
 
 // 요소(element), input 혹은 상수
-const mainContainer = document.querySelector(".mainContainer");
+const productContainer = document.querySelector(".productContainer");
 const addProduct = document.querySelector("#addProduct");
 
 // 상품 추가 모달 관련 요소
@@ -31,12 +31,12 @@ addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   changeNavbar();
-  categoryList();
-  allProductsLanding();
+  const getCategory = await categoryList();
+  allProductsLanding(getCategory);
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   // 상품 추가를 위한 모달창 컨트롤러
   addProduct.addEventListener("click", () => {
     addModal.classList.add("is-active");
@@ -50,14 +50,19 @@ function addAllEvents() {
     editModal.classList.remove("is-active");
   });
 
+  // 카테고리 목록
+  const getCategory = await getCategoryFromApi();
+
   // 상품 추가 이벤트 리스너
-  addProductBtn.addEventListener("click", addProductFn);
+  addProductBtn.addEventListener("click", () => {
+    addProductFn(getCategory);
+  });
 }
 
 // html에 상품 전체 목록을 출력해주는 함수
-async function allProductsLanding() {
+async function allProductsLanding(getCategory) {
   const getData = await getProductListFromApi();
-  createProductList(getData).forEach((el) => mainContainer.insertAdjacentHTML("beforeend", el));
+  createProductList(getData).forEach((el) => productContainer.insertAdjacentHTML("beforeend", el));
   const deleteButtons = document.querySelectorAll(".deleteButton");
   const editButtons = document.querySelectorAll(".editButton");
 
@@ -66,26 +71,9 @@ async function allProductsLanding() {
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
       const prevProductName = e.target.classList[0];
-      // 카테고리 수정 이벤트 리스너
+      // 상품 수정 이벤트 리스너
       editProductBtn.addEventListener("click", async () => {
-        let category = editProductCategory.value;
-        switch (category) {
-          case "krFood":
-            category = "한식";
-            break;
-          case "jpFood":
-            category = "일식";
-            break;
-          case "chFood":
-            category = "중식";
-            break;
-          case "wsFood":
-            category = "양식";
-            break;
-          default:
-            category = "기타";
-            break;
-        }
+        let category = getCategory[editProductCategory.value - 1];
         const productName = editProductName.value;
         const productContent = editProductDescription.value;
         const productPrice = editProductPrice.value;
@@ -105,7 +93,7 @@ async function allProductsLanding() {
           method: "PATCH",
           headers: {
             // "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            // Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           },
           body: formData,
         });
@@ -138,45 +126,21 @@ async function allProductsLanding() {
 // api를 통해 상품 전체 목록을 받아온 후 html에 표시
 function createProductList(data) {
   return data.map(
-    (el) => `
-  <div class="columns orders-item" id="order">
-    <div class="column is-2">${el.createdAt.split("T")[0]}</div>
-    <div class="column is-2">${el.productName}</div>
-    <div class="column is-2">${el.category}</div>
-    <div class="column is-2">${el.productContent}</div>
-    <div class="column is-2">${el.productPrice.toLocaleString()}원</div>
-    <div class="column is-1">
-      <button class="${el.productName} button editButton ">수정</button>
-    </div>
-    <div class="column is-1">
-      <button class="${el.productName} button deleteButton">삭제</button>
-    </div>
-  </div>
-  `
+    (el) => `<div class="orderItem">
+    <span>${el.createdAt.split("T")[0]}</span>
+    <span>${el.productName}</span>
+    <span>${el.category}</span>
+    <span>${el.productContent}</span>
+    <span>${el.productPrice.toLocaleString()}</span>
+    <button class="${el.foodType} button editButton">수정</button>
+    <button class="${el.foodType} button deleteButton">삭제</button>
+    </div>`
   );
 }
 
 // 추가하기 버튼 클릭 시 실행되는 상품 추가 기능
-async function addProductFn() {
-  let category = addProductCategory.value;
-  switch (category) {
-    case "krFood":
-      category = "한식";
-      break;
-    case "jpFood":
-      category = "일식";
-      break;
-    case "chFood":
-      category = "중식";
-      break;
-    case "wsFood":
-      category = "양식";
-      break;
-    default:
-      category = "기타";
-      break;
-  }
-
+async function addProductFn(getCategory) {
+  let category = getCategory[addProductCategory.value - 1];
   const formData = new FormData();
   const productName = addProductName.value;
   const productContent = addProductDescription.value;
@@ -196,7 +160,7 @@ async function addProductFn() {
     method: "POST",
     headers: {
       // "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      // Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: formData,
   });
@@ -214,35 +178,16 @@ async function addProductFn() {
 
 // 상품 추가하기, 수정하기에서 카테고리 목록 조회를 위한 함수
 function createCategoryList(data) {
-  return data.map((el) => {
-    let category = el.foodType;
-    switch (category) {
-      case "한식":
-        category = "krFood";
-        break;
-      case "일식":
-        category = "jpFood";
-        break;
-      case "중식":
-        category = "chFood";
-        break;
-      case "양식":
-        category = "wsFood";
-        break;
-      default:
-        category = "etc";
-        break;
-    }
-
-    return `
-      <option value=${category}>${el.foodType}</option>
-      `;
-  });
+  return data.map(
+    (el, index) => `
+      <option value=${index + 1}>${el}</option>
+      `
+  );
 }
 
 // 카테고리 목록 api 요청
 async function getCategoryFromApi() {
-  const data = await Api.get("/api/category/list");
+  const data = await Api.get("/api/category/name");
   return data;
 }
 
@@ -253,6 +198,7 @@ async function categoryList() {
     addProductCategory.insertAdjacentHTML("beforeend", el);
     editProductCategory.insertAdjacentHTML("beforeend", el);
   });
+  return getData;
 }
 
 // 상품 전체 목록 api 요청

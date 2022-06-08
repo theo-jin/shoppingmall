@@ -17,6 +17,9 @@ function addAllEvents() {
   submitButton.addEventListener("click", handleSubmit);
 }
 
+// 이전 페이지 url
+const prevUrl = document.referrer;
+
 // 로그인 진행
 async function handleSubmit(e) {
   e.preventDefault();
@@ -40,9 +43,16 @@ async function handleSubmit(e) {
     const result = await Api.post("/api/login", data);
 
     // 로그인 성공, 토큰은 쿠키에 저장
-    if (result.message === "OK") alert(`정상적으로 로그인되었습니다.`);
-    // 기본 페이지로 이동
-    window.location.href = "/";
+    if (result.message === "OK") {
+      alert(`정상적으로 로그인되었습니다.`);
+
+      // 주문 결제 페이지에서 넘어왔다면 주문 결제 페이지로 이동
+      if (prevUrl === "http://localhost:5000/order/") {
+        window.location.href = "/order";
+      }
+      // 기본 페이지로 이동
+      else window.location.href = "/";
+    }
   } catch (err) {
     console.error(err.stack);
     alert(err.message);

@@ -1,44 +1,59 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
-*{
-    color:#434373 !important;
-    font-family: "Jua", sans-serif;
-    font-size: large;
+* {
+  color: #434373 !important;
+  font-family: "Jua", sans-serif;
+  font-size: large;
 }
+
 .brandLogo {
-    font-size: xx-large;
-    font-weight: bold;
-    font-family: "Jua", sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
 }
-.userTitle{
-    margin: 2% 40% 4% 45%;
-    
+
+.itemDiv {
+  text-align: center;
+  width: 400px;
 }
-.mainContainer{
-    display: flex;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
+
+.userTitle {
+  text-align: center;
+  margin: 2% auto;
 }
-.userMenu{
-    margin: 2% 2% 2% 2%;
+
+.mainContainer {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-.userIcon{
-    align-items: flex-start;
-    font-size: 40px;
+
+.userMenu {
+  margin: 2% 2% 2% 2%;
 }
-.menuIcon{
-    height: 60px;
+
+.userIcon {
+  align-items: flex-start;
+  font-size: 40px;
 }
-.mainContainer b{
-    font-family: "Poor+Story", sans-serif;
-    font-size: 25px !important;
+
+.menuIcon {
+  height: 60px;
 }
-.mainContainer p{
-    font-family: "Poor+Story", sans-serif;
-    font-size: 20px !important;
+
+.mainContainer b {
+  font-family: "Poor+Story", sans-serif;
+  font-size: 25px !important;
 }
-.mainContainer span{
-    font-family: "Poor+Story", sans-serif;
-    font-size: 40px !important;
+
+.mainContainer p {
+  font-family: "Poor+Story", sans-serif;
+  font-size: 20px !important;
+}
+
+.mainContainer span {
+  font-family: "Poor+Story", sans-serif;
+  font-size: 40px !important;
 }

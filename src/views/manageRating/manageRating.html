@@ -5,26 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>마이키트</title>
     <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <!-- bulma css -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+    <!-- bulma css 관련 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <!-- 폰트 어썸: 아이콘 -->
-    <script
-      defer
-      src="https://kit.fontawesome.com/7630448495.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- 커스텀 css, js --> 
-    <link rel="stylesheet" href="product.css" />
-    <script src="product.js" type="module" defer></script>
+    <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
+    <!-- 구글 OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 카카오 OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="manageRating.css" />
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="manageRating.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -41,7 +34,6 @@
           <a class="navbar-item" href="/new">신상품</a>
           <a class="navbar-item" href="/product?category=1">제품</a>
         </div>
-
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
               <li><a href="/login">로그인</a></li>
@@ -59,22 +51,20 @@
         </div>
       </div>
     </nav>
-    <nav class="navbar menuNav" role="navigation" aria-label="main navigation">
-      <div class="container">
-        <a class="foodItem" href ="/product?category=1">
-          한식 
-        </a>
-        <a class="foodItem" href ="/product?category=2">
-          중식
-        </a>
-        <a class="foodItem" href ="/product?category=3">
-          일식
-        </a>
-        <a class="foodItem" href ="/product?category=4">
-          양식
-        </a>
-      </div>  
-    </nav>
-    <div class="containerDiv"></div>
+
+    <section class="reviewPageContainer">
+      <div class="reviewPageInfo">
+        <h1 class="reviewTitle">리뷰 관리</h1>
+        <div id="reviewContainer" class="reviewContainer">
+          <div class="listTitle">
+            <span>주문날짜</span>
+            <span>주문상품</span>
+            <span>평점</span>
+            <span>등록</span>
+            <span>수정</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

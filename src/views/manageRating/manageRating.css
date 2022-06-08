@@ -10,28 +10,25 @@
   font-weight: bold;
   font-family: "Jua", sans-serif;
 }
-
-.orderlistpageContainer {
+.reviewPageContainer {
   display: flex;
   height: 100vh;
   flex-direction: column;
   align-items: center;
 }
 
-.orderlistpageInfo {
+.reviewPageInfo {
   display: flex;
   width: 80%;
   margin: 30px;
   flex-direction: column;
 }
 
-.orderListTitle {
+.reviewTitle {
   margin-bottom: 30px;
   font-size: 30px;
   font-weight: 600;
   text-align: center;
-  font-family: "Jua", sans-serif;
-  color: #434373 !important;
 }
 
 .listTitle {
@@ -42,10 +39,8 @@
 
 .listTitle span,
 .orderItem span {
-  padding: 12px;
+  padding: 10px;
   text-align: center;
-  color: black !important;
-  font-family: "Poor+Story", sans-serif !important;
 }
 
 .listTitle span:nth-child(1),
@@ -57,17 +52,16 @@
 
 .listTitle span:nth-child(3),
 .orderItem span:nth-child(3) {
-  width: 25%;
+  width: 30%;
 }
 
 .listTitle span:nth-child(4),
-.orderItem span:nth-child(4) {
-  width: 15%;
-}
-
 .listTitle span:nth-child(5),
-.orderItem span:nth-child(5) {
-  width: 20%;
+.listTitle span:nth-child(6),
+.orderItem span:nth-child(4),
+.orderItem span:nth-child(5),
+.orderItem span:nth-child(6) {
+  width: 15%;
 }
 
 .orderItem {
@@ -94,7 +88,14 @@
   background-color: #434373;
   color: white !important;
 }
-
 button:hover {
   background-color: #2781d9;
+}
+
+span.starSpan {
+  padding: 0;
+}
+
+button.btn {
+  width: 50px;
 }
