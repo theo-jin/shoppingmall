@@ -86,11 +86,7 @@
 
 .index{
   display: flex;
-  margin-top: 5%;
-}
 
-.newItemImg {
-  margin-top: 20px;
 }
 
 #comment1, #comment2, #comment3{
