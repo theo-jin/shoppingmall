@@ -53,16 +53,11 @@ export class ProductModel {
     return deletedProduct;
   }
 
-  async updateScore({ productId, reviewScore }) {
+  async updateScore({ productId, toUpdate }) {
     const filter = { _id: productId };
     const option = { returnOriginal: false };
-    const update = { reviewScore };
 
-    const updatedResult = await Product.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    const updatedResult = await Product.updateOne(filter, toUpdate, option);
     return updatedResult;
   }
 }

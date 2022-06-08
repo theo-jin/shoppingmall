@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-import { ScoreSchema } from "../schemas/grade-schema";
+import { ScoreSchema } from "../schemas/score-schema";
 
 const Score = model("scores", ScoreSchema);
 
@@ -10,17 +10,13 @@ export class ScoreModel {
     return score;
   }
 
-  // 상품의 평점 조회
-  async findByProductId(productId) {
-    const score = await Score.findOne({ productId });
-    return score;
-  }
-
   // 유저가 별점 남긴 상품 조회
   async findByUserAndProduct(userId, productId) {
     const score = await Score.findOne({
       userId,
-      productId,
+      product: {
+        $elemMatch: { productId },
+      },
     });
     return score;
   }
@@ -33,17 +29,28 @@ export class ScoreModel {
 
   //평점 수정
   async updateGrade({ productId, reviewScore }) {
-    const filter = { productId };
     const option = { returnOriginal: false };
     const update = { reviewScore };
 
-    const updatedResult = await Score.updateOne(filter, update, option);
+    const updatedResult = await Score.updateOne(
+      {
+        product: {
+          $elemMatch: { productId },
+        },
+      },
+      update,
+      option
+    );
     return updatedResult;
   }
 
   //상품 평점 가져오기
   async findByProduct(productId) {
-    const score = await Score.find({ productId });
+    const score = await Score.find({
+      product: {
+        $elemMatch: { productId },
+      },
+    });
     return score;
   }
 }

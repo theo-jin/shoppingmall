@@ -6,17 +6,25 @@ const ScoreSchema = new Schema(
       type: String,
       required: true,
     },
-    productId: {
-      type: String,
-      required: true,
+    // productId: {
+    //   type: String,
+    //   required: true,
+    // },
+    product: {
+      productId: String,
+      productName: String,
     },
     reviewScore: {
       type: Number,
       required: true,
     },
+    orderedAt: {
+      type: Date,
+      required: true,
+    },
   },
   {
-    collection: "grades",
+    collection: "scores",
     timestamps: true,
   }
 );

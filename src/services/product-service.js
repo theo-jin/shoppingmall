@@ -1,4 +1,5 @@
-import { productModel, categoryModel, gradeModel } from "../db";
+import { productModel, categoryModel } from "../db";
+import { scoreService } from "../services";
 
 class ProductService {
   constructor(productModel) {
@@ -39,23 +40,6 @@ class ProductService {
     if (!product) {
       throw new Error(`${product}은(는) 존재하지 않는 상품입니다.`);
     }
-
-    const grades = await gradeModel.findByProduct(product.productName);
-    if (grades.length < 1) {
-      return product;
-    }
-    // 평점 평균 가져오기
-    const averageGrade =
-      grades.reduce((result, grade) => {
-        return result + grade.reviewScore;
-      }, 0) / grades.length;
-    // 평점 평균을 소수점 1자리로 맞춤
-    const grade = averageGrade.toFixed(1);
-
-    product = await this.productModel.gradeUpdate({
-      productId,
-      grade,
-    });
 
     return product;
   }
