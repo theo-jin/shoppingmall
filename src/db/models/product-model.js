@@ -53,10 +53,10 @@ export class ProductModel {
     return deletedProduct;
   }
 
-  async gradeUpdate({ productId, grade }) {
+  async updateScore({ productId, reviewScore }) {
     const filter = { _id: productId };
     const option = { returnOriginal: false };
-    const update = { reviewScore: grade };
+    const update = { reviewScore };
 
     const updatedResult = await Product.findOneAndUpdate(
       filter,

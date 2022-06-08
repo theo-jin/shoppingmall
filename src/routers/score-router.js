@@ -4,10 +4,10 @@ import is from "@sindresorhus/is";
 import { loginRequired } from "../middlewares";
 import { gradeService } from "../services";
 
-const gradeRouter = Router();
+const scoreRouter = Router();
 
 // 평점 남기기
-gradeRouter.post("/", loginRequired, async function (req, res, next) {
+scoreRouter.post("/", loginRequired, async function (req, res, next) {
   try {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -23,11 +23,14 @@ gradeRouter.post("/", loginRequired, async function (req, res, next) {
     const { productId, reviewScore } = req.body;
 
     // 위 데이터를 평점 db에 추가하기
-    const newGrade = await gradeService.addGrade({
+    const newScore = await scoreService.addGrade({
       userId,
       productId,
       reviewScore,
     });
+
+    const productScore = await scoreService.getScoresProduct(productId)
+    const updatedScore = await productModel.updatedScore(productId, productScore)
 
     // 추가된 평점의 db 데이터를 프론트에 다시 보내줌
     res.status(201).json(newGrade);
@@ -37,7 +40,7 @@ gradeRouter.post("/", loginRequired, async function (req, res, next) {
 });
 
 // 평점 수정
-gradeRouter.patch(
+scoreRouter.patch(
   "/:productId",
   loginRequired,
   async function (req, res, next) {
@@ -55,7 +58,7 @@ gradeRouter.patch(
       // body에서 정보 받아오기
       const { reviewScore } = req.body;
 
-      const updatedResult = await gradeService.setGrade(
+      const updatedResult = await scoreService.setGrade(
         userId,
         productId,
         reviewScore
@@ -74,16 +77,16 @@ gradeRouter.patch(
 );
 
 //상품 평점 가져오기
-gradeRouter.get("/:productId", async function (req, res, next) {
+scoreRouter.get("/:productId", async function (req, res, next) {
   try {
     const { productId } = req.params;
     // 배열 형태
-    const grades = await gradeService.getGradesProduct(productId);
+    const scores = await scoreService.getScoresProduct(productId);
 
-    res.status(200).json(grades);
+    res.status(200).json(scores);
   } catch (error) {
     next(error);
   }
 });
 
-export { gradeRouter };
+export { scoreRouter };

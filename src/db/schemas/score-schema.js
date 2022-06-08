@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const GradeSchema = new Schema(
+const ScoreSchema = new Schema(
   {
     userId: {
       type: String,
@@ -21,4 +21,4 @@ const GradeSchema = new Schema(
   }
 );
 
-export { GradeSchema };
+export { ScoreSchema };
