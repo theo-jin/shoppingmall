@@ -1,6 +1,9 @@
 import * as Api from "/api.js";
+import { changeNavbar } from "/changeNavbar.js";
 
 const submitButton = document.getElementById("submitButton");
+
+changeNavbar();
 
 // 쿠키 삭제 함수
 function deleteCookie(name) {

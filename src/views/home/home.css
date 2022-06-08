@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -17,7 +18,7 @@
   /* align-items: center; */
   justify-content: center;
   height: 550px;
-  background-color: #b8dff8;
+  background-color: #b8e0f837;
   margin: 3% auto;
 }
 
@@ -30,62 +31,63 @@
   width: 800px;
   overflow: hidden;
 }
+
 #slideContainer .slides {
   width: 3500px;
 }
 
 #slideContainer .slides img {
   width: 800px;
-  height: 550px;
+  height: 500px;
+  border-radius: 20px;
 }
 
 #slideContainer .slides li {
+  margin: 20px 0;
   float: left;
   list-style-type: none;
 }
 
-.newItemImg{
+.newItemImg {
   margin: 0 15%;
 }
 
-.newItem{
+.newItem {
   text-align: center;
   margin-top: 5%;
 }
 
-.img{
+.img {
   box-shadow: 5px 5px 5px gray;
 }
-#img1{
+#img1 {
   position: static;
   width: 60%;
-  
-  
 }
-#img2{
+#img2 {
   position: relative;
   width: 60%;
   top: -50px;
   left: 390px;
 }
-#img3{
+#img3 {
   position: relative;
   width: 60%;
-  top:-100px;
+  top: -100px;
 }
-#img1:hover, #img2:hover, #img3:hover{
-  transform:scale(1.01);
+#img1:hover,
+#img2:hover,
+#img3:hover {
+  transform: scale(1.01);
 }
 
-.img
-{
-    opacity:0;
+.img {
+  opacity: 0;
 }
 /* .index{
   display: flex;
   margin-top: 5%;
 } */
-.newItemImg{
+.newItemImg {
   margin-top: 20px;
 }
- 

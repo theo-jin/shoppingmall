@@ -15,7 +15,7 @@ function changeNavbar() {
 
   // sessionStore 내에 token이 존재할 시(로그인 되었을 시) navbar 변경
   if (token) {
-    navbar.innerHTML = `<li><a href='/userInfo'>계정관리</a></li>
+    navbar.innerHTML = `<li><a href='/userInfo'>계정 관리</a></li>
     <li><a>로그아웃</a></li>
     <li>
       <a href="/cart" aria-current="page">
@@ -31,7 +31,7 @@ function changeNavbar() {
   // 유저가 admin일 경우 navbar 변경
   if (isCookie("role")) {
     navbar.innerHTML = `<li><a href='/admin'>페이지 관리</a></li>
-    <li><a href='/userInfo'>계정관리</a></li>
+    <li><a href='/userInfo'>계정 관리</a></li>
     <li><a>로그아웃</a></li>
     <li>
       <a href="/cart" aria-current="page">

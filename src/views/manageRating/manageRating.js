@@ -10,11 +10,21 @@ addAllElements();
 async function addAllElements() {
   changeNavbar();
   const getData = await getDataFromApi();
-  createOrderList(getData).forEach((el) => (reviewContainer.innerHTML += el));
+  const HtmlList = createOrderList(getData);
+  HtmlList.forEach((el) => (reviewContainer.innerHTML += el));
+  sessionStorage.removeItem("data");
 }
 
+// 주문 데이터
 async function getDataFromApi() {
   const data = await Api.get("/api/order/user");
+  return data;
+}
+
+// 별점 데이터
+// TODO
+async function getRatingFromApi(productId) {
+  const data = await Api.get("/api/order/user", productId);
   return data;
 }
 
@@ -26,7 +36,7 @@ function createOrderList(data) {
       <span>${el.createdAt.split("T")[0]}</span>
       <span>${el.products[0].productName}</span>
       <span>
-        <div class="ratingContainer">
+        <div class="ratingContainer" id=${el.products[0].productName}>
           <span class="starSpan oneStar" data-item-id="oneStar">
             <i class="far fa-star"></i>
           </span>
@@ -46,7 +56,6 @@ function createOrderList(data) {
       </span>
       <button class="btn add">등록</button>
       <button class="btn edit">수정</button>
-      <button class="btn del">삭제</button>
     </div>`
   );
 }
@@ -60,7 +69,7 @@ const ratingObj = {
   fiveStar: 5,
 };
 
-document.querySelector("#reviewContainer").addEventListener("click", (e) => {
+document.querySelector("#reviewContainer").addEventListener("click", async (e) => {
   // 평점관련 기능
   const ratingContainer = e.target.closest("div");
 
@@ -88,18 +97,22 @@ document.querySelector("#reviewContainer").addEventListener("click", (e) => {
     for (let i = 0; i < ratingValue; i++) {
       ratingContainer.children[i].innerHTML = "<i class='fas fa-star'></i>";
     }
-    // DB로 평점 데이터 전달
-    try {
-    } catch (err) {
-      alert(err);
-    }
-  }
+    const data = {
+      productId: ratingContainer.id,
+      reviewScore: ratingValue,
+    };
 
-  // 등록, 수정, 삭제 관련 기능
+    sessionStorage.setItem("data", JSON.stringify(data));
+  }
+  // 등록, 수정 관련 기능
   // 등록
   const buttons = e.target.closest("button");
   if (buttons.classList.contains("add")) {
     try {
+      const data = JSON.parse(sessionStorage.getItem("data"));
+      await Api.post("/api/grade/", data);
+      alert("별점이 등록되었습니다.");
+      window.location.href = "/userInfo/review/";
     } catch (err) {
       alert(err);
     }
@@ -108,14 +121,10 @@ document.querySelector("#reviewContainer").addEventListener("click", (e) => {
   // 수정
   if (buttons.classList.contains("edit")) {
     try {
-    } catch (err) {
-      alert(err);
-    }
-  }
-
-  // 삭제
-  if (buttons.classList.contains("del")) {
-    try {
+      const data = JSON.parse(sessionStorage.getItem("data"));
+      await Api.patch("/api/grade", data.productId, data);
+      alert("별점이 수정되었습니다.");
+      window.location.href = "/userInfo/review/";
     } catch (err) {
       alert(err);
     }
