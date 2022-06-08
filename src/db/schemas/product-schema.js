@@ -22,6 +22,7 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
+    reviewScore: Number,
   },
   {
     collection: "products",

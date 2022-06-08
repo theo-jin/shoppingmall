@@ -53,6 +53,16 @@ class NoticeService {
 
     return deletedResult;
   }
+
+  // 공지사항 조회
+  async getNotice(noticeId) {
+    const notice = await this.noticeModel.findByNoticeId(noticeId);
+    if (!notice) {
+      throw new Error(`${notice}은(는) 존재하지 않는 상품입니다.`);
+    }
+
+    return notice;
+  }
 }
 
 const noticeService = new NoticeService(noticeModel);

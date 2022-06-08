@@ -52,6 +52,19 @@ export class ProductModel {
     const deletedProduct = await Product.deleteOne({ productName });
     return deletedProduct;
   }
+
+  async gradeUpdate({ productId, grade }) {
+    const filter = { _id: productId };
+    const option = { returnOriginal: false };
+    const update = { reviewScore: grade };
+
+    const updatedResult = await Product.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedResult;
+  }
 }
 
 const productModel = new ProductModel();

@@ -119,4 +119,18 @@ noticeRouter.delete(
   }
 );
 
+// 공지사항 조회
+// ?id={}
+noticeRouter.get("/detail", async function (req, res, next) {
+  try {
+    const noticeId = req.query.id;
+
+    const notice = await noticeService.getNotice(noticeId);
+
+    res.status(200).json(notice);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { noticeRouter };
