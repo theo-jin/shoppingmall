@@ -67,7 +67,7 @@ userRouter.post("/login", async function (req, res, next) {
           maxAge: 1000 * 60 * 60 * 24,
           // web server에서만 접근
           httpOnly: true,
-        })
+        });
 
         // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
         res.status(200).json({ token, role });
@@ -96,18 +96,30 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
         if (err || !user) {
           throw new Error(info.message);
         }
-          const { token, role } = await userService.getUserToken({
-            userId: user.userId,
-            role: user.role,
-          });
+        const { token, role } = await userService.getUserToken({
+          userId: user.userId,
+          role: user.role,
+        });
 
-          if (!token && !role) {
-            throw new Error("로그인에 실패했습니다.");
-          }
-          res.cookie("user", { token, role });
-        })(req, res);
+        if (!token && !role) {
+          throw new Error("로그인에 실패했습니다.");
+        }
+        res.cookie("token", token, {
+          // 1일
+          maxAge: 1000 * 60 * 60 * 24,
+          // web server에서만 접근
+          httpOnly: true,
+        });
+        res.cookie("role", role, {
+          // 1일
+          maxAge: 1000 * 60 * 60 * 24,
+          // web server에서만 접근
+          httpOnly: true,
+        });
+      }
+    )(req, res);
 
-        res.redirect("http://localhost:5000");
+    res.redirect("http://localhost:5000");
   } catch (error) {
     next(error);
   }
@@ -235,7 +247,10 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
 
 userRouter.get("/logout", async function (req, res, next) {
   try {
-    req.session.destroy();
+    if (req.cookies.token) {
+      res.clearCookie("token");
+    }
+    res.clearCookie("role");
 
     res.status(200).json({ message: "OK" });
   } catch (error) {
