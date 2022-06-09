@@ -14,11 +14,6 @@ const optionStatus = {
   Delivered: "배송완료",
 };
 
-const logout = $("#navbar").children[1];
-logout.addEventListener("click", () => {
-  sessionStorage.removeItem("token");
-});
-
 renderDataFromApi();
 
 // 이벤트 함수를 모아둠
@@ -28,6 +23,7 @@ function handleAllEvent() {
 
 async function renderDataFromApi() {
   const data = await Api.get("/api/order/user");
+  console.log(data);
   let userStatus = "";
 
   // 배송상태 확인

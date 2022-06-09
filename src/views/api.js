@@ -1,5 +1,3 @@
-var httpRequest = new XMLHttpRequest();
-
 // api 로 GET 요청 (/endpoint/params 형태로 요청함)
 async function get(endpoint, params = "", query = false) {
   let apiUrl = `${endpoint}/${params}`;
@@ -11,10 +9,9 @@ async function get(endpoint, params = "", query = false) {
   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
   const res = await fetch(apiUrl, {
     headers: {
-      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
   });
-
   // 응답 코드가 4XX 계열일 때 (400, 403 등)
   if (!res.ok) {
     const errorContent = await res.json();
@@ -40,7 +37,7 @@ async function post(endpoint, data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: bodyData,
   });
@@ -55,7 +52,7 @@ async function post(endpoint, data) {
 
   const result = await res.json();
 
-  return result;
+  return res;
 }
 
 // api 로 PATCH 요청 (/endpoint/params 로, JSON 데이터 형태로 요청함)
@@ -72,7 +69,7 @@ async function patch(endpoint, params = "", data) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: bodyData,
   });
@@ -103,7 +100,7 @@ async function del(endpoint, data = {}) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
     body: bodyData,
   });
