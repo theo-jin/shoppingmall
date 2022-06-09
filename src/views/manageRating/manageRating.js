@@ -17,7 +17,7 @@ async function addAllElements() {
 
 // 주문 데이터
 async function getDataFromApi() {
-  const data = await Api.get("/api/order/user");
+  const data = await Api.get("/api/score/list");
   return data;
 }
 
@@ -33,10 +33,10 @@ function createOrderList(data) {
   return data.map(
     (el) =>
       `<div class="orderItem">
-      <span>${el.createdAt.split("T")[0]}</span>
-      <span>${el.products[0].productName}</span>
+      <span>${el.orderedAt.split("T")[0]}</span>
+      <span>${el.product.productName}</span>
       <span>
-        <div class="ratingContainer" id=${el.products[0].productName}>
+        <div class="ratingContainer" id=${el.product.productId}>
           <span class="starSpan oneStar" data-item-id="oneStar">
             <i class="far fa-star"></i>
           </span>
@@ -104,27 +104,28 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
   }
   // 등록, 수정 관련 기능
   // 등록
-  if (e.target.classList.contains("add")) {
+  /* if (e.target.classList.contains("add")) {
     try {
       const data = JSON.parse(sessionStorage.getItem("data"));
-      await Api.post("/api/grade/", data);
+      await Api.post("/api/score/", data);
       alert("별점이 등록되었습니다.");
       window.location.href = "/userInfo/review/";
     } catch (err) {
       alert(err);
     }
-  }
+  } */
 
   // TODO 수정 기능 추후 추가 예정
-  // 수정
-  // if (e.target.classList.contains("edit")) {
-  //   try {
-  //     const data = JSON.parse(sessionStorage.getItem("data"));
-  //     await Api.patch("/api/grade", data.productId, data);
-  //     alert("별점이 수정되었습니다.");
-  //     window.location.href = "/userInfo/review/";
-  //   } catch (err) {
-  //     alert(err);
-  //   }
-  // }
+  // 등록
+  if (e.target.classList.contains("add")) {
+    try {
+      const data = JSON.parse(sessionStorage.getItem("data"));
+      console.log(data)
+      await Api.patch("/api/score", data.productId, data);
+      alert("별점이 수정되었습니다.");
+      window.location.href = "/userInfo/review/";
+    } catch (err) {
+      alert(err);
+    }
+  }
 });
