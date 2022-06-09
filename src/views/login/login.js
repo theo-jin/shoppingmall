@@ -45,9 +45,6 @@ async function handleSubmit(e) {
     // api 요청 결과 token 값을 반환함
     const result = await Api.post("/api/login", data);
 
-    sessionStorage.setItem("token", result.token)
-    sessionStorage.setItem("role", result.role)
-
     // 로그인 성공, 토큰은 쿠키에 저장
     if (result) {
       alert(`정상적으로 로그인되었습니다.`);

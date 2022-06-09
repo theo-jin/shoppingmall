@@ -6,6 +6,7 @@ function adminAuthorized(req, res, next) {
       console.log("권한이 없는 사용자가 접근하였습니다.")
       throw new Error("권한이 없습니다.")
     }
+    
     next();
   } catch (error) {
     // 401: Unauthorized
