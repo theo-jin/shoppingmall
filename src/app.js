@@ -29,7 +29,7 @@ app.use(passport.initialize());
 passportConfig();
 
 // cookie
-app.use(cookieParser());
+app.use(cookieParser("ElIcEKeY"));
 
 // html, css, js 라우팅
 app.use(viewsRouter);

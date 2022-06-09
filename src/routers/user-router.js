@@ -70,6 +70,8 @@ userRouter.post("/login", async function (req, res, next) {
             maxAge: 1000 * 60 * 60 * 24,
             // web server에서만 접근
             httpOnly: true,
+            // 암호화
+            signed: true,
           });
           // role을 cookie에 담아서 보냄
           res.cookie("role", role, {
@@ -77,6 +79,8 @@ userRouter.post("/login", async function (req, res, next) {
             maxAge: 1000 * 60 * 60 * 24,
             // web server에서만 접근
             httpOnly: true,
+            // 암호화
+            signed: true,
           });
 
           res.status(200).json({ message: "OK" });
@@ -123,6 +127,8 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
             maxAge: 1000 * 60 * 60 * 24,
             // web server에서만 접근
             httpOnly: true,
+            // 암호화
+            signed: true,
           });
           // cookie
           res.cookie("role", role, {
@@ -130,6 +136,8 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
             maxAge: 1000 * 60 * 60 * 24,
             // web server에서만 접근
             httpOnly: true,
+            // 암호화
+            signed: true,
           });
         } catch (error) {
           next(error);
