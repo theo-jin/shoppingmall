@@ -14,7 +14,7 @@ function loginRequired(req, res, next) {
       if (!user) {
         throw new Error("사용자를 찾을 수 없습니다.");
       }
-      req.currentUserId = user._id;
+      req.currentUserId = user._id.toString();
       next();
     } catch (err) {
       next(err);

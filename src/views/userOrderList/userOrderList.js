@@ -44,7 +44,7 @@ async function renderDataFromApi() {
       <span>${productList}</span>
       <span>${userStatus}</span>
       <button class="deleteButton">X</button>
-       <span class="id">${el._id}</span>
+      <span class="id">${el._id}</span>
     </div>`;
   });
 

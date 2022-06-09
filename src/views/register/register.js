@@ -81,7 +81,9 @@ async function handleSubmit(e) {
     // 자동로그인
     const result = await Api.post("/api/login", { email, password });
     // 로그인 성공,
-    if (result.message === "OK") {
+    if (result.status === 200) {
+      const role = await Api.get("/api/role");
+      sessionStorage.setItem(role);
       // 기본 페이지로 이동
       window.location.href = "/";
     }

@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -12,23 +13,17 @@
   font-family: "Jua", sans-serif;
 }
 
-.div-container {
-  display: flex;
-  /* align-items: center; */
-  justify-content: center;
-  height: 550px;
-  background-color: #b8dff8;
-  margin: 3% auto;
+.userTitle {
+  text-align: center;
+  margin: 2% auto;
 }
 
-.landing {
-  margin-top: 7px;
+div.column {
+  color: black !important;
 }
-.userTitle {
-  margin: 2% 40% 4% 45%;
-}
+
 .mainContainer {
-  width: 1024px;
+  width: 1300px;
   margin: 0 auto;
   text-align: center;
 }
@@ -38,31 +33,12 @@
   padding: 10px;
 }
 
-.userMenu {
-  margin: 2% 2% 2% 2%;
+.mainContainer > div.notification {
+  margin-bottom: 10px;
 }
 
-.userIcon {
-  align-items: flex-start;
-  font-size: 40px;
-}
-.menuIcon {
-  height: 60px;
-}
-
-#addNotice {
-  cursor: pointer;
-  text-align: center;
-  line-height: 50px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #d5e5f5;
-  position: fixed;
-  right: 10%;
-  bottom: 100px;
-}
-
-#addNotice:hover {
-  background-color: #8ea5bd;
+.mainContainer > div.textContent {
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.229);
+  border: rgba(0, 0, 0, 0.229) 0px solid;
+  margin-bottom: 30px;
 }

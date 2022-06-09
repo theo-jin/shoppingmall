@@ -43,6 +43,7 @@ class OrderService {
       // 리뷰 생성
       const createdNewReview = await scoreModel.create({
         userId: createdNewOrder.userId,
+        orderId: createdNewOrder._id.toString(),
         product: {
           productId: products[index].productId,
           productName: products[index].productName,

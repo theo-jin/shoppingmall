@@ -2,7 +2,7 @@ import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired, adminAuthorized } from "../middlewares";
-import { orderService } from "../services";
+import { scoreService, orderService } from "../services";
 
 const orderRouter = Router();
 
@@ -52,8 +52,7 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
     const userId = req.currentUserId;
 
     // req (request)의 body 에서 데이터 가져오기
-    const { fullName, phoneNumber, address, products, totalPrice } =
-      req.body;
+    const { fullName, phoneNumber, address, products, totalPrice } = req.body;
 
     // 위 데이터를 주문 정보 db에 추가하기
     const newOrder = await orderService.addOrder({
@@ -92,16 +91,19 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
     }
 
     // 관리자 권한이거나 사용자 정보가 일치할 때 삭제
-    let deletedResult;
     if (userRole === "admin" || orderUserId === userId) {
-      deletedResult = await orderService.deleteOrderId(orderId);
+      const deletedResult = await orderService.deleteOrderId(orderId);
+      if (deletedResult.deletedCount !== 1) {
+        throw new Error(`${deletedOrder}을 삭제 실패했습니다.`);
+      }
+      // 리뷰 삭제
+      const deletedReview = await scoreService.deleteOrderId(order._id.toString());
+      if (deletedReview.deletedCount !== 1) {
+        throw new Error(`리뷰를 삭제 실패했습니다.`);
+      }
     }
-
     //삭제 성공
-    if (deletedResult.deletedCount !== 1) {
-      throw new Error(`${deletedOrder}을 삭제 실패했습니다.`);
-    }
-    res.status(201).json({ message: "OK" });
+    res.status(200).json({ message: "OK" });
   } catch (error) {
     next(error);
   }

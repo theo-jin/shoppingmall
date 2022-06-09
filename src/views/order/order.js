@@ -1,5 +1,9 @@
 import * as Api from "/api.js";
-import { validatePhoneNumber, addCommas, convertToNumber } from "/useful-functions.js";
+import {
+  validatePhoneNumber,
+  addCommas,
+  convertToNumber,
+} from "/useful-functions.js";
 import { changeNavbar } from "/changeNavbar.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -62,10 +66,14 @@ async function getDirectItem() {
   const data = sessionStorage.getItem("product");
   const itemData = JSON.parse(data);
   console.log(itemData);
-  $("#productList").innerHTML += `<tr><td class="productName">${itemData.name}</td>
+  $("#productList").innerHTML += `<tr><td class="productName">${
+    itemData.name
+  }</td>
             <td class="productPrice">${addCommas(itemData.price)}</td>
             <td class="productNumber">${itemData.count}</td>
-            <td class="productTotal">${addCommas(itemData.price * itemData.count)}</td></tr>`;
+            <td class="productTotal">${addCommas(
+              itemData.price * itemData.count
+            )}</td></tr>`;
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
     `<label class="totaPrice" id="totalUserPrice">${addCommas(
@@ -74,7 +82,11 @@ async function getDirectItem() {
   );
 
   const products = new Array();
-  products.push({ productId: itemData.productId,productName: itemData.name, productCount: itemData.count });
+  products.push({
+    productId: itemData.productId,
+    productName: itemData.name,
+    productCount: itemData.count,
+  });
 }
 
 // 카트에서 주문상품 데이터 받아오기
@@ -86,9 +98,15 @@ async function getCartItem() {
     $("#productList").innerHTML += `<tr><td class="productName">${el.name}</td>
             <td class="productPrice">${addCommas(el.price)}<span>원</span></td>
             <td class="productNumber">${el.count}</td>
-            <td class="productTotal">${addCommas(el.price * el.count)}<span>원</span></td></tr>`;
+            <td class="productTotal">${addCommas(
+              el.price * el.count
+            )}<span>원</span></td></tr>`;
 
-    products.push({ productId: el.productId, productName: el.name, productCount: el.count });
+    products.push({
+      productId: el.productId,
+      productName: el.name,
+      productCount: el.count,
+    });
   });
   const totalPriceList = $$(".productTotal");
   let price = 0;
@@ -98,7 +116,9 @@ async function getCartItem() {
 
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
-    `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}<span>원</span></label>`
+    `<label class="totaPrice" id="totalUserPrice">${addCommas(
+      price
+    )}<span>원</span></label>`
   );
 }
 
@@ -106,20 +126,35 @@ async function getCartItem() {
 async function handleSubmit(e) {
   e.preventDefault();
   const products = new Array();
+
+  // 이전 주소
   const before = document.referrer;
+
+  // 상품 상세정보에서 넘어왔을 때
   if (before.split("/")[4] == "product-detail") {
     const data = sessionStorage.getItem("product");
     const itemData = JSON.parse(data);
-    products.push({ productId: itemData.productId,productName: itemData.name, productCount: itemData.count });
-  
-  } else if (before.split("/")[3] == "cart") {
+    console.log(itemData);
+    products.push({
+      productId: itemData.productId,
+      productName: itemData.name,
+      productCount: itemData.count,
+    });
+  }
+  // 카트에서 넘어왔을 때
+  else if (before.split("/")[3] == "cart") {
     const data = sessionStorage.getItem("cartProduct");
     const itemData = JSON.parse(data);
     itemData.forEach((el) => {
-      products.push({  productId: el.productId, productName: el.name, productCount: el.count });
+      products.push({
+        productId: el.productId,
+        productName: el.name,
+        productCount: el.count,
+      });
     });
   }
 
+  // 사용자 정보 설정
   const fullName = $("#fullNameInput").value;
   const postalCode = $("#addressInput").value;
   const address1 = $("#address1Input").value;
@@ -131,7 +166,6 @@ async function handleSubmit(e) {
   };
   const phoneNumber = $("#phoneInput").value;
   const totalPrice = convertToNumber($("#totalUserPrice").innerHTML);
-  const status = "Information Received";
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -144,8 +178,14 @@ async function handleSubmit(e) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
   try {
-    console.log(products);
-    const data = { fullName, phoneNumber, address, status, products, totalPrice };
+    // db에 저장할 데이터
+    const data = {
+      fullName,
+      phoneNumber,
+      address,
+      products,
+      totalPrice,
+    };
 
     await Api.post("/api/order/complete", data);
 

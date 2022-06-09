@@ -124,7 +124,7 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
           //token을 cookie에 담아서 보냄
           res.cookie("token", token, {
             // 1일
-            maxAge: 1000 * 60 * 60 * 24,
+            maxAge: 1000 * 60 * 60 * 24 * 3,
             // web server에서만 접근
             httpOnly: true,
             // 암호화
@@ -133,7 +133,7 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
           // cookie
           res.cookie("role", role, {
             // 1일
-            maxAge: 1000 * 60 * 60 * 24,
+            maxAge: 1000 * 60 * 60 * 24 * 3,
             // web server에서만 접근
             httpOnly: true,
             // 암호화
@@ -176,9 +176,9 @@ userRouter.get("/user", loginRequired, async function (req, res, next) {
     // loginRequired에서 decoded된 userId
     const userId = req.currentUserId;
     // 선택 사용자 정보를 얻음
-    const users = await userService.getUserInfo(userId);
+    const user = await userService.getUserInfo(userId);
     // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(users);
+    res.status(200).json(user);
   } catch (error) {
     console.log(error);
     next(error);
