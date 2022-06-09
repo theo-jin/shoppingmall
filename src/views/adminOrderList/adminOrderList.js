@@ -42,12 +42,22 @@ async function renderDataFromApi() {
     <span>${productList}</span>
     <span>
       <select class="statusMessage" id="requestInput">
-      <option selected>${userStatus}</option>
-        <option>주문완료</option>
-        <option>상품준비중</option>
-        <option>배송준비중</option>
-        <option>배송중</option>
-        <option>배송완료</option>
+      
+        <option ${
+          userStatus === '주문완료' && 'selected'
+        }>주문완료</option>
+        <option ${
+          userStatus === '상품준비중' && 'selected'
+        }>상품준비중</option>
+        <option ${
+          userStatus === '배송준비중' && 'selected'
+        }>배송준비중</option>
+        <option ${
+          userStatus === '배송중' && 'selected'
+        }>배송중</option>
+        <option ${
+          userStatus === '배송완료' && 'selected'
+        }>배송완료</option>
       </select>
     </span>
     <button class="deleteButton">X</button>
