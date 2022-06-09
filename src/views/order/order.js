@@ -1,5 +1,5 @@
 import * as Api from "/api.js";
-import { validatePhoneNumber,addCommas,convertToNumber } from "/useful-functions.js";
+import { validatePhoneNumber, addCommas, convertToNumber } from "/useful-functions.js";
 import { changeNavbar } from "/changeNavbar.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -24,7 +24,7 @@ function addAllEvents() {
 
 // 로그인시에만 주문이 가능함
 function checkLogin() {
-  if (!document.cookie) {
+  if (!sessionStorage.getItem("role")) {
     alert("로그인 후 이용가능한 서비스입니다.");
     window.location.href = "/login";
   }
@@ -33,8 +33,9 @@ function checkLogin() {
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
   const data = await Api.get("/api/user");
+
   $("#fullNameInput").value = data.fullName;
-  $("#phoneInput").value = data.phoneNumber?data.phoneNumber:"";
+  $("#phoneInput").value = data.phoneNumber ? data.phoneNumber : "";
   const getAddress = data.address;
   $("#addressInput").value = getAddress.postalCode;
   $("#address1Input").value = getAddress.address1;
@@ -55,12 +56,11 @@ function findAddress(e) {
 }
 
 // 이전경로 판별
-async function getItemData(){
-  const before=document.referrer;
-  if(before.split("/")[4]=="product-detail"){
+async function getItemData() {
+  const before = document.referrer;
+  if (before.split("/")[4] == "product-detail") {
     getDirectItem();
-  }
-  else if(before.split("/")[3]=="cart"){
+  } else if (before.split("/")[3] == "cart") {
     getCartItem();
   }
 }
@@ -76,7 +76,9 @@ async function getDirectItem() {
             <td class="productTotal">${addCommas(itemData.price * itemData.count)}</td></tr>`;
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
-    `<label class="totaPrice" id="totalUserPrice">${addCommas(itemData.price * itemData.count)}</label>`
+    `<label class="totaPrice" id="totalUserPrice">${addCommas(
+      itemData.price * itemData.count
+    )}</label>`
   );
 
   const products = new Array();
@@ -93,35 +95,33 @@ async function getCartItem() {
             <td class="productPrice">${addCommas(el.price)}</td>
             <td class="productNumber">${el.count}</td>
             <td class="productTotal">${addCommas(el.price * el.count)}</td></tr>`;
-    
-  products.push({ productName: el.name, productCount: el.count });
+
+    products.push({ productName: el.name, productCount: el.count });
   });
-  const totalPriceList =$$(".productTotal");
+  const totalPriceList = $$(".productTotal");
   let price = 0;
   totalPriceList.forEach((el) => {
-    price+=Number(convertToNumber(el.innerHTML));
+    price += Number(convertToNumber(el.innerHTML));
   });
 
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
     `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}</label>`
   );
-  
 }
 
 // 주문자 데이터와 주문상품 데이터 DB에 보내기(주문자 이름, 연락처, 주소, 총액),
 async function handleSubmit(e) {
   e.preventDefault();
   const products = new Array();
-  const before=document.referrer;
-  if(before.split("/")[4]=="product-detail"){
+  const before = document.referrer;
+  if (before.split("/")[4] == "product-detail") {
     const data = sessionStorage.getItem("product");
     const itemData = JSON.parse(data);
     data.forEach((el) => {
       products.push({ productName: el.name, productCount: el.count });
     });
-  }
-  else if(before.split("/")[3]=="cart"){
+  } else if (before.split("/")[3] == "cart") {
     const data = sessionStorage.getItem("cartProduct");
     const itemData = JSON.parse(data);
     itemData.forEach((el) => {

@@ -43,6 +43,7 @@ async function logout() {
   const logOut = navbar.children[navbar.children.length - 2];
   logOut.addEventListener("click", async () => {
     sessionStorage.removeItem("role");
+    sessionStorage.removeItem("token");
     await Api.get("/api/logout");
     window.location.href = "/";
   });

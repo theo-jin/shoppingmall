@@ -41,8 +41,10 @@ async function handleSubmit(e) {
 
     // api 요청 결과 token 값을 반환함
     const result = await Api.post("/api/login", data);
+    const token = result.headers.get("Authorization");
+    sessionStorage.setItem("token", token);
     // 로그인 성공
-    if (result.message === "OK") {
+    if (result.status === 200) {
       alert(`정상적으로 로그인되었습니다.`);
       const { role } = await Api.get("/api/role");
       sessionStorage.setItem("role", role);

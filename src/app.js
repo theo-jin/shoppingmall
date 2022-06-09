@@ -17,8 +17,11 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 // CORS 에러 방지
-app.use(cors({}));
-
+app.use(
+  cors({
+    exposedHeaders: ["Authorization"],
+  })
+);
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
 
@@ -30,7 +33,7 @@ app.use(passport.initialize());
 passportConfig();
 
 // cookie
-app.use(cookieParser())
+app.use(cookieParser());
 
 // html, css, js 라우팅
 app.use(viewsRouter);
