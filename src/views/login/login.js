@@ -39,10 +39,7 @@ async function handleSubmit(e) {
   try {
     const data = { email, password };
 
-    // api 요청 결과 token 값을 반환함
     const result = await Api.post("/api/login", data);
-    const token = result.headers.get("Authorization");
-    sessionStorage.setItem("token", token);
     // 로그인 성공
     if (result.status === 200) {
       alert(`정상적으로 로그인되었습니다.`);

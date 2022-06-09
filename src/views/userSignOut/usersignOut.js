@@ -16,9 +16,9 @@ async function userSignOut(e) {
 
   // 회원 정보 삭제 api 요청
   try {
-    const res = await Api.delete("/api/");
+    await Api.delete("/api/");
     alert(`회원탈퇴 완료하였습니다.감사합니다.`);
-    deleteCookie("token");
+    sessionStorage.removeItem("role");
     //홈으로 이동.
     window.location.href = "/";
   } catch (err) {

@@ -3,12 +3,12 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
-  color:#434373 !important;
+  color: #434373 !important;
 }
 .brandLogo {
-    font-size: xx-large;
-    font-weight: bold;
-    font-family: "Jua", sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
 }
 .order-user-form-container {
   display: flex;
@@ -19,6 +19,12 @@
 
 .order-user-form-box {
   width: 30rem;
+}
+
+.order-product-form-box .label {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 5px;
 }
 
 .order-user-form-box .title {
@@ -34,7 +40,7 @@
   box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
 }
 
-.order-product-form-box{
+.order-product-form-box {
   width: 30rem;
 }
 .order-product-form-box .title {
@@ -50,43 +56,56 @@
   box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
 }
 
-form{
+form {
   margin: 0% 2% 2% 2%;
 }
 
-.userTitle{
+.userTitle {
   margin: 2% 40% 4% 45%;
 }
 
-#totalProductPrice{
-  float:right;
+#totalProductPrice {
+  float: right;
 }
 /* table */
-.productName{
+.productName {
   clear: both;
-  width:25% !important;
+  width: 25% !important;
 }
-.productPrice{
-  width:25% !important;
+.productPrice {
+  width: 25% !important;
 }
-.productNumber{
-  width:15%;
+.productNumber {
+  width: 15%;
 }
-.productTotal{
+.productTotal {
   width: 25% !important;
   text-align: right;
 }
-.productTitle{
+.productTitle {
   background-color: #dee8e6;
   font-weight: bold;
 }
-#submitButton{
+
+#productList tr {
+  border: 10px solid transparent;
+}
+
+#submitButton {
   margin-top: 15%;
-  background-color:#434373;
+  background-color: #434373;
   color: white !important;
 }
 /* table */
-table{
+table {
   table-layout: fixed;
-  width:100%;
+  width: 100%;
+}
+
+.order-product-form-box label.totalPayment {
+  text-align: right;
+}
+
+#totalUserPrice {
+  font-size: 30px;
 }

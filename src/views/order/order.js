@@ -92,9 +92,9 @@ async function getCartItem() {
   const products = new Array();
   itemData.forEach((el) => {
     $("#productList").innerHTML += `<tr><td class="productName">${el.name}</td>
-            <td class="productPrice">${addCommas(el.price)}</td>
+            <td class="productPrice">${addCommas(el.price)}<span>원</span></td>
             <td class="productNumber">${el.count}</td>
-            <td class="productTotal">${addCommas(el.price * el.count)}</td></tr>`;
+            <td class="productTotal">${addCommas(el.price * el.count)}<span>원</span></td></tr>`;
 
     products.push({ productName: el.name, productCount: el.count });
   });
@@ -106,7 +106,7 @@ async function getCartItem() {
 
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
-    `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}</label>`
+    `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}<span>원</span></label>`
   );
 }
 
