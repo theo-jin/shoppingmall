@@ -62,6 +62,12 @@ userRouter.post("/login", async function (req, res, next) {
         if (!token && !role) {
           throw new Error("로그인에 실패했습니다.");
         }
+        res.cookie("role", role, {
+          // 1일
+          maxAge: 1000 * 60 * 60 * 24,
+          // web server에서만 접근
+          httpOnly: true,
+        })
 
         // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
         res.status(200).json({ token, role });
