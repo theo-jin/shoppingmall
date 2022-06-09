@@ -70,7 +70,10 @@ async function allProductsLanding(getCategory) {
   editButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
-      const prevProductName = e.target.classList[0];
+      const prevProductName = e.target.parentNode.querySelectorAll("span")[1].innerHTML;
+      editProductName.value = e.target.parentNode.querySelectorAll("span")[1].innerHTML;
+      editProductDescription.value = e.target.parentNode.querySelectorAll("span")[3].innerHTML;
+
       // 상품 수정 이벤트 리스너
       editProductBtn.addEventListener("click", async () => {
         let category = getCategory[editProductCategory.value - 1];
@@ -114,7 +117,7 @@ async function allProductsLanding(getCategory) {
   // 클릭 시 상품 삭제 api 요청 후 상품 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
-      const productName = e.target.classList[0];
+      const productName = e.target.parentNode.querySelectorAll("span")[1].innerHTML;
       if (confirm("상품을 삭제하시겠습니까?")) {
         await Api.delete("/api/product/" + productName);
         window.location.href = "/admin/manageProduct/";
@@ -132,8 +135,8 @@ function createProductList(data) {
     <span>${el.category}</span>
     <span>${el.productContent}</span>
     <span>${el.productPrice.toLocaleString()}</span>
-    <button class="${el.foodType} button editButton">수정</button>
-    <button class="${el.foodType} button deleteButton">삭제</button>
+    <button class="button editButton">수정</button>
+    <button class="button deleteButton">삭제</button>
     </div>`
   );
 }
