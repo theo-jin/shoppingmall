@@ -39,6 +39,7 @@ async function productDetailLanding() {
     const productName = getData.productName;
     const prevData = JSON.parse(sessionStorage.getItem(productName));
     const data = {
+      productId: productId,
       count: prevData
         ? Number(prevData.count) + Number(productCount.value)
         : Number(productCount.value),
