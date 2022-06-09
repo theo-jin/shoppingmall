@@ -21,10 +21,10 @@ async function noticeLanding() {
 function createNoticeList(data) {
   return data.map(
     (el) => `
-  <div class="columns orders-item" id="order">
-    <div class="column is-1">${el.createdAt.split("T")[0]}</div>
-    <div class="column is-2 order-summary">${el.title}</div>
-    <div class="column is-10">${el.content}</div>
+  <div class="columns textContent" >
+    <div class="column is-2">${el.createdAt.split("T")[0]}</div>
+    <div class="column is-3 order-summary">${el.title}</div>
+    <div class="column is-7">${el.content}</div>
   </div>
   `
   );
