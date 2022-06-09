@@ -32,32 +32,11 @@ authRouter.get("/google/callback", async function (req, res, next) {
           throw new Error("로그인에 실패했습니다.");
         }
 
-        // 일반 사용자일 경우 cookie를 설정하지 않음
-        // 관리자일 경우 cookie 설정
-        res.cookie("token", token, {
-          // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-          maxAge: 60 * 60 * 24 * 7 * 1000,
-          // FIXME
-          // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-          // web server에서만 쿠키에 접근할 수 있도록 설정
-          httpOnly: false,
-          // https에서만 cookie를 사용할 수 있게 설정
-          secure: false,
-          // 암호화
-          signed: true,
-        });
-        res.cookie("role", role, {
-          // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-          maxAge: 60 * 60 * 24 * 7 * 1000,
-          // FIXME
-          // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-          // web server에서만 쿠키에 접근할 수 있도록 설정
-          httpOnly: false,
-          // https에서만 cookie를 사용할 수 있게 설정
-          secure: false,
-          // 암호화
-          signed: true,
-        });
+        // role을 session에 저장
+        sessionStorage.setItem("role", role);
+        // token을 header에 저장
+        sessionStorage.setItem("Authorization", auth)
+
         res.redirect("http://localhost:5000");
       }
     )(req, res);

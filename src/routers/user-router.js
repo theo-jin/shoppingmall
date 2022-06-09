@@ -2,6 +2,7 @@ import { Router } from "express";
 //type check
 import is from "@sindresorhus/is";
 import passport from "passport";
+import sessionStorage from "sessionstorage";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired, adminAuthorized } from "../middlewares";
 import { userService } from "../services";
@@ -63,38 +64,13 @@ userRouter.post("/login", async function (req, res, next) {
           throw new Error("로그인에 실패했습니다.");
         }
 
-        // 일반 사용자일 경우 cookie를 설정하지 않음
-        // 관리자일 경우 cookie 설정
-        res.cookie("token", token, {
-          // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-          maxAge: 60 * 60 * 24 * 7 * 1000,
-          // FIXME
-          // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-          // web server에서만 쿠키에 접근할 수 있도록 설정
-          httpOnly: false,
-          // https에서만 cookie를 사용할 수 있게 설정
-          secure: false,
-          // 암호화
-          signed: true,
-        });
-
-        if (role !== null) {
-          res.cookie("role", role, {
-            // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-            maxAge: 60 * 60 * 24 * 7 * 1000,
-            // FIXME
-            // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-            // web server에서만 쿠키에 접근할 수 있도록 설정
-            httpOnly: false,
-            // https에서만 cookie를 사용할 수 있게 설정
-            secure: false,
-            // 암호화
-            signed: true,
-          });
-        }
-
+        // role을 session에 저장
+        sessionStorage.setItem("role", role);
+        // token을 header에 저장
+        sessionStorage.setItem("Authorization", auth)
+        
         // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-        res.status(200).json({message: "OK"});
+        res.json({ message: "OK" });
       });
     })(req, res);
   } catch (error) {
@@ -126,6 +102,7 @@ userRouter.get("/user", loginRequired, async function (req, res, next) {
   try {
     // loginRequired에서 decoded된 userId
     const userId = req.currentUserId;
+    console.log(userId);
 
     // 선택 사용자 정보를 얻음
     const users = await userService.getUserInfo(userId);
@@ -223,12 +200,7 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
 
 userRouter.get("/logout", async function (req, res, next) {
   try {
-    res.cookie("token", null, {
-      maxAge: 0,
-    });
-    res.cookie("role", null, {
-      maxAge: 0,
-    });
+    req.session.destroy();
 
     res.status(200).json({ message: "OK" });
   } catch (error) {

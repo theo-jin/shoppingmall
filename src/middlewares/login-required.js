@@ -1,7 +1,9 @@
 import passport from "passport";
 
 function loginRequired(req, res, next) {
-  if (!req.signedCookies.token) {
+  const token = req.headers.authorization?.split(' ')[1]
+  console.log(token)
+  if (!token) {
     next();
     return;
   }
