@@ -52,7 +52,7 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
     const userId = req.currentUserId;
 
     // req (request)의 body 에서 데이터 가져오기
-    const { fullName, phoneNumber, address, products, status, totalPrice } =
+    const { fullName, phoneNumber, address, products, totalPrice } =
       req.body;
 
     // 위 데이터를 주문 정보 db에 추가하기
