@@ -118,7 +118,6 @@ async function handleSubmit(e) {
   if (before.split("/")[4] == "product-detail") {
     const data = sessionStorage.getItem("product");
     const itemData = JSON.parse(data);
-    console.log(itemData);
     products.push({ productId: itemData.productId,productName: itemData.name, productCount: itemData.count });
   
   } else if (before.split("/")[3] == "cart") {
@@ -153,6 +152,7 @@ async function handleSubmit(e) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
   try {
+    console.log(products);
     const data = { fullName, phoneNumber, address, status, products, totalPrice };
 
     await Api.post("/api/order/complete", data);
