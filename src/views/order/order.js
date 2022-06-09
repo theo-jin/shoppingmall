@@ -186,7 +186,6 @@ async function handleSubmit(e) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
   try {
-
     // db에 저장할 데이터
     const data = {
       fullName,

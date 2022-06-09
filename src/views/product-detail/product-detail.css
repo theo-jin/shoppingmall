@@ -34,6 +34,7 @@
 
 .imgDiv {
   width: 700px;
+  height: 500px;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.267);

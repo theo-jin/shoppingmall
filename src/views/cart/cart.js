@@ -58,7 +58,7 @@ function getProduct() {
 function createDataContainer(getProductList) {
   return getProductList.map(
     (el) =>
-      `<div class="productBox">
+      `<div class="productBox" id=${el.productId}>
       <input class="checkbox" type="checkbox" name="check" value=${el.name}>
     <div class="imgBox">
       <img src=${el.Img} alt=${el.name}>
@@ -146,10 +146,12 @@ submitButton.addEventListener("click", () => {
   const productBox = document.querySelectorAll(".productBox");
   const productList = [];
   productBox.forEach((el) => {
+    const productId = el.id;
     const name = el.querySelector(".productName").innerHTML;
     const price = el.querySelector(".productPrice").innerHTML.replace(",", "");
     const count = el.querySelector(".productCount").innerHTML;
     const data = {
+      productId,
       name,
       price,
       count,
