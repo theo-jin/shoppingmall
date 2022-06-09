@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>마이키트</title>
+    <title>마이키트 공지사항</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -22,9 +22,9 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
-    <!-- 커스텀 css, js --> 
-    <link rel="stylesheet" href="product.css" />
-    <script src="product.js" type="module" defer></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="noticeShow.css" />
+    <script src="noticeShow.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -41,7 +41,6 @@
           <a class="navbar-item" href="/new">신상품</a>
           <a class="navbar-item" href="/product?category=1">제품</a>
         </div>
-
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
               <li><a href="/login">로그인</a></li>
@@ -59,22 +58,19 @@
         </div>
       </div>
     </nav>
-    <nav class="navbar menuNav" role="navigation" aria-label="main navigation">
-      <div class="container">
-        <a class="foodItem" href ="/product?category=1">
-          한식 
-        </a>
-        <a class="foodItem" href ="/product?category=2">
-          중식
-        </a>
-        <a class="foodItem" href ="/product?category=3">
-          일식
-        </a>
-        <a class="foodItem" href ="/product?category=4">
-          양식
-        </a>
+
+    <div class="divContainer">
+      <div class="userTitle"><h3 class="title">공지</h3></div>
+      <hr>
+      <div class="mainContainer">
+        <div class="columns notification is-info is-light is-mobile orders-top">
+          <div class="column is-1">날짜</div>
+          <div class="column is-2">내용</div>
+          <div class="column is-10">설명</div>
+        </div>
       </div>  
-    </nav>
-    <div class="containerDiv"></div>
+    </div>
+
+  
   </body>
 </html>

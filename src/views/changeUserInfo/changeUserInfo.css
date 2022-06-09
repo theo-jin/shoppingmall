@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -12,21 +13,23 @@
   font-family: "Jua", sans-serif;
 }
 
+.title {
+  color: #434373;
+}
+
 .div-container {
   display: flex;
   /* align-items: center; */
   justify-content: center;
   height: 550px;
   background-color: antiquewhite;
-  margin: 3% auto;
+  margin: 0 auto;
 }
 
 .change-user-form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  padding: 50px;
   height: 85vh;
 }
 
@@ -40,14 +43,26 @@
 }
 
 .userTitle {
-  margin: 2% 40% 4% 45%;
+  text-align: center;
+  margin: 2% auto;
+}
+
+.change-user-form-container label,
+.change-user-form-container input {
+  color: black !important;
 }
 
 .change-user-form-box .button {
   font-weight: bold;
+  color: white;
+  background-color: #434373;
 }
 
-.change-user-form-box .input:focus {
-  border-color: #00d1b2;
-  box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
+.change-user-form-box .button:hover {
+  background-color: rgb(106, 107, 109);
+}
+
+#checkAddressBtn,
+#submitButton {
+  color: white !important;
 }

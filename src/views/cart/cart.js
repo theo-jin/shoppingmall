@@ -1,160 +1,168 @@
-import { addCommas } from "./../useful-functions.js";
 import { changeNavbar } from "/changeNavbar.js";
 
-const productsCountValue = document.querySelector("#productsCountValue");
-const productCostValue = document.querySelector("#productCostValue");
-const deliveryFeeValue = document.querySelector("#deliveryFeeValue");
-const totalCostValue = document.querySelector("#totalCostValue");
+// 요소(element), input 혹은 상수
+const productContainer = document.querySelector("#productContainer");
+const allProductTotalPrice = document.querySelector("#allProductTotalPrice");
+const submitButton = document.querySelector(".submitButton");
+const backButton = document.querySelector(".backButton");
 
-changeNavbar();
+addAllElements();
 
-//sssion에서 데이터 가져오기.
-const store = {
-  setSessionStorage(product) {
-    sessionStorage.setItem("product", JSON.stringify(product));
-  },
-  getSessionStorage() {
-    return JSON.parse(sessionStorage.getItem("product"));
-  },
-};
+// 장바구니 삭제 요소
+const allClearBtn = document.querySelector(".allClear");
+const selectedClearBtn = document.querySelector(".selectedClear");
 
-function App() {
-  // 상태
-  this.product = [];
+// 장바구니 전체 삭제
+allClearBtn.addEventListener("click", () => {
+  sessionStorage.clear();
+  window.location.reload();
+});
 
-  // 스토리지에서 카트 리스트 불러오기
-  this.init = () => {
-    if (store.getSessionStorage().length > 0) {
-      this.product = store.getSessionStorage();
-      render();
+// 장바구니 선택 삭제
+selectedClearBtn.addEventListener("click", confirmCheckBox);
+
+// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+async function addAllElements() {
+  changeNavbar();
+  const getProductList = getProduct();
+  createDataContainer(getProductList).forEach((el) => (productContainer.innerHTML += el));
+  eventHandler();
+  calculAllProductTotalPrice();
+}
+
+// 선택 삭제를 위해 체크된 박스 확인
+function confirmCheckBox() {
+  const checkboxs = document.querySelectorAll(".checkbox");
+  checkboxs.forEach((el) => {
+    if (el.checked) {
+      sessionStorage.removeItem(el.value);
+      window.location.reload();
     }
-  };
-
-  // 카트 리스트 목록
-  const render = () => {
-    const cartLists = this.product
-      .map((item, index) => {
-        return `
-        <div class="box">
-          <li data-item-id="${index}" class="cart-list-item media">
-            <div class="media-left">
-            <input type="checkbox" class="cart-item" ${item.product}>
-              <figure class="image is-64x64"><img alt="Image" src="${item.image}" /></figure>
-            </div>
-            <div class="media-content product-info">
-              <div class="content">
-                <p>
-                  <strong class="title is-6"> ${item.name} </strong> 
-                  <small class="subtitle is-6"> ${addCommas(item.price)} 원 </small>
-                </p>
-                <p>
-                ${addCommas(item.price)} 원 x ${item.count} 
-                = ${addCommas(item.price * item.count)} 원
-                </p>
-              </div>
-              <nav class="level">
-              <button class="decrease-item button is-rounded"> - </button>
-              <span class="menu-count">${item.count}</span>
-              <button class="increase-item button is-rounded"> + </button>
-              <button class="delete-item button is-rounded"> 삭제 </button>
-              </nav>
-            </div>
-          </li>
-        </div>
-      `;
-      })
-      .join("");
-    document.querySelector("#cartShow").innerHTML = cartLists;
-
-    let itemCounts = 0;
-    let itemPrices = 0;
-    let orderedItem = "";
-    let deliveryFee = 0;
-    this.cart.map((item) => {
-      if (item.cart === "checked") {
-        itemCounts += item.count;
-        itemPrices += item.price * item.count;
-        orderedItem += `${item.name} / ${item.count}개<br />`;
-        deliveryFee = 3000;
-      }
-      productsCountValue.innerHTML = orderedItem;
-      productCostValue.innerText = `${addCommas(itemPrices)} 원`;
-      deliveryFeeValue.innerText = `${addCommas(deliveryFee)} 원`;
-      totalCostValue.innerText = `${addCommas(itemPrices + deliveryFee)} 원`;
-    });
-  };
-
-  // 상품 상태 변경
-  document.querySelector("#cartShow").addEventListener("click", (e) => {
-    const itemId = e.target.closest("li").dataset.itemId;
-
-    // 상품 개수 증가
-    if (e.target.classList.contains("increase-item")) {
-      this.cart[itemId].count++;
-      store.setSessionStorage(this.cart);
-      render();
-    }
-
-    // 상품 개수 감소
-    if (e.target.classList.contains("decrease-item")) {
-      if (this.cart[itemId].count > 2) {
-        this.cart[itemId].count--;
-      } else {
-        this.cart[itemId].count = 1;
-      }
-      store.setSessionStorage(this.cart);
-      render();
-    }
-
-    // 상품 삭제
-    if (e.target.classList.contains("delete-item")) {
-      if (confirm("삭제하시겠습니까?")) {
-        this.cart.splice(itemId, 1);
-        e.target.closest("li").remove();
-        store.setSessionStorage(this.cart);
-        render();
-      }
-    }
-
-    // 상품 선택
-    if (e.target.classList.contains("cart-item")) {
-      if (this.cart[itemId].cart === "checked") {
-        this.cart[itemId].cart = "";
-      } else {
-        this.cart[itemId].cart = "checked";
-      }
-      store.setSessionStorage(this.cart);
-      render();
-    }
-  });
-
-  // 상품 전체 삭제
-  const deleteAll = document.querySelector("#allDelete");
-  deleteAll.addEventListener("click", () => {
-    alert("장바구니에 있는 모든 상품을 삭제합니다.");
-    this.cart = [];
-    sessionStorage.clear();
-    render();
-  });
-
-  // 상품 선택 삭제
-  const deleteSelection = document.querySelector("#selectDelete");
-  deleteSelection.addEventListener("click", () => {
-    alert("선택한 상품을 삭제합니다.");
-    this.cart = this.cart.filter((item) => item.cart !== "checked");
-    store.setSessionStorage(this.cart);
-
-    render();
   });
 }
 
-//결제버튼
-const purchaseButton = document.querySelector("#purchaseButton");
-purchaseButton.addEventListener("click", () => {
-  if (!confirm("정말 구매하시겠습니까?")) return;
+// 세션스토리지에서 데이터 가져오기
+function getProduct() {
+  const productkeys = Object.keys(sessionStorage);
+  const productList = [];
+  productkeys.forEach((el) => {
+    // 바로 주문하기 데이터, 장바구니에서 주문하기로 넘겨주는 데이터, 별점 관련 데이터 제외
+    if (el !== "product" && el !== "cartProduct" && el !== "data") {
+      productList.push(JSON.parse(sessionStorage.getItem(el)));
+    }
+  });
+  return productList;
+}
+
+// 상품 데이터를 html 요소로 전환
+function createDataContainer(getProductList) {
+  return getProductList.map(
+    (el) =>
+      `<div class="productBox">
+      <input class="checkbox" type="checkbox" name="check" value=${el.name}>
+    <div class="imgBox">
+      <img src=${el.Img} alt=${el.name}>
+    </div>
+    <div class="detailBox">
+      <p>상품명: 
+        <span class="productName">${el.name}</span>
+      </p>
+      <p>상품가격: 
+        <span class="productPrice">${el.price.toLocaleString()}</span>원
+      </p>
+      <div class="orderCount">주문수량: 
+        <button class="add"> + </button>
+        <span class="productCount">${el.count}</span> 
+        <button class="del"> - </button>
+      </div>
+      <p>합계: 
+        <span class="totalPrice">${(el.price * el.count).toLocaleString()}</span>원
+      </p> 
+      <div>
+        <button class="delItem">제거</button>
+      </div>
+    </div>
+  </div>`
+  );
+}
+
+// 최초 로딩 시 총 합계 금액 계산
+function calculAllProductTotalPrice() {
+  const totalPriceList = document.querySelectorAll(".totalPrice");
+  let price = 0;
+  totalPriceList.forEach((el) => {
+    price += Number(el.innerHTML.replace(",", ""));
+  });
+  allProductTotalPrice.innerHTML = price.toLocaleString();
+}
+
+// 이벤트 핸들러
+function eventHandler() {
+  document.querySelectorAll(".productBox").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      // 총 합계 금액
+      const currentAllPrice = Number(allProductTotalPrice.innerHTML.replace(",", ""));
+
+      // 상품 수량 증가
+      if (e.target.classList.contains("add")) {
+        const countTag = el.querySelector(".productCount");
+        const priceTag = el.querySelector(".productPrice");
+        const totalPriceTag = el.querySelector(".totalPrice");
+
+        let price = Number(priceTag.innerHTML.replace(",", ""));
+        let count = Number(countTag.innerHTML);
+        countTag.innerHTML = ++count;
+        totalPriceTag.innerHTML = `${(count * price).toLocaleString()}`;
+        allProductTotalPrice.innerHTML = (currentAllPrice + price).toLocaleString();
+      }
+
+      // 상품 수량 감소
+      if (e.target.classList.contains("del")) {
+        const countTag = el.querySelector(".productCount");
+        const priceTag = el.querySelector(".productPrice");
+        const totalPriceTag = el.querySelector(".totalPrice");
+
+        let price = Number(priceTag.innerHTML.replace(",", ""));
+        let count = Number(countTag.innerHTML);
+        if (count * price > 0) {
+          countTag.innerHTML = --count;
+          totalPriceTag.innerHTML = `${(count * price).toLocaleString()}`;
+          allProductTotalPrice.innerHTML = (currentAllPrice - price).toLocaleString();
+        }
+      }
+
+      // 상품 제거
+      if (e.target.classList.contains("delItem")) {
+        const productName = el.querySelector(".productName").innerHTML;
+        sessionStorage.removeItem(productName);
+        window.location.reload();
+      }
+    });
+  });
+}
+
+// 주문하기
+submitButton.addEventListener("click", () => {
+  const productBox = document.querySelectorAll(".productBox");
+  const productList = [];
+  productBox.forEach((el) => {
+    const name = el.querySelector(".productName").innerHTML;
+    const price = el.querySelector(".productPrice").innerHTML.replace(",", "");
+    const count = el.querySelector(".productCount").innerHTML;
+    const data = {
+      name,
+      price,
+      count,
+    };
+    productList.push(data);
+  });
+  sessionStorage.setItem("cartProduct", JSON.stringify(productList));
   window.location.href = "/order";
-  render();
 });
 
-const app = new App();
-app.init();
+// 돌아가기
+backButton.addEventListener("click", () => {
+  if (document.referrer) {
+    window.location.href = document.referrer;
+  }
+});

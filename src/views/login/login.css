@@ -31,3 +31,18 @@
 .login-form-box .button {
   font-weight: bold;
 }
+
+.login-form-container p.title {
+  color: #485fc7 !important;
+  font-size: xx-large !important;
+}
+
+label.label {
+  color: black !important;
+  font-size: large;
+  font-weight: 400;
+}
+
+#submitButton {
+  color: white !important;
+}

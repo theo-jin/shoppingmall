@@ -14,13 +14,14 @@ async function addAllElements() {
 
 // html에 출력해주는 함수
 async function insertTextToLanding() {
-  const category = getCategory();
+  const categoryList = await getCategoryFromApi();
+  const category = getCategory(categoryList);
   const getData = await getDataFromApi(category);
   const productList = createProductList(getData);
   if (typeof productList == "object") {
     productList.forEach((el) => (containerDiv.innerHTML += el));
   } else {
-    containerDiv.innerHTML = productList;
+    containerDiv.innerHTML= productList;
   }
 }
 
@@ -46,24 +47,18 @@ function createProductList(data) {
 }
 
 // api를 요청하기 위해서 쿼리를 통해 전달받은 카테고리를 변수로 사용
-function getCategory() {
+function getCategory(categoryList) {
   let params = new URL(document.location).searchParams;
-  let category = params.get("category");
-  switch (category) {
-    case "krFood":
-      return "한식";
-    case "jpFood":
-      return "일식";
-    case "chFood":
-      return "중식";
-    case "wsFood":
-      return "양식";
-    default:
-      return "기타";
-  }
+  let index = params.get("category");
+  return categoryList[index - 1];
 }
 
 async function getDataFromApi(category) {
   const data = await Api.get("/api/product?category", category, true);
+  return data;
+}
+
+async function getCategoryFromApi() {
+  const data = await Api.get("/api/category/name");
   return data;
 }

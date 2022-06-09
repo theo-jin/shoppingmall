@@ -1,13 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
 * {
   font-size: large;
-  font-family: "Poor+Story", sans-serif;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 .brandLogo {
-    font-size: xx-large;
-    font-weight: bold;
-    font-family: "Jua", sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
 }
 .orderlistpageContainer {
   display: flex;
@@ -28,7 +30,7 @@
   font-size: 30px;
   font-weight: 600;
   text-align: center;
-  color:#434373;
+  color: #434373;
   font-family: "Jua", sans-serif;
 }
 
@@ -38,21 +40,29 @@
   font-weight: bold;
 }
 
-.listTitle span, .orderItem span {
+.listTitle span,
+.orderItem span {
   padding: 12px;
   text-align: center;
+  font-family: "Poor+Story", sans-serif !important;
+  color: black !important;
 }
 
-.listTitle span:nth-child(1), .listTitle span:nth-child(2), .orderItem span:nth-child(1), .orderItem span:nth-child(2) {
+.listTitle span:nth-child(1),
+.listTitle span:nth-child(2),
+.orderItem span:nth-child(1),
+.orderItem span:nth-child(2) {
   width: 20%;
 }
 
-
-.listTitle span:nth-child(3),.orderItem span:nth-child(3) {
+.listTitle span:nth-child(3),
+.orderItem span:nth-child(3) {
   width: 30%;
 }
 
-.listTitle span:nth-child(4), .listTitle span:nth-child(5), .orderItem span:nth-child(4){
+.listTitle span:nth-child(4),
+.listTitle span:nth-child(5),
+.orderItem span:nth-child(4) {
   width: 15%;
 }
 
@@ -65,13 +75,14 @@
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
-  background-color:#434373;
+  border: transparent;
+  background-color: #434373;
   color: white !important;
 }
-button:hover{
-  background-color: #2781d9;
+button:hover {
+  background-color: rgb(106, 107, 109);
 }
 
-.id{
+.id {
   display: none;
 }
