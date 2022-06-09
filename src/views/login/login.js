@@ -45,12 +45,11 @@ async function handleSubmit(e) {
     // api 요청 결과 token 값을 반환함
     const result = await Api.post("/api/login", data);
 
-    sessionStorage.setItem("role", "admin")
-    const item = sessionStorage.getItem("role");
-    console.log(item);
+    sessionStorage.setItem("token", result.token)
+    sessionStorage.setItem("role", result.role)
 
     // 로그인 성공, 토큰은 쿠키에 저장
-    if (result.message === "OK") {
+    if (result) {
       alert(`정상적으로 로그인되었습니다.`);
 
       // 주문 결제 페이지에서 넘어왔다면 주문 결제 페이지로 이동

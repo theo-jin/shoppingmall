@@ -2,7 +2,6 @@ import { Router } from "express";
 //type check
 import is from "@sindresorhus/is";
 import passport from "passport";
-import sessionStorage from "sessionstorage";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired, adminAuthorized } from "../middlewares";
 import { userService } from "../services";
@@ -64,15 +63,45 @@ userRouter.post("/login", async function (req, res, next) {
           throw new Error("로그인에 실패했습니다.");
         }
 
-        // role을 session에 저장
-        sessionStorage.setItem("role", role);
-        // token을 header에 저장
-        sessionStorage.setItem("Authorization", auth)
-        
         // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-        res.json({ message: "OK" });
+        res.status(200).json({ token, role });
       });
     })(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 구글 로그인
+userRouter.get("/auth/google", async (req, res, next) => {
+  passport.authenticate("google", { scope: ["email", "profile"] })(req, res);
+});
+
+//google login success and failure
+userRouter.get("/auth/google/callback", async function (req, res, next) {
+  try {
+    passport.authenticate(
+      "google",
+      {
+        successRedirect: "http://localhost:5000",
+        failureRedirect: "http://localhost:5000/api/login",
+      },
+      async (err, user, info) => {
+        if (err || !user) {
+          throw new Error(info.message);
+        }
+          const { token, role } = await userService.getUserToken({
+            userId: user.userId,
+            role: user.role,
+          });
+
+          if (!token && !role) {
+            throw new Error("로그인에 실패했습니다.");
+          }
+          res.cookie("user", { token, role });
+        })(req, res);
+
+        res.redirect("http://localhost:5000");
   } catch (error) {
     next(error);
   }
