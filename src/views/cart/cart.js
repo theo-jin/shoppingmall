@@ -4,8 +4,22 @@ import { changeNavbar } from "/changeNavbar.js";
 const productContainer = document.querySelector("#productContainer");
 const allProductTotalPrice = document.querySelector("#allProductTotalPrice");
 const submitButton = document.querySelector(".submitButton");
+const backButton = document.querySelector(".backButton");
 
 addAllElements();
+
+// 장바구니 삭제 요소
+const allClearBtn = document.querySelector(".allClear");
+const selectedClearBtn = document.querySelector(".selectedClear");
+
+// 장바구니 전체 삭제
+allClearBtn.addEventListener("click", () => {
+  sessionStorage.clear();
+  window.location.reload();
+});
+
+// 장바구니 선택 삭제
+selectedClearBtn.addEventListener("click", confirmCheckBox);
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
@@ -14,6 +28,17 @@ async function addAllElements() {
   createDataContainer(getProductList).forEach((el) => (productContainer.innerHTML += el));
   eventHandler();
   calculAllProductTotalPrice();
+}
+
+// 선택 삭제를 위해 체크된 박스 확인
+function confirmCheckBox() {
+  const checkboxs = document.querySelectorAll(".checkbox");
+  checkboxs.forEach((el) => {
+    if (el.checked) {
+      sessionStorage.removeItem(el.value);
+      window.location.reload();
+    }
+  });
 }
 
 // 세션스토리지에서 데이터 가져오기
@@ -34,6 +59,7 @@ function createDataContainer(getProductList) {
   return getProductList.map(
     (el) =>
       `<div class="productBox">
+      <input class="checkbox" type="checkbox" name="check" value=${el.name}>
     <div class="imgBox">
       <img src=${el.Img} alt=${el.name}>
     </div>
@@ -132,4 +158,11 @@ submitButton.addEventListener("click", () => {
   });
   sessionStorage.setItem("cartProduct", JSON.stringify(productList));
   window.location.href = "/order";
+});
+
+// 돌아가기
+backButton.addEventListener("click", () => {
+  if (document.referrer) {
+    window.location.href = document.referrer;
+  }
 });

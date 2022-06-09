@@ -21,9 +21,13 @@
   box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.243);
 }
 
+.deleteContainer {
+  margin-bottom: 20px;
+}
+
 .priceContainer,
 .orderContainer {
-  text-align: right;
+  text-align: center;
 }
 
 .orderContainer .submitButton {
@@ -40,6 +44,20 @@
   background-color: #2373c3 !important;
 }
 
+.orderContainer .backButton {
+  border-radius: 10px;
+  border: transparent;
+  width: 170px;
+  height: 40px;
+  background-color: #434373 !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.orderContainer .backButton:hover {
+  background-color: #37375e !important;
+}
+
 .productBox {
   width: 600px;
   display: flex;
@@ -47,6 +65,12 @@
   border: 1px solid rgba(0, 0, 0, 0.212);
   border-radius: 20px;
   margin: 0 auto 30px auto;
+}
+
+input.checkbox {
+  width: 15px;
+  height: 15px;
+  margin: 20px 0 0 10px;
 }
 
 .productBox .imgBox {
@@ -62,7 +86,7 @@
 }
 
 .productBox .orderCount {
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,8 +101,8 @@
 
 button.add,
 button.del {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: transparent;
   background-color: #434373;
@@ -91,4 +115,19 @@ button.delItem {
   border: transparent;
   background-color: #434373;
   color: white !important;
+}
+
+button.allClear,
+button.selectedClear {
+  width: 100px;
+  height: 30px;
+  border-radius: 6px;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
+}
+
+button.allClear:hover,
+button.selectedClear:hover {
+  background-color: #37375e !important;
 }
