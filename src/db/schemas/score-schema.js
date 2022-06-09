@@ -6,10 +6,10 @@ const ScoreSchema = new Schema(
       type: String,
       required: true,
     },
-    // productId: {
-    //   type: String,
-    //   required: true,
-    // },
+    orderId: {
+      type: String,
+      required: true,
+    },
     product: {
       productId: String,
       productName: String,

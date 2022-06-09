@@ -57,48 +57,48 @@ productRouter.get("", async function (req, res, next) {
   try {
     const category = req.query.category;
     // 페이지 번호
-    let page = req.query.page
+    let page = req.query.page;
     // 제품 개수
-    let countPerPage = req.query.count
+    let countPerPage = req.query.count;
 
     // countPerPage가 비어서 온 경우
-    if(!countPerPage || countPerPage == null){
-      countPerPage = 10
-    }else{
-      countPerPage = Number(countPerPage)
+    if (!countPerPage || countPerPage == null) {
+      countPerPage = 10;
+    } else {
+      countPerPage = Number(countPerPage);
     }
 
     // 페이지 번호가 없는 경우
-    if(!page || page == null){
+    if (!page || page == null) {
       page = 0;
-    }else{
-      page = Number(page)
+    } else {
+      page = Number(page);
     }
 
     const products = await productService.getProductsByCategory(category);
 
-    if(page > 0){
+    if (page > 0) {
       // 전체 제품 크기
-      let totalCount = products.length
+      let totalCount = products.length;
       // start Number
-      let startItemNo = ((page - 1) * countPerPage)
+      let startItemNo = (page - 1) * countPerPage;
       // last Number
-      let endItemNo = (page * countPerPage) - 1
+      let endItemNo = page * countPerPage - 1;
 
       // 종료 번호가 전체 크기보다 크면 전체 크기로 변경
-      if(endItemNo > (totalCount - 1)){
-        endItemNo = totalCount - 1
+      if (endItemNo > totalCount - 1) {
+        endItemNo = totalCount - 1;
       }
 
       let productPageList = [];
-      if(startItemNo < totalCount){
-        for(let index = startItemNo; index <= endItemNo; index++){
-          productPageList.push(products[index])
+      if (startItemNo < totalCount) {
+        for (let index = startItemNo; index <= endItemNo; index++) {
+          productPageList.push(products[index]);
         }
       }
       // success
-      res.status(200).json(productPageList)
-    }else{
+      res.status(200).json(productPageList);
+    } else {
       res.status(200).json(products);
     }
   } catch (error) {
@@ -239,6 +239,7 @@ productRouter.delete(
     try {
       const productName = req.params.productName;
 
+      // 상품 삭제
       const result = await productService.deleteProduct(productName);
       if (result.deletedCount !== 1) {
         throw new Error(`${productName} 삭제 실패했습니다.`);

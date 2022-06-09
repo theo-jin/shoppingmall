@@ -60,8 +60,8 @@ class UserService {
 
   // 사용자 개인 정보를 받음.
   async getUserInfo(userId) {
-    const users = await this.userModel.findById(userId);
-    return users;
+    const user = await this.userModel.findById(userId);
+    return user;
   }
 
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.

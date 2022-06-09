@@ -6,12 +6,14 @@ class ScoreService {
     this.scoreModel = scoreModel;
   }
 
+  // 모든 별점 가져오기
   async getScores(userId) {
     const scores = await this.scoreModel.findByUserId(userId);
 
     return scores;
   }
 
+  // 별점 있는지 확인하기
   async checkScore(userId, scoreId) {
     const score = await this.scoreModel.findByUserAndId(userId, scoreId);
 
@@ -42,6 +44,11 @@ class ScoreService {
       return 0.0;
     }
     return averageScore;
+  }
+
+  async deleteOrderId(orderId) {
+    const result = await this.scoreModel.deleteScore(orderId);
+    return result;
   }
 }
 

@@ -40,6 +40,11 @@ export class ScoreModel {
     });
     return score;
   }
+
+  async deleteScore(orderId) {
+    const result = await Score.deleteOne({ orderId });
+    return result
+  }
 }
 
 const scoreModel = new ScoreModel();
