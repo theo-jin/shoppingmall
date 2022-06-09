@@ -35,7 +35,7 @@ class ProductService {
 
   // 상품 상세 조회
   async getProduct(productId) {
-    const product = await this.productModel.findById(productId);
+    let product = await this.productModel.findById(productId);
     if (!product) {
       throw new Error(`${product}은(는) 존재하지 않는 상품입니다.`);
     }
