@@ -23,10 +23,10 @@ async function getDataFromApi() {
 
 // 별점 데이터
 // TODO
-async function getRatingFromApi(productId) {
-  const data = await Api.get("/api/order/user", productId);
-  return data;
-}
+// async function getRatingFromApi(productId) {
+//   const data = await Api.get("/api/order/user", productId);
+//   return data;
+// }
 
 // api로 주문 목록 데이터를 받아와서 html로 표시하는 함수
 function createOrderList(data) {
@@ -55,7 +55,6 @@ function createOrderList(data) {
         </div>
       </span>
       <button class="btn add">등록</button>
-      <button class="btn edit">수정</button>
     </div>`
   );
 }
@@ -116,15 +115,16 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
     }
   }
 
+  // TODO 수정 기능 추후 추가 예정
   // 수정
-  if (e.target.classList.contains("edit")) {
-    try {
-      const data = JSON.parse(sessionStorage.getItem("data"));
-      await Api.patch("/api/grade", data.productId, data);
-      alert("별점이 수정되었습니다.");
-      window.location.href = "/userInfo/review/";
-    } catch (err) {
-      alert(err);
-    }
-  }
+  // if (e.target.classList.contains("edit")) {
+  //   try {
+  //     const data = JSON.parse(sessionStorage.getItem("data"));
+  //     await Api.patch("/api/grade", data.productId, data);
+  //     alert("별점이 수정되었습니다.");
+  //     window.location.href = "/userInfo/review/";
+  //   } catch (err) {
+  //     alert(err);
+  //   }
+  // }
 });

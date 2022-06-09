@@ -79,16 +79,17 @@
 }
 
 .orderItem button {
-  width: 5%;
+  width: 3%;
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
+  border: transparent;
   background-color: #434373;
   color: white !important;
 }
 
 button:hover {
-  background-color: #2781d9;
+  background-color: rgb(106, 107, 109);
 }
 
 #addProduct {
@@ -129,5 +130,11 @@ button:hover {
 
 #addBtn,
 #editBtn {
+  background-color: #434373;
   color: white !important;
+}
+
+#addBtn:hover,
+#editBtn:hover {
+  background-color: rgb(106, 107, 109);
 }

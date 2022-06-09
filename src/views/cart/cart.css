@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
+}
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
+.cartContainer {
+  width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  border: solid 1px rgba(0, 0, 0, 0.243);
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.243);
+}
+
+.priceContainer,
+.orderContainer {
+  text-align: right;
+}
+
+.orderContainer .submitButton {
+  border-radius: 10px;
+  border: transparent;
+  width: 170px;
+  height: 40px;
+  background-color: #2781d9 !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.orderContainer .submitButton:hover {
+  background-color: #2373c3 !important;
+}
+
+.productBox {
+  width: 600px;
+  display: flex;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(0, 0, 0, 0.212);
+  border-radius: 20px;
+  margin: 0 auto 30px auto;
+}
+
+.productBox .imgBox {
+  width: 200px;
+  border-radius: 20px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.productBox img {
+  width: 100%;
+  height: 100%;
+}
+
+.productBox .orderCount {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailBox {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+button.add,
+button.del {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
+}
+
+button.delItem {
+  width: 50px;
+  border-radius: 6px;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
+}

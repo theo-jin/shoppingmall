@@ -74,14 +74,6 @@
   display: flex;
 }
 
-.orderItem button {
-  width: 5%;
-  height: 10%;
-  margin: 1% auto;
-  border-radius: 5px;
-  background-color: white;
-}
-
 .id {
   display: none;
 }
@@ -91,10 +83,11 @@
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
+  border: transparent;
   background-color: #434373;
   color: white !important;
 }
 
 button:hover {
-  background-color: #2781d9;
+  background-color: rgb(106, 107, 109);
 }

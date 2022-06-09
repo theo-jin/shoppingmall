@@ -41,6 +41,8 @@
 .orderItem span {
   padding: 10px;
   text-align: center;
+  font-family: "Poor+Story", sans-serif !important;
+  color: black !important;
 }
 
 .listTitle span:nth-child(1),
@@ -52,28 +54,16 @@
 
 .listTitle span:nth-child(3),
 .orderItem span:nth-child(3) {
-  width: 30%;
+  width: 40%;
 }
 
 .listTitle span:nth-child(4),
-.listTitle span:nth-child(5),
-.listTitle span:nth-child(6),
-.orderItem span:nth-child(4),
-.orderItem span:nth-child(5),
-.orderItem span:nth-child(6) {
-  width: 15%;
+.orderItem span:nth-child(4) {
+  width: 20%;
 }
 
 .orderItem {
   display: flex;
-}
-
-.orderItem button {
-  width: 5%;
-  height: 10%;
-  margin: 1% auto;
-  border-radius: 5px;
-  background-color: white;
 }
 
 .id {
@@ -85,17 +75,14 @@
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
+  border: transparent;
   background-color: #434373;
   color: white !important;
 }
 button:hover {
-  background-color: #2781d9;
+  background-color: rgb(106, 107, 109);
 }
 
 span.starSpan {
   padding: 0;
-}
-
-button.btn {
-  width: 50px;
 }
