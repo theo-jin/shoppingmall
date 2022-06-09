@@ -26,14 +26,6 @@ function addAllEvents() {
   $("#submitButton").addEventListener("click", handleSubmit);
 }
 
-// 로그인시에만 주문이 가능함
-function checkLogin() {
-  if (!sessionStorage.getItem("role")) {
-    alert("로그인 후 이용가능한 서비스입니다.");
-    window.location.href = "/login";
-  }
-}
-
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
   const data = await Api.get("/api/user");

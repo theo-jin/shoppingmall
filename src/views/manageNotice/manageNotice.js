@@ -53,7 +53,7 @@ async function noticeLanding() {
   editButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
-      const prevNotice = e.target.classList[0];
+      const prevNotice = e.target.parentNode.parentNode.querySelectorAll("div")[1].innerHTML;
       editNoticeName.value = prevNotice;
 
       // 공지 수정 이벤트 리스너
@@ -61,7 +61,7 @@ async function noticeLanding() {
         const data = {
           // title이 같다면 title의 설명만 변경하도록 title 값을 null로 지정
           title: editNoticeName.value === prevNotice ? null : editNoticeName.value,
-          content: editNoticeDescription.value
+          content: editNoticeDescription.value,
         };
         try {
           await Api.patch("/api/notice", prevNotice, data);
@@ -76,7 +76,7 @@ async function noticeLanding() {
   // 클릭 시 공지 삭제 api 요청 후 카테고리 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
-      const notice = e.target.classList[0];
+      const prevNotice = e.target.parentNode.parentNode.querySelectorAll("div")[1].innerHTML;
       if (confirm("공지를 삭제하시겠습니까?")) {
         await Api.delete("/api/notice/" + notice);
         alert("공지가 삭제되었습니다.");
@@ -89,9 +89,8 @@ async function noticeLanding() {
 //공지 추가 함수
 async function addNoticeFn() {
   const data = {
-   
-    title:addNoticeName.value,
-    content:addNoticeDescription.value
+    title: addNoticeName.value,
+    content: addNoticeDescription.value,
   };
   try {
     await Api.post("/api/notice/", data);
@@ -106,15 +105,15 @@ async function addNoticeFn() {
 function createNoticeList(data) {
   return data.map(
     (el) => `
-  <div class="columns orders-item" id="order">
-    <div class="column is-1">${el.createdAt.split("T")[0]}</div>
+  <div class="columns textContent" >
+    <div class="column is-2">${el.createdAt.split("T")[0]}</div>
     <div class="column is-2 order-summary">${el.title}</div>
-    <div class="column is-7">${el.content}</div>
+    <div class="column is-6">${el.content}</div>
     <div class="column is-1">
-      <button class="${el.title} button editButton">수정</button>
+      <button class="button editButton">수정</button>
     </div>
     <div class="column is-1">
-      <button class="${el.title} button deleteButton">삭제</button>
+      <button class="button deleteButton">삭제</button>
     </div>
   </div>
   `

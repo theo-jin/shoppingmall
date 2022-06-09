@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -12,23 +13,17 @@
   font-family: "Jua", sans-serif;
 }
 
-.div-container {
-  display: flex;
-  /* align-items: center; */
-  justify-content: center;
-  height: 550px;
-  background-color: #b8dff8;
-  margin: 3% auto;
+.userTitle {
+  text-align: center;
+  margin: 2% auto;
 }
 
-.landing {
-  margin-top: 7px;
+div.column {
+  color: black !important;
 }
-.userTitle {
-  margin: 2% 40% 4% 45%;
-}
+
 .mainContainer {
-  width: 1024px;
+  width: 1300px;
   margin: 0 auto;
   text-align: center;
 }
@@ -38,16 +33,24 @@
   padding: 10px;
 }
 
-.userMenu {
-  margin: 2% 2% 2% 2%;
+.mainContainer > div.notification {
+  margin-bottom: 10px;
 }
 
-.userIcon {
-  align-items: flex-start;
-  font-size: 40px;
+.mainContainer > div.textContent {
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.229);
+  border: rgba(0, 0, 0, 0.229) 0px solid;
+  margin-bottom: 30px;
 }
-.menuIcon {
-  height: 60px;
+
+.textContent button {
+  width: 50px;
+  height: 30px;
+  margin: 1% auto;
+  border-radius: 5px;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
 }
 
 #addNotice {
@@ -65,4 +68,30 @@
 
 #addNotice:hover {
   background-color: #8ea5bd;
+}
+
+#addModal label,
+#editModal label {
+  font-weight: 400;
+  font-size: large;
+}
+
+#addModal label,
+#categoryName1,
+#categoryDescription1,
+#editModal label,
+#categoryName2,
+#categoryDescription1 {
+  color: black !important;
+}
+
+#addBtn,
+#editBtn {
+  background-color: #434373;
+  color: white !important;
+}
+
+#addBtn:hover,
+#editBtn:hover {
+  background-color: rgb(106, 107, 109);
 }
