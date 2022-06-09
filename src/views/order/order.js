@@ -158,6 +158,7 @@ async function handleSubmit(e) {
     await Api.post("/api/order/complete", data);
 
     alert(`주문이 완료되었습니다.`);
+    sessionStorage.clear();
 
     // 주문완료 페이지 이동
     window.location.href = "/orderComplete";
