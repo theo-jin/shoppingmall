@@ -4,20 +4,14 @@ import { ScoreSchema } from "../schemas/score-schema";
 const Score = model("scores", ScoreSchema);
 
 export class ScoreModel {
-  //평점 남긴 유저 조회
+  // 유저의 별점 목록 조회
   async findByUserId(userId) {
-    const score = await Score.find({ userId });
-    return score;
+    const scores = await Score.find({ userId });
+    return scores;
   }
 
-  // 유저가 별점 남긴 상품 조회
-  async findByUserAndProduct(userId, productId) {
-    const score = await Score.findOne({
-      userId,
-      product: {
-        $elemMatch: { productId },
-      },
-    });
+  async findByUserAndId(userId, scoreId) {
+    const score = await Score.findOne({ userId, scoreId });
     return score;
   }
 
@@ -28,19 +22,12 @@ export class ScoreModel {
   }
 
   //평점 수정
-  async updateGrade({ productId, reviewScore }) {
+  async updateScore({ scoreId, reviewScore }) {
+    const filter = { _id: scoreId };
     const option = { returnOriginal: false };
     const update = { reviewScore };
 
-    const updatedResult = await Score.updateOne(
-      {
-        product: {
-          $elemMatch: { productId },
-        },
-      },
-      update,
-      option
-    );
+    const updatedResult = await Score.updateOne(filter, update, option);
     return updatedResult;
   }
 

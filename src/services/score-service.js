@@ -1,7 +1,7 @@
-import { scoreModel, productModel } from "../db";
+import { scoreModel } from "../db";
 
 class ScoreService {
-  // 본 파일의 맨 아래에서, new GradeService(gradeModel) 하면, 이 함수의 인자로 전달됨
+  // 본 파일의 맨 아래에서, new ScoreService(scoreModel) 하면, 이 함수의 인자로 전달됨
   constructor(scoreModel) {
     this.scoreModel = scoreModel;
   }
@@ -12,61 +12,17 @@ class ScoreService {
     return scores;
   }
 
-  //평점 남기기
-/*   async addScore(scoreInfo) {
-    const { userId, productId, reviewScore } = scoreInfo;
+  async checkScore(userId, scoreId) {
+    const score = await this.scoreModel.findByUserAndId(userId, scoreId);
 
-    // 평점 중복 확인
-    // const score = await this.scoreModel.findByUserAndProduct(userId, productId);
-    // if (score) {
-    //   throw new Error("이미 별점을 남긴 리뷰입니다.");
-    // }
-
-    // 상품 이름 조회
-    const product = await productModel.findById(productId);
-
-    // 저장할 정보
-    const toCreate = {
-      userId,
-      product: {
-        productId,
-        productName: product.productName,
-      },
-      reviewScore,
-    };
-
-    // 평점 중복은 이제 아니므로, 평점 남기기를 진행함
-    // db에 저장
-    const createdNewGrade = await this.scoreModel.create(toCreate);
-
-    // 상품 정보에 평균 점수 넣기
-    const productScore = await this.getScoresProduct(productId);
-    const toUpdate = { reviewScore: productScore };
-    const updatedScore = await productModel.updateScore({
-      productId,
-      toUpdate,
-    });
-
-    console.log(updatedScore)
-
-    if (updatedScore.modifiedCount !== 1) {
-      throw new Error("리뷰 평점을 수정에 실패했습니다.");
-    }
-
-    return createdNewGrade;
-  } */
+    return score;
+  }
 
   //평점 수정하기
-  async setScore(userId, productId, reviewScore) {
-    // 평점 남긴게 존재하는지 확인
-    let score = await this.scoreModel.findByUserAndProduct(userId, productId);
-    if (!score) {
-      throw new Error("별점을 남긴 상품이 아닙니다.");
-    }
-
+  async setScore(scoreId, reviewScore) {
     // 평점 수정
     const updatedResult = await this.scoreModel.updateScore({
-      productId,
+      scoreId,
       reviewScore,
     });
 

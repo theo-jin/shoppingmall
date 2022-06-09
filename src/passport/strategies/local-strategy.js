@@ -6,7 +6,6 @@ const config = {
   usernameField: "email",
   passwordField: "password",
   session: false,
-  //passReqCallback: false,
 };
 
 const verify = async function (email, password, done) {
