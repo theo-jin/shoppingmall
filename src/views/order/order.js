@@ -69,7 +69,7 @@ async function getItemData() {
 async function getDirectItem() {
   const data = sessionStorage.getItem("product");
   const itemData = JSON.parse(data);
-
+  console.log(itemData);
   $("#productList").innerHTML += `<tr><td class="productName">${itemData.name}</td>
             <td class="productPrice">${addCommas(itemData.price)}</td>
             <td class="productNumber">${itemData.count}</td>
@@ -82,7 +82,7 @@ async function getDirectItem() {
   );
 
   const products = new Array();
-  products.push({ productName: itemData.name, productCount: itemData.count });
+  products.push({ productId: itemData.productId,productName: itemData.name, productCount: itemData.count });
 }
 
 // 카트에서 주문상품 데이터 받아오기
@@ -96,7 +96,7 @@ async function getCartItem() {
             <td class="productNumber">${el.count}</td>
             <td class="productTotal">${addCommas(el.price * el.count)}</td></tr>`;
 
-    products.push({ productName: el.name, productCount: el.count });
+    products.push({ productId: el.productId, productName: el.name, productCount: el.count });
   });
   const totalPriceList = $$(".productTotal");
   let price = 0;
@@ -118,14 +118,14 @@ async function handleSubmit(e) {
   if (before.split("/")[4] == "product-detail") {
     const data = sessionStorage.getItem("product");
     const itemData = JSON.parse(data);
-    data.forEach((el) => {
-      products.push({ productName: el.name, productCount: el.count });
-    });
+    console.log(itemData);
+    products.push({ productId: itemData.productId,productName: itemData.name, productCount: itemData.count });
+  
   } else if (before.split("/")[3] == "cart") {
     const data = sessionStorage.getItem("cartProduct");
     const itemData = JSON.parse(data);
     itemData.forEach((el) => {
-      products.push({ productName: el.name, productCount: el.count });
+      products.push({  productId: el.productId, productName: el.name, productCount: el.count });
     });
   }
 
