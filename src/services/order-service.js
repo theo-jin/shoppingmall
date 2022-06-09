@@ -36,17 +36,21 @@ class OrderService {
   async addOrder(orderInfo) {
     // db에 저장
     const createdNewOrder = await this.orderModel.create(orderInfo);
-    orderInfo.products.foreach(async (el) => {
+
+    // 주문한 상품 목록
+    const products = createdNewOrder.products;
+    for (let index = 0; index < products.length; index++) {
+      // 리뷰 생성
       const createdNewReview = await scoreModel.create({
-        userId: orderInfo.userId,
+        userId: createdNewOrder.userId,
         product: {
-          productId: el.productId,
-          productName: el.productName,
+          productId: products[index].productId,
+          productName: products[index].productName,
         },
         reviewScore: 0,
-        orderedAt: orderInfo.createdAt,
+        orderedAt: createdNewOrder.createdAt,
       });
-    });
+    }
 
     return createdNewOrder;
   }

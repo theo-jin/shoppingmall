@@ -62,7 +62,6 @@ orderRouter.post("/complete", loginRequired, async (req, res, next) => {
       phoneNumber,
       address,
       products,
-      status,
       totalPrice,
     });
 

@@ -44,7 +44,7 @@ const OrderSchema = new Schema(
     ],
     status: {
       type: String,
-      required: true,
+      required: false,
       default: "Information Received",
     },
     totalPrice: {
