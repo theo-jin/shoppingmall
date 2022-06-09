@@ -63,8 +63,19 @@ userRouter.post("/login", async function (req, res, next) {
           throw new Error("로그인에 실패했습니다.");
         }
 
-        // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-        res.status(200).json({ token, role });
+        // role을 cookie에 담아서 보냄
+        res.cookie("role", role, {
+          // 1일
+          maxAge: 1000 * 60 * 60 * 24,
+          // web server에서만 접근
+          httpOnly: true,
+        });
+
+        // header에 token을 담아서 보냄
+        res.set({
+          Authrozation: token,
+        });
+        res.status(200).json({ message: "OK" });
       });
     })(req, res);
   } catch (error) {
@@ -83,25 +94,37 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
     passport.authenticate(
       "google",
       {
-        successRedirect: "http://localhost:5000",
         failureRedirect: "http://localhost:5000/api/login",
       },
       async (err, user, info) => {
         if (err || !user) {
           throw new Error(info.message);
         }
-          const { token, role } = await userService.getUserToken({
-            userId: user.userId,
-            role: user.role,
-          });
+        const { token, role } = await userService.getUserToken({
+          userId: user.userId,
+          role: user.role,
+        });
 
-          if (!token && !role) {
-            throw new Error("로그인에 실패했습니다.");
-          }
-          res.cookie("user", { token, role });
-        })(req, res);
+        if (!token && !role) {
+          throw new Error("로그인에 실패했습니다.");
+        }
 
-        res.redirect("http://localhost:5000");
+        // cookie
+        res.cookie("role", role, {
+          // 1일
+          maxAge: 1000 * 60 * 60 * 24,
+          // web server에서만 접근
+          httpOnly: true,
+        });
+
+        // header
+        res.set({
+          Authrozation: token,
+        });
+      }
+    )(req, res);
+
+    res.redirect("http://localhost:5000");
   } catch (error) {
     next(error);
   }
@@ -131,7 +154,6 @@ userRouter.get("/user", loginRequired, async function (req, res, next) {
   try {
     // loginRequired에서 decoded된 userId
     const userId = req.currentUserId;
-    console.log(userId);
 
     // 선택 사용자 정보를 얻음
     const users = await userService.getUserInfo(userId);
@@ -227,9 +249,27 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
   }
 });
 
+// role
+userRouter.get(
+  "/role",
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      const role = req.cookies.role;
+      res.status(200).json({ role });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// logout
 userRouter.get("/logout", async function (req, res, next) {
   try {
-    req.session.destroy();
+    if (req.headers.authorization) {
+      res.set({ Authorization: null });
+    }
+    res.clearCookie("role");
 
     res.status(200).json({ message: "OK" });
   } catch (error) {
