@@ -2,12 +2,17 @@ import passportJWT from "passport-jwt";
 import { userModel } from "../../db";
 
 const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
+
+const cookieExtractor = function (req) {
+  let token = null;
+  if (req && req.signedCookies) token = req.signedCookies.token;
+  return token;
+};
 
 const jwt = new JWTStrategy(
   {
     secretOrKey: process.env.JWT_SECRET_KEY,
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: cookieExtractor,
     session: false,
   },
   // parsing 한 값 = payload
