@@ -44,5 +44,7 @@ label.label {
 }
 
 #submitButton {
+  margin-bottom: 3%;
+  background-color: #434373;
   color: white !important;
 }
