@@ -21,7 +21,8 @@ function getProduct() {
   const productkeys = Object.keys(sessionStorage);
   const productList = [];
   productkeys.forEach((el) => {
-    if (el !== "product" && el !== "cartProduct") {
+    // 바로 주문하기 데이터, 장바구니에서 주문하기로 넘겨주는 데이터, 별점 관련 데이터 제외
+    if (el !== "product" && el !== "cartProduct" && el !== "data") {
       productList.push(JSON.parse(sessionStorage.getItem(el)));
     }
   });

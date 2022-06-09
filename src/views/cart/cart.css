@@ -16,6 +16,28 @@
 .cartContainer {
   width: 700px;
   margin: 0 auto;
+  padding: 30px;
+  border: solid 1px rgba(0, 0, 0, 0.243);
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.243);
+}
+
+.priceContainer,
+.orderContainer {
+  text-align: right;
+}
+
+.orderContainer .submitButton {
+  border-radius: 10px;
+  border: transparent;
+  width: 170px;
+  height: 40px;
+  background-color: #2781d9 !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.orderContainer .submitButton:hover {
+  background-color: #2373c3 !important;
 }
 
 .productBox {
@@ -24,7 +46,7 @@
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.37);
   border: 1px solid rgba(0, 0, 0, 0.212);
   border-radius: 20px;
-  margin: 30px auto;
+  margin: 0 auto 30px auto;
 }
 
 .productBox .imgBox {
