@@ -1,7 +1,7 @@
 // 관리자 권한을 확인하는 미들웨어
 function adminAuthorized(req, res, next) {
   try {
-    const userRole = req.currentUserRole;
+    const userRole = req.session.role;
     if (userRole !== "admin") {
       console.log("권한이 없는 사용자가 접근하였습니다.")
       throw new Error("권한이 없습니다.")

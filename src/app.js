@@ -1,9 +1,12 @@
 import cors from "cors";
 import express from "express";
-import cookieParser from "cookie-parser";
+import session from "express-session";
+import passport from "passport";
+import passportConfig from "./passport";
 import {
   viewsRouter,
   userRouter,
+  authRouter,
   productRouter,
   categoryRouter,
   orderRouter,
@@ -15,7 +18,7 @@ import { errorHandler } from "./middlewares";
 const app = express();
 
 // CORS 에러 방지
-app.use(cors());
+app.use(cors({}));
 
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
@@ -23,16 +26,27 @@ app.use(express.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
 
-// cookie 암호화 설정
-app.use(cookieParser("ElIcEkEy"));
+// passport 적용
+app.use(passport.initialize());
+passportConfig();
+
+app.use(
+  session({
+    // 암호화
+    secret: "EliceKey",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // html, css, js 라우팅
 app.use(viewsRouter);
-app.use('/users', express.static('uploads'))
+app.use("/users", express.static("uploads"));
 
 // api 라우팅
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.
+app.use("/auth", authRouter);
 app.use("/api", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);

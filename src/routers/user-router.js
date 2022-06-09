@@ -1,6 +1,8 @@
 import { Router } from "express";
 //type check
 import is from "@sindresorhus/is";
+import passport from "passport";
+import sessionStorage from "sessionstorage";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 import { loginRequired, adminAuthorized } from "../middlewares";
 import { userService } from "../services";
@@ -38,55 +40,39 @@ userRouter.post("/register", async (req, res, next) => {
   }
 });
 
-// 로그인 api (아래는 /login 이지만, 실제로는 /api/login로 요청해야 함.)
+// 로그인 api
 userRouter.post("/login", async function (req, res, next) {
   try {
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
+    passport.authenticate("local", async (passportError, user, info) => {
+      // error
+      if (passportError || !user) {
+        throw new Error(info.message);
+      }
 
-    // req (request) 에서 데이터 가져오기
-    const email = req.body.email;
-    const password = req.body.password;
+      req.login(user, { session: false }, async (loginError) => {
+        if (loginError) {
+          throw new Error(loginError);
+        }
 
-    // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
-    const userToken = await userService.getUserToken({ email, password });
+        // token 할당하고 토큰과 role을 반환받음
+        const { token, role } = await userService.getUserToken({
+          userId: user.userId,
+          role: user.role,
+        });
 
-    // 일반 사용자일 경우 cookie를 설정하지 않음
-    // 관리자일 경우 cookie 설정
-    res.cookie("token", userToken.token, {
-      // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-      maxAge: 60 * 60 * 24 * 7 * 1000,
-      // FIXME
-      // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-      // web server에서만 쿠키에 접근할 수 있도록 설정
-      httpOnly: false,
-      // https에서만 cookie를 사용할 수 있게 설정
-      secure: false,
-      // 암호화
-      signed: true,
-    });
+        if (!token && !role) {
+          throw new Error("로그인에 실패했습니다.");
+        }
 
-    if (userToken.role !== null) {
-      res.cookie("role", userToken.role, {
-        // 현재시간으로부터 만료 시간(ms 단위) -> 7일
-        maxAge: 60 * 60 * 24 * 7 * 1000,
-        // FIXME
-        // true인 경우 로컬호스트에서 쿠키값을 조회할 수 없어서 false로 변경
-        // web server에서만 쿠키에 접근할 수 있도록 설정
-        httpOnly: false,
-        // https에서만 cookie를 사용할 수 있게 설정
-        secure: false,
-        // 암호화
-        signed: true,
+        // role을 session에 저장
+        sessionStorage.setItem("role", role);
+        // token을 header에 저장
+        sessionStorage.setItem("Authorization", auth)
+        
+        // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
+        res.json({ message: "OK" });
       });
-    }
-
-    // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).json({ message: "OK" });
+    })(req, res);
   } catch (error) {
     next(error);
   }
@@ -116,6 +102,7 @@ userRouter.get("/user", loginRequired, async function (req, res, next) {
   try {
     // loginRequired에서 decoded된 userId
     const userId = req.currentUserId;
+    console.log(userId);
 
     // 선택 사용자 정보를 얻음
     const users = await userService.getUserInfo(userId);
@@ -204,6 +191,16 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
     if (deleteResult.deletedCount < 1) {
       throw new Error("사용자 정보 삭제 실패했습니다.");
     }
+
+    res.status(200).json({ message: "OK" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.get("/logout", async function (req, res, next) {
+  try {
+    req.session.destroy();
 
     res.status(200).json({ message: "OK" });
   } catch (error) {
