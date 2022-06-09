@@ -282,9 +282,7 @@ userRouter.get("/role", loginRequired, async function (req, res, next) {
 // logout
 userRouter.get("/logout", async function (req, res, next) {
   try {
-    if (req.headers.authorization) {
-      res.set({ Authorization: null });
-    }
+    res.clearCookie("token");
     res.clearCookie("role");
 
     res.status(200).json({ message: "OK" });
