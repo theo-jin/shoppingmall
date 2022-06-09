@@ -272,7 +272,7 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
 // role
 userRouter.get("/role", loginRequired, async function (req, res, next) {
   try {
-    const role = req.cookies.role;
+    const role = req.signedCookies.role;
     res.status(200).json({ role });
   } catch (error) {
     next(error);
