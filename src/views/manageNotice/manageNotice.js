@@ -65,7 +65,7 @@ async function noticeLanding() {
         };
         try {
           await Api.patch("/api/notice", prevNotice, data);
-          window.location.href = "/noticeManage/";
+          window.location.href = "/manageNotice/";
         } catch (err) {
           alert(err);
         }
@@ -80,7 +80,7 @@ async function noticeLanding() {
       if (confirm("공지를 삭제하시겠습니까?")) {
         await Api.delete("/api/notice/" + notice);
         alert("공지가 삭제되었습니다.");
-        window.location.href = "/noticeManage/";
+        window.location.href = "/manageNotice/";
       }
     })
   );
@@ -96,7 +96,7 @@ async function addNoticeFn() {
   try {
     await Api.post("/api/notice/", data);
     alert("공지가 추가되었습니다.");
-    window.location.href = "/noticeManage";
+    window.location.href = "/manageNotice";
   } catch (err) {
     alert(err);
   }
