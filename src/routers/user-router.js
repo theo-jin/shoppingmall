@@ -14,9 +14,7 @@ userRouter.post("/register", async (req, res, next) => {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
     }
 
     // req (request)의 body 에서 데이터 가져오기
@@ -73,7 +71,7 @@ userRouter.post("/login", async function (req, res, next) {
 
         // header에 token을 담아서 보냄
         res.set({
-          Authrozation: token,
+          Authorization: token,
         });
         res.status(200).json({ message: "OK" });
       });
@@ -119,7 +117,7 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
 
         // header
         res.set({
-          Authrozation: token,
+          Authorization: token,
         });
       }
     )(req, res);
@@ -132,22 +130,17 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
 
 // 전체 유저 목록을 가져옴 (배열 형태임)
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
-userRouter.get(
-  "/list",
-  loginRequired,
-  adminAuthorized,
-  async function (req, res, next) {
-    try {
-      // 전체 사용자 목록을 얻음
-      const users = await userService.getUsers();
+userRouter.get("/list", loginRequired, adminAuthorized, async function (req, res, next) {
+  try {
+    // 전체 사용자 목록을 얻음
+    const users = await userService.getUsers();
 
-      // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-      res.status(200).json(users);
-    } catch (error) {
-      next(error);
-    }
+    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 사용자 정보 조회
 userRouter.get("/user", loginRequired, async function (req, res, next) {
@@ -173,9 +166,7 @@ userRouter.patch("/user", loginRequired, async function (req, res, next) {
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
     }
 
     // token에서 decoded userId
@@ -228,9 +219,7 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
     if (req.currentUserRole === "admin") {
       // req.body가 비어있는 경우
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
       }
       // 회원 id
       userId = req.body.userId;
@@ -250,18 +239,14 @@ userRouter.delete("/", loginRequired, async function (req, res, next) {
 });
 
 // role
-userRouter.get(
-  "/role",
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      const role = req.cookies.role;
-      res.status(200).json({ role });
-    } catch (error) {
-      next(error);
-    }
+userRouter.get("/role", loginRequired, async function (req, res, next) {
+  try {
+    const role = req.cookies.role;
+    res.status(200).json({ role });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // logout
 userRouter.get("/logout", async function (req, res, next) {

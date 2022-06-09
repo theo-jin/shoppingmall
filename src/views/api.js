@@ -1,3 +1,5 @@
+var httpRequest = new XMLHttpRequest();
+
 // api 로 GET 요청 (/endpoint/params 형태로 요청함)
 async function get(endpoint, params = "", query = false) {
   let apiUrl = `${endpoint}/${params}`;
@@ -7,10 +9,9 @@ async function get(endpoint, params = "", query = false) {
   }
 
   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
-
   const res = await fetch(apiUrl, {
     headers: {
-      Authorization,
+      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
     },
   });
 
@@ -35,12 +36,11 @@ async function post(endpoint, data) {
   const bodyData = JSON.stringify(data);
   console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
   console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
-
   const res = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization,
+      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
     },
     body: bodyData,
   });
@@ -72,7 +72,7 @@ async function patch(endpoint, params = "", data) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization,
+      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
     },
     body: bodyData,
   });
@@ -103,7 +103,7 @@ async function del(endpoint, data = {}) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization,
+      Authorization: `Bearer ${httpRequest.getResponseHeader("Authorization")}`,
     },
     body: bodyData,
   });
