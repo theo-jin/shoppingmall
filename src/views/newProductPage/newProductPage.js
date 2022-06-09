@@ -1,10 +1,11 @@
+import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
 
+// 요소(element), input 혹은 상수
 const containerDiv = document.querySelector(".containerDiv");
-import { changeNavbar } from "/changeNavbar.js";
 
 addAllElements();
-// addAllEvents();
+addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
@@ -12,10 +13,17 @@ async function addAllElements() {
   insertTextToLanding();
 }
 
+// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+function addAllEvents() {}
+
+async function getDataFromApi(category) {
+  const data = await Api.get("/api/product/new");
+  return data;
+}
+
 // html에 출력해주는 함수
 async function insertTextToLanding() {
-  const category = getCategory();
-  const getData = await getDataFromApi(category);
+  const getData = await getDataFromApi();
   const productList = createProductList(getData);
   if (typeof productList == "object") {
     productList.forEach((el) => (containerDiv.innerHTML += el));
@@ -43,27 +51,4 @@ function createProductList(data) {
     );
   }
   return `<div id="noProduct"><h1>${data}</h1></div>`;
-}
-
-// api를 요청하기 위해서 쿼리를 통해 전달받은 카테고리를 변수로 사용
-function getCategory() {
-  let params = new URL(document.location).searchParams;
-  let category = params.get("category");
-  switch (category) {
-    case "krFood":
-      return "한식";
-    case "jpFood":
-      return "일식";
-    case "chFood":
-      return "중식";
-    case "wsFood":
-      return "양식";
-    default:
-      return "기타";
-  }
-}
-
-async function getDataFromApi(category) {
-  const data = await Api.get("/api/product?category", category, true);
-  return data;
 }

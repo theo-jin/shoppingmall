@@ -3,28 +3,28 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
-  color:#434373 !important;
+  color: #434373 !important;
 }
 .brandLogo {
-    font-size: xx-large;
-    font-weight: bold;
-    font-family: "Jua", sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
 }
-.orderlistpageContainer {
+.reviewPageContainer {
   display: flex;
   height: 100vh;
   flex-direction: column;
   align-items: center;
 }
 
-.orderlistpageInfo {
+.reviewPageInfo {
   display: flex;
   width: 80%;
   margin: 30px;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
-.orderListTitle {
+.reviewTitle {
   margin-bottom: 30px;
   font-size: 30px;
   font-weight: 600;
@@ -37,25 +37,31 @@
   font-weight: bold;
 }
 
-.listTitle span, .orderItem span {
-  padding: 12px;
+.listTitle span,
+.orderItem span {
+  padding: 10px;
   text-align: center;
 }
 
-.listTitle span:nth-child(1), .listTitle span:nth-child(2), .orderItem span:nth-child(1), .orderItem span:nth-child(2)  {
+.listTitle span:nth-child(1),
+.listTitle span:nth-child(2),
+.orderItem span:nth-child(1),
+.orderItem span:nth-child(2) {
   width: 20%;
 }
 
-.listTitle span:nth-child(3), .orderItem span:nth-child(3) {
-  width: 25%;
+.listTitle span:nth-child(3),
+.orderItem span:nth-child(3) {
+  width: 30%;
 }
 
-.listTitle span:nth-child(4), .orderItem span:nth-child(4) {
+.listTitle span:nth-child(4),
+.listTitle span:nth-child(5),
+.listTitle span:nth-child(6),
+.orderItem span:nth-child(4),
+.orderItem span:nth-child(5),
+.orderItem span:nth-child(6) {
   width: 15%;
-}
-
-.listTitle span:nth-child(5), .orderItem span:nth-child(5) {
-  width: 20%;
 }
 
 .orderItem {
@@ -70,7 +76,7 @@
   background-color: white;
 }
 
-.id{
+.id {
   display: none;
 }
 
@@ -79,9 +85,17 @@
   height: 10%;
   margin: 1% auto;
   border-radius: 5px;
-  background-color:#434373;
+  background-color: #434373;
   color: white !important;
 }
-button:hover{
+button:hover {
   background-color: #2781d9;
+}
+
+span.starSpan {
+  padding: 0;
+}
+
+button.btn {
+  width: 50px;
 }

@@ -1,3 +1,5 @@
+import { changeNavbar } from "/changeNavbar.js";
+
 const secondList = navbar.children[1];
 const orderListButton = document.querySelector("#orderListReturn");
 const homeButton = document.querySelector("#homeReturn");
@@ -7,7 +9,7 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
-
+  changeNavbar();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -28,4 +30,3 @@ async function homeReturn(e) {
   e.preventDefault();
   window.location.href = "/";
 }
-

@@ -1,4 +1,4 @@
-import { orderModel } from "../db";
+import { orderModel, scoreModel } from "../db";
 
 class OrderService {
   constructor(orderModel) {
@@ -12,12 +12,12 @@ class OrderService {
   }
 
   // orderId로 주문 정보 찾기
-  async getOrder(orderId){
+  async getOrder(orderId) {
     const order = await this.orderModel.findById(orderId);
-    if(!order){
-      throw new Error('주문 정보가 없습니다.')
+    if (!order) {
+      throw new Error("주문 정보가 없습니다.");
     }
-    return order
+    return order;
   }
 
   //사용자 주문 정보 조회하기
@@ -36,6 +36,17 @@ class OrderService {
   async addOrder(orderInfo) {
     // db에 저장
     const createdNewOrder = await this.orderModel.create(orderInfo);
+    orderInfo.products.foreach(async (el) => {
+      const createdNewReview = await scoreModel.create({
+        userId: orderInfo.userId,
+        product: {
+          productId: el.productId,
+          productName: el.productName,
+        },
+        reviewScore: 0,
+        orderedAt: orderInfo.createdAt,
+      });
+    });
 
     return createdNewOrder;
   }
@@ -69,7 +80,7 @@ class OrderService {
     // 업데이트 진행
     const updatedResult = await this.orderModel.update({
       orderId,
-      status
+      status,
     });
 
     return updatedResult;

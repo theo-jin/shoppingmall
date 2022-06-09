@@ -52,6 +52,14 @@ export class ProductModel {
     const deletedProduct = await Product.deleteOne({ productName });
     return deletedProduct;
   }
+
+  async updateScore({ productId, toUpdate }) {
+    const filter = { _id: productId };
+    const option = { returnOriginal: false };
+
+    const updatedResult = await Product.updateOne(filter, toUpdate, option);
+    return updatedResult;
+  }
 }
 
 const productModel = new ProductModel();

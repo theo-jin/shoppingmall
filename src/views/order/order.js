@@ -1,8 +1,9 @@
 import * as Api from "/api.js";
-import { validatePhoneNumber} from "/useful-functions.js";
+import { validatePhoneNumber } from "/useful-functions.js";
+import { changeNavbar } from "/changeNavbar.js";
 
-const $ = selector => document.querySelector(selector);
-const $$ = selector => document.querySelectorAll(selector);
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 
 const logout = $("#navbar").children[1];
 logout.addEventListener("click", () => {
@@ -15,6 +16,7 @@ checkLogin();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
+  changeNavbar();
   await getDataFromApi();
 }
 
@@ -25,8 +27,8 @@ function addAllEvents() {
 }
 
 // 로그인시에만 주문이 가능함
-function checkLogin(){
-  if (!sessionStorage.getItem("token")){
+function checkLogin() {
+  if (!document.cookie) {
     alert("로그인 후 이용가능한 서비스입니다.");
     window.location.href = "/login";
   }
@@ -34,7 +36,7 @@ function checkLogin(){
 
 // db에서 userData를 받아온 후 기존에 입력된 회원 정보를 보여줌
 async function getDataFromApi() {
-  const data = await Api.get("/api/userInfo");
+  const data = await Api.get("/api/user");
   $("#fullNameInput").value = data.fullName;
   $("#phoneInput").value = data.phoneNumber;
   const getAddress = data.address;
@@ -66,27 +68,33 @@ function findAddress(e) {
 getDirectItem();
 
 // 바로구매시 실행되는 함수
-async function getDirectItem(){
-  const data=sessionStorage.getItem("product");
-  const itemData=JSON.parse(data);
+async function getDirectItem() {
+  const data = sessionStorage.getItem("product");
+  const itemData = JSON.parse(data);
 
-  $("#productList").innerHTML+=
-  `<tr><td class="productName">${itemData.name}</td>
+  $("#productList").innerHTML += `<tr><td class="productName">${itemData.name}</td>
             <td class="productPrice">${itemData.price}</td>
             <td class="productNumber">${itemData.count}</td>
-            <td class="productTotal">${itemData.price*itemData.count}</td></tr>`
-            $("#totalProductPrice").insertAdjacentHTML('beforeend',
-  `<label class="totaPrice" id="totalUserPrice">${itemData.price*itemData.count}</label>`)
+            <td class="productTotal">${itemData.price * itemData.count}</td></tr>`;
+  $("#totalProductPrice").insertAdjacentHTML(
+    "beforeend",
+    `<label class="totaPrice" id="totalUserPrice">${itemData.price * itemData.count}</label>`
+  );
+
+  const products = new Array();
+  products.push({ productName: itemData.name, productCount: itemData.count });
 }
 
 // TODO:카트에서 주문상품 데이터 받아오기
-async function getCartItem(){
+async function getCartItem() {}
 
-}
-
-// 주문자 데이터와 주문상품 데이터 DB에 보내기(주문자 이름, 연락처, 주소, 총액), 
+// 주문자 데이터와 주문상품 데이터 DB에 보내기(주문자 이름, 연락처, 주소, 총액),
 async function handleSubmit(e) {
   e.preventDefault();
+  const data = sessionStorage.getItem("product");
+  const itemData = JSON.parse(data);
+  const products = new Array();
+  products.push({ productName: itemData.name, productCount: itemData.count });
 
   const fullName = $("#fullNameInput").value;
   const postalCode = $("#addressInput").value;
@@ -98,18 +106,8 @@ async function handleSubmit(e) {
     address2,
   };
   const phoneNumber = $("#phoneInput").value;
-  const totalPrice=$("#totalUserPrice").innerHTML;
-  const status="Information Received"
-  console.log(totalPrice);
-  
-  // TODO:productId 가져오기
-  if(sessionStorage.getItem("product")){
-    var products=new Array();
-    const data=sessionStorage.getItem("product");
-    const itemData=JSON.parse(data);
-    products[0]=itemData.productId;
-  }
-
+  const totalPrice = $("#totalUserPrice").innerHTML;
+  const status = "Information Received";
   // 잘 입력했는지 확인
   const isAddressValid = postalCode.length === 5;
   const isPhoneNumberValid = validatePhoneNumber(phoneNumber);
@@ -121,9 +119,8 @@ async function handleSubmit(e) {
   if (!isPhoneNumberValid) {
     return alert("휴대전화 번호 형식이 맞지 않습니다.");
   }
-
   try {
-    const data = { fullName, phoneNumber, address, status, products , totalPrice };
+    const data = { fullName, phoneNumber, address, status, products, totalPrice };
 
     await Api.post("/api/order/complete", data);
 
@@ -136,4 +133,3 @@ async function handleSubmit(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-

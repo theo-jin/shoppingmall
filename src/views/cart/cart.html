@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-n팀</title>
+    <title>마이키트</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -22,9 +22,10 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
-    <!-- 커스텀 css, js -->
+    <!-- 커스텀 css, js --> 
     <link rel="stylesheet" href="cart.css" />
     <script src="cart.js" type="module" defer></script>
+    <script src="slideShow.js" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -33,26 +34,18 @@
         <div class="navbar-brand">
           <a class="navbar-item" href="/">
             <img src="/elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-n팀</span>
-          </a>
-
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+            <span class="has-text-link brandLogo">마이키트</span>
           </a>
         </div>
-
+        <div class="navbar-menu navMenuContainer">
+          <a class="navbar-item" href="#공지">공지사항</a>
+          <a class="navbar-item" href="/new">신상품</a>
+          <a class="navbar-item" href="/product?category=krFood">제품</a>
+        </div>
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
-              <li><a href='/userInfo'>계정관리</a></li>
-              <li><a href='/'>로그아웃</a></li>
+              <li><a href="/login">로그인</a></li>
+              <li><a href="/register">회원가입</a></li>
               <li>
                 <a href="/cart" aria-current="page">
                   <span class="icon">
@@ -76,9 +69,8 @@
             <div class="cartContainerInfo">
               <div class="items">
                 <div class="select">
-                  <label class="checkbox">
-                    <input type="checkbox" id="allSelectCheckbox" />
-                    <p>전체 선택</p>
+                  <label class="allDelete" id="allDelete">
+                    <p>전체 삭제</p>
                   </label>
                   <label class="selectionDelete" id="selectDelete">
                     <p>선택 삭제</p>

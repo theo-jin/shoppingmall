@@ -58,7 +58,7 @@
 }
 
 .containerDiv {
-  max-width: 1300px;
+  width: 1300px;
   margin: 100px auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

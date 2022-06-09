@@ -4,6 +4,7 @@
 * {
   font-size: large;
   font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
 .brandLogo {
@@ -12,21 +13,51 @@
   font-family: "Jua", sans-serif;
 }
 
-.container {
-  justify-content: center;
+.menuNav {
+  background-color: #b8e0f837;
 }
 
-.itemBox {
-  width: 600px;
+.menuNav a {
+  line-height: 52px;
+  width: 100px;
+  color: black !important;
+}
+
+.menuNav a:hover {
+  background-color: #e1f3fe;
+}
+
+.container {
+  justify-content: center;
+  text-align: center;
+}
+
+.imgDiv {
+  width: 700px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.267);
+}
+
+.imgDiv .productImage {
+  width: 800px;
+  height: 100%;
 }
 
 .descriptionBox {
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.267);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
   width: 400px;
   height: 500px;
+}
+
+.descriptionBox p,
+.descriptionBox span {
+  color: black !important;
 }
 
 .descriptionBox .description {
@@ -51,10 +82,10 @@
 }
 
 .containerDiv {
-  width: 1024px;
+  width: 1300px;
   margin: 50px auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .btnBox {
@@ -74,19 +105,19 @@
 }
 
 .btn.orderBtn {
-  background-color: #2781d9;
-  color: white;
+  background-color: #2781d9 !important;
+  color: white !important;
 }
 
 .btn.orderBtn:hover {
-  background-color: #2373c3;
+  background-color: #2373c3 !important;
 }
 
 .btn.putCartBtn {
-  background-color: #434373;
-  color: white;
+  background-color: #434373 !important;
+  color: white !important;
 }
 
 .btn.putCartBtn:hover {
-  background-color: #37375e;
+  background-color: #37375e !important;
 }

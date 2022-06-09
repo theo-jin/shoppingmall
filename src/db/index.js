@@ -23,4 +23,4 @@ export * from "./models/product-model";
 export * from "./models/category-model";
 export * from "./models/order-model";
 export * from "./models/notice-model";
-export * from "./models/grade-model";
+export * from "./models/score-model";

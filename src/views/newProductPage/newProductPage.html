@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>마이키트</title>
     <!-- 아이콘 -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
-    <!-- bulma css 관련 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
     <!-- 폰트 어썸: 아이콘 -->
-    <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
-    <!-- 구글 OAuth -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- 카카오 OAuth -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="adminOrderList.css" />
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="adminOrderList.js" type="module" defer></script>
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js --> 
+    <link rel="stylesheet" href="newProductPage.css" />
+    <script src="newProductPage.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -32,8 +39,9 @@
         <div class="navbar-menu navMenuContainer">
           <a class="navbar-item" href="#공지">공지사항</a>
           <a class="navbar-item" href="/new">신상품</a>
-          <a class="navbar-item" href="/product?category=krFood" >제품</a>
+          <a class="navbar-item" href="/product?category=krFood">제품</a>
         </div>
+
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
               <li><a href="/login">로그인</a></li>
@@ -51,21 +59,22 @@
         </div>
       </div>
     </nav>
-
-    <section class="orderlistpageContainer">
-      <div class="orderlistpageInfo">
-        <h1 class="orderListTitle">주문관리</h1>
-        <div id="orderlistContainer" class="orderlistContainer">
-          <div class="listTitle">
-            <span>주문자 이름</span>
-            <span>주문날짜</span>
-            <span>주문상품</span>
-            <span>배송상태</span>
-            <span>취소</span>
-          </div>
-            
-        </div>
-      </div>
-    </section>
+    <nav class="navbar menuNav" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <a class="foodItem" href ="/product?category=krFood">
+          한식 
+        </a>
+        <a class="foodItem" href ="/product?category=jpFood">
+          일식
+        </a>
+        <a class="foodItem" href ="/product?category=chFood">
+          중식
+        </a>
+        <a class="foodItem" href ="/product?category=wsFood">
+          양식
+        </a>
+      </div>  
+    </nav>
+    <div class="containerDiv"></div>
   </body>
 </html>
