@@ -43,8 +43,24 @@ label.label {
   font-weight: 400;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #submitButton {
-  margin-bottom: 3%;
+  width: 200px;
   background-color: #434373;
   color: white !important;
+  margin-bottom: 10px;
+}
+
+.googleBtn {
+  width: 210px;
+}
+
+.googleBtn img {
+  width: 100%;
 }
