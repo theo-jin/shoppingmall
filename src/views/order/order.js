@@ -8,6 +8,15 @@ const $$ = (selector) => document.querySelectorAll(selector);
 addAllElements();
 addAllEvents();
 getItemData();
+checkUser();
+
+function checkUser(){
+  const role = sessionStorage.getItem("role");
+  if (role !== "basic-user" &&  role !== "admin"){
+    alert("로그인이 필요한 서비스입니다.");
+    window.location.href = "/login";
+  }
+}
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {

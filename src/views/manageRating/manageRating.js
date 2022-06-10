@@ -117,7 +117,7 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
     try {
       const data = JSON.parse(sessionStorage.getItem("reviewData"));
       await Api.patch("/api/score", data.scoreId, data);
-      alert("별점이 수정되었습니다.");
+      alert("별점이 등록되었습니다.");
       sessionStorage.removeItem("reviewData");
       window.location.href = "/userInfo/review/";
     } catch (err) {
