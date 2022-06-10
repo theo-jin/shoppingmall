@@ -70,9 +70,11 @@ function getCategory(categoryList) {
 pageContainer.addEventListener("click", async (e) => {
   let params = new URL(document.location).searchParams;
   let index = params.get("category");
-  const pageNumber = e.target.innerHTML;
-  const limit = 6;
-  window.location.href = `/product/?category=${index}&page=${pageNumber}&limit${limit}`;
+  if (e.target.classList.contains("pageButton")) {
+    const pageNumber = e.target.innerHTML;
+    const limit = 6;
+    window.location.href = `/product/?category=${index}&page=${pageNumber}&limit${limit}`;
+  }
 });
 
 async function getDataFromApi(category, page, limit) {
