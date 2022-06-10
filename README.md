@@ -18,18 +18,14 @@
 ## 주요 사용 기술
 
 ### 1. 프론트엔드
-
-- **Vanilla javascript**, html, css (**Bulma css**)
-- Font-awesome 
-- Daum 도로명 주소 api 
-- 이외
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
 
 ### 2. 백엔드 
-
-- **Express** (nodemon, babel-node로 실행됩니다.)
-- Mongodb, Mongoose
-- cors
-- 이외
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/mongodb-47A248?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=css3&logoColor=white">
 
 ## 폴더 구조
 - 프론트: `src/views` 폴더 
