@@ -12,7 +12,7 @@ export class OrderModel {
 
   // 전체 조회
   async findAll() {
-    const orders = await Order.find({});
+    const orders = await Order.find({}).sort({createdAt: -1});
     return orders;
   }
 

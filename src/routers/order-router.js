@@ -97,7 +97,7 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
         throw new Error(`${deletedOrder}을 삭제 실패했습니다.`);
       }
       // 리뷰 삭제
-      const deletedReview = await scoreService.deleteOrderId(order._id.toString());
+      const deletedReview = await scoreService.deleteOrderId(orderId);
       if (deletedReview.deletedCount !== 1) {
         throw new Error(`리뷰를 삭제 실패했습니다.`);
       }
