@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
+}
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
+.userTitle {
+  text-align: center;
+  margin: 2% auto;
+}
+
+div.column {
+  color: black !important;
+}
+
+.mainContainer {
+  width: 1300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mainContainer > div {
+  display: flex;
+  padding: 10px;
+}
+
+.mainContainer > div.notification {
+  margin-bottom: 10px;
+}
+
+.mainContainer > div.textContent {
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.229);
+  border: rgba(0, 0, 0, 0.229) 0px solid;
+  margin-bottom: 30px;
+}
+
+.textContent button {
+  width: 50px;
+  height: 30px;
+  margin: 1% auto;
+  border-radius: 5px;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
+}
+
+#addNotice {
+  cursor: pointer;
+  text-align: center;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d5e5f5;
+  position: fixed;
+  right: 10%;
+  bottom: 100px;
+}
+
+#addNotice:hover {
+  background-color: #8ea5bd;
+}
+
+#addModal label,
+#editModal label {
+  font-weight: 400;
+  font-size: large;
+}
+
+#addModal label,
+#categoryName1,
+#categoryDescription1,
+#editModal label,
+#categoryName2,
+#categoryDescription1 {
+  color: black !important;
+}
+
+#addBtn,
+#editBtn {
+  background-color: #434373;
+  color: white !important;
+}
+
+#addBtn:hover,
+#editBtn:hover {
+  background-color: rgb(106, 107, 109);
+}
+
+#noticeDescription1,
+#noticeDescription2 {
+  height: 300px;
+}

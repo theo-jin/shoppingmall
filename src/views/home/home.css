@@ -1,11 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
+}
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
 .div-container {
   display: flex;
   /* align-items: center; */
   justify-content: center;
   height: 550px;
-  background-color: antiquewhite;
-  margin: 10% auto;
+  background-color: #b8e0f837;
+  margin: 3% auto;
 }
+
 .landing {
   margin-top: 7px;
 }
@@ -15,20 +31,86 @@
   width: 800px;
   overflow: hidden;
 }
+
 #slideContainer .slides {
   width: 3500px;
 }
 
 #slideContainer .slides img {
   width: 800px;
+  height: 500px;
+  border-radius: 20px;
 }
 
 #slideContainer .slides li {
+  margin: 20px 0;
   float: left;
   list-style-type: none;
 }
 
-/* 슬라이드 버튼 */
-#slideContainer .slide-dots {
-  clear: both;
+.commentImg {
+  margin: 0 15%;
+}
+
+.commentTitle {
+  text-align: center;
+}
+
+.img {
+  box-shadow: 5px 5px 5px gray;
+}
+#img1 {
+  position: static;
+  width: 60%;
+}
+#img2 {
+  position: relative;
+  width: 60%;
+  top: -50px;
+  left: 130px;
+}
+#img3 {
+  position: relative;
+  width: 60%;
+  top: -100px;
+}
+#img1:hover,
+#img2:hover,
+#img3:hover {
+  transform: scale(1.01);
+}
+
+.img {
+  opacity: 0;
+}
+
+.index {
+  display: flex;
+}
+
+#comment1,
+#comment2,
+#comment3 {
+  margin: 30% 8%;
+  font-family: "Noto Serif KR", serif;
+}
+
+.commentTitle {
+  font-family: "Noto Serif KR", serif;
+  margin: 8% 0;
+  font-size: 25px;
+  color: #434373;
+}
+
+footer {
+  width: 100%;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.154);
+  padding: 30px;
+}
+
+footer p {
+  font-family: "Noto Serif KR", serif !important;
+  font-size: medium;
+  color: black !important;
 }

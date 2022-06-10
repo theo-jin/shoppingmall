@@ -1,4 +1,4 @@
-import { orderModel } from "../db";
+import { orderModel, scoreModel } from "../db";
 
 class OrderService {
   constructor(orderModel) {
@@ -12,12 +12,12 @@ class OrderService {
   }
 
   // orderId로 주문 정보 찾기
-  async getOrder(orderId){
+  async getOrder(orderId) {
     const order = await this.orderModel.findById(orderId);
-    if(!order){
-      throw new Error('주문 정보가 없습니다.')
+    if (!order) {
+      throw new Error("주문 정보가 없습니다.");
     }
-    return order
+    return order;
   }
 
   //사용자 주문 정보 조회하기
@@ -36,6 +36,22 @@ class OrderService {
   async addOrder(orderInfo) {
     // db에 저장
     const createdNewOrder = await this.orderModel.create(orderInfo);
+
+    // 주문한 상품 목록
+    const products = createdNewOrder.products;
+    for (let index = 0; index < products.length; index++) {
+      // 리뷰 생성
+      const createdNewReview = await scoreModel.create({
+        userId: createdNewOrder.userId,
+        orderId: createdNewOrder._id.toString(),
+        product: {
+          productId: products[index].productId,
+          productName: products[index].productName,
+        },
+        reviewScore: 0,
+        orderedAt: createdNewOrder.createdAt,
+      });
+    }
 
     return createdNewOrder;
   }
@@ -67,12 +83,12 @@ class OrderService {
 
     // 주문 정보 수정 시작
     // 업데이트 진행
-    const updatedOrder = await this.orderModel.update({
+    const updatedResult = await this.orderModel.update({
       orderId,
-      status
+      status,
     });
 
-    return updatedOrder;
+    return updatedResult;
   }
 }
 

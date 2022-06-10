@@ -14,8 +14,31 @@ export class ProductModel {
     return product;
   }
 
+  async countBycategory(category) {
+    const total = await Product.countDocuments({ category });
+    return total;
+  }
+
   async findByCategory(category) {
     const products = await Product.find({ category });
+    return products;
+  }
+
+  async findByCategory(category, page, countPerPage) {
+    const products = await Product.find({ category })
+      .skip(countPerPage * (page - 1))
+      .limit(countPerPage);
+    return products;
+  }
+
+  async findByDate(date) {
+    const products = await Product.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: date, $lte: new Date() },
+        },
+      },
+    ]);
     return products;
   }
 
@@ -33,17 +56,21 @@ export class ProductModel {
     const filter = { productName: productInfoRequired.productName };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.findOneAndUpdate(
-      filter,
-      toUpdate,
-      option
-    );
-    return updatedProduct;
+    const updatedResult = await Product.updateOne(filter, toUpdate, option);
+    return updatedResult;
   }
 
   async deleteProduct(productName) {
     const deletedProduct = await Product.deleteOne({ productName });
     return deletedProduct;
+  }
+
+  async updateScore({ productId, toUpdate }) {
+    const filter = { _id: productId };
+    const option = { returnOriginal: false };
+
+    const updatedResult = await Product.updateOne(filter, toUpdate, option);
+    return updatedResult;
   }
 }
 

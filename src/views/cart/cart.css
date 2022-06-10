@@ -1,87 +1,133 @@
-section.cart {
-  display: flex;
-  flex-direction: column;
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
 
-div.cartContainer {
-  width: 100%;
-  margin: 10px auto;
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
 }
 
-
-div.cartContainerInfo {
-  display: flex;
-  width: 100%;
-  gap: 1rem;
+.cartContainer {
+  width: 700px;
   margin: 0 auto;
+  padding: 30px;
+  border: solid 1px rgba(0, 0, 0, 0.243);
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.243);
 }
 
-div.items {
-  width: 60%;
-  margin-left:10px
+.deleteContainer {
+  margin-bottom: 20px;
 }
 
-div.select {
+.priceContainer,
+.orderContainer {
+  text-align: center;
+}
+
+.orderContainer .submitButton {
+  border-radius: 10px;
+  border: transparent;
+  width: 170px;
+  height: 40px;
+  background-color: #2781d9 !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.orderContainer .submitButton:hover {
+  background-color: #2373c3 !important;
+}
+
+.orderContainer .backButton {
+  border-radius: 10px;
+  border: transparent;
+  width: 170px;
+  height: 40px;
+  background-color: #434373 !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.orderContainer .backButton:hover {
+  background-color: #37375e !important;
+}
+
+.productBox {
+  width: 600px;
   display: flex;
-  border-bottom: 1px solid #333;
-  padding-bottom: 0.5rem;
-  margin-right: 1rem;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(0, 0, 0, 0.212);
+  border-radius: 20px;
+  margin: 0 auto 30px auto;
 }
 
-div.select > * {
-  margin-right: 1rem;
+input.checkbox {
+  width: 15px;
+  height: 15px;
+  margin: 20px 0 0 10px;
 }
 
-.checkbox {
+.productBox .imgBox {
+  width: 200px;
+  border-radius: 20px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.productBox img {
+  width: 100%;
+  height: 100%;
+}
+
+.productBox .orderCount {
+  width: 50%;
   display: flex;
-  gap: 0.5rem;
-  align-items: center; 
-}  
-
-.selectionDelete{
-display: flex;
-gap: 0.5rem;
-align-items: center;
-cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
 }
 
-div.orderSummary {
-  width: 30%;
-  height: 50vh;
+.detailBox {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 10px;
+  justify-content: center;
 }
 
-div.orderSummary > p {
-  border-bottom: 1px solid #333;
-  padding-bottom: 0.5rem;
-  font-weight: bold;
+button.add,
+button.del {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
 }
 
-div.data {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
+button.delItem {
+  width: 50px;
+  border-radius: 6px;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
 }
 
-div.total {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin: 2rem 0;
-  align-items: flex-end;
+button.allClear,
+button.selectedClear {
+  width: 100px;
+  height: 30px;
+  border-radius: 6px;
+  border: transparent;
+  background-color: #434373;
+  color: white !important;
 }
 
-#purchaseButton {
-  width: 100%;
-  height: 7vh;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-
+button.allClear:hover,
+button.selectedClear:hover {
+  background-color: #37375e !important;
 }
-

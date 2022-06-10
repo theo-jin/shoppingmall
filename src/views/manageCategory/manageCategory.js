@@ -1,6 +1,7 @@
 import { changeNavbar } from "/changeNavbar.js";
 import * as Api from "/api.js";
-const mainContainer = document.querySelector(".mainContainer");
+
+const categoryContainer = document.querySelector(".categoryContainer");
 const addCategory = document.querySelector("#addCategory");
 const addModal = document.querySelector("#addModal");
 const editModal = document.querySelector("#editModal");
@@ -44,7 +45,9 @@ function addAllEvents() {
 // html에 카테고리 목록을 출력해주는 함수
 async function categoryLanding() {
   const getData = await getDataFromApi();
-  createCategoryList(getData).forEach((el) => mainContainer.insertAdjacentHTML("beforeend", el));
+  createCategoryList(getData).forEach((el) =>
+    categoryContainer.insertAdjacentHTML("beforeend", el)
+  );
   const deleteButtons = document.querySelectorAll(".deleteButton");
   const editButtons = document.querySelectorAll(".editButton");
 
@@ -52,12 +55,14 @@ async function categoryLanding() {
   editButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
-      const prevCategory = e.path[2].children[1].innerText;
+      const prevCategory = e.target.classList[0];
+      editCategoryName.value = prevCategory;
 
       // 카테고리 수정 이벤트 리스너
       editBtn.addEventListener("click", async () => {
         const data = {
-          foodType: editCategoryName.value,
+          // 음식 카테고리의 종류가 같다면 카테고리의 설명만 변경하도록 foodType 값을 null로 지정
+          foodType: editCategoryName.value === prevCategory ? null : editCategoryName.value,
           description: editCategoryDescription.value,
         };
         try {
@@ -73,9 +78,12 @@ async function categoryLanding() {
   // 클릭 시 카테고리 삭제 api 요청 후 카테고리 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
-      const catecory = e.path[2].children[1].innerText;
-      await Api.delete("/api/category/" + catecory);
-      window.location.href = "/admin/manageCategory/";
+      const catecory = e.target.classList[0];
+      if (confirm("카테고리를 삭제하시겠습니까?")) {
+        await Api.delete("/api/category/" + catecory);
+        alert("카테고리가 삭제되었습니다.");
+        window.location.href = "/admin/manageCategory/";
+      }
     })
   );
 }
@@ -87,7 +95,8 @@ async function addCategoryFn() {
     description: addCategoryDescription.value,
   };
   try {
-    await Api.post("/api/category/add", data);
+    await Api.post("/api/category/", data);
+    alert("카테고리가 추가되었습니다.");
     window.location.href = "/admin/manageCategory/";
   } catch (err) {
     alert(err);
@@ -97,19 +106,13 @@ async function addCategoryFn() {
 // api를 통해 상품 정보를 받아온 후 html에 표시
 function createCategoryList(data) {
   return data.map(
-    (el) => `
-  <div class="columns orders-item" id="order">
-    <div class="column is-3">${el.createdAt.split("T")[0]}</div>
-    <div class="column is-2 order-summary">${el.foodType}</div>
-    <div class="column is-5">${el.description}</div>
-    <div class="column is-1">
-      <button class="button editButton">수정</button>
-    </div>
-    <div class="column is-1">
-      <button class="button deleteButton">삭제</button>
-    </div>
-  </div>
-  `
+    (el) => `<div class="orderItem">
+    <span>${el.createdAt.split("T")[0]}</span>
+    <span>${el.foodType}</span>
+    <span>${el.description}</span>
+    <button class="${el.foodType} button editButton">수정</button>
+    <button class="${el.foodType} button deleteButton">삭제</button>
+    </div>`
   );
 }
 

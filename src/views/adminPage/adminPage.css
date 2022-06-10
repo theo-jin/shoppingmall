@@ -1,16 +1,37 @@
-.userTitle {
-  margin: 2% 40% 4% 45%;
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
 }
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
+.userTitle {
+  text-align: center;
+  margin: 2% auto;
+}
+
 .mainContainer {
-  width: 1024px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.itemDiv {
+  text-align: center;
+  width: 400px;
+}
+
 .userMenu {
   margin: 2% 2% 2% 2%;
-  text-align: center;
 }
 
 .userIcon {
@@ -19,4 +40,19 @@
 }
 .menuIcon {
   height: 60px;
+}
+
+.mainContainer b {
+  font-family: "Poor+Story", sans-serif;
+  font-size: 25px !important;
+}
+
+.mainContainer p {
+  font-family: "Poor+Story", sans-serif;
+  font-size: 20px !important;
+}
+
+.mainContainer span {
+  font-family: "Poor+Story", sans-serif;
+  font-size: 40px !important;
 }

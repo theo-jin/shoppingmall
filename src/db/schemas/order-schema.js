@@ -25,14 +25,26 @@ const OrderSchema = new Schema(
       ),
       required: true,
     },
-    products: [{
-      type: Schema.Types.ObjectId,
-      ref: "products",
-      required: true,
-    }],
+    products: [
+      {
+        productId: {
+          type: String,
+          required: true,
+        },
+        productName: {
+          type: String,
+          require: true,
+        },
+        productCount: {
+          type: Number,
+          required: true,
+        },
+      },
+      { required: true },
+    ],
     status: {
       type: String,
-      required: true,
+      required: false,
       default: "Information Received",
     },
     totalPrice: {

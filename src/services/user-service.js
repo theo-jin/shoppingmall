@@ -42,49 +42,14 @@ class UserService {
   }
 
   // 로그인
-  async getUserToken(loginInfo) {
-    // 객체 destructuring
-    const { email, password } = loginInfo;
-
-    // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
-    const user = await this.userModel.findByEmail(email);
-    if (!user) {
-      throw new Error(
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
-    }
-
-    // 이제 이메일은 문제 없는 경우이므로, 비밀번호를 확인함
-
-    // 비밀번호 일치 여부 확인
-    const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
-
-    // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      correctPasswordHash
-    );
-
-    if (!isPasswordCorrect) {
-      throw new Error(
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
-    }
-
+  async getUserToken({userId, role}) {
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
 
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
+    const token = jwt.sign({ userId }, secretKey);
 
-    if (user.role == "admin") {
-      return {
-        token,
-        cookie: { role: user.role },
-      };
-    }
-
-    return { token, cookie: null };
+    return { token, role };
   }
 
   // 사용자 목록을 받음.
@@ -95,8 +60,8 @@ class UserService {
 
   // 사용자 개인 정보를 받음.
   async getUserInfo(userId) {
-    const users = await this.userModel.findById(userId);
-    return users;
+    const user = await this.userModel.findById(userId);
+    return user;
   }
 
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.

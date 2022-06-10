@@ -1,13 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Jua&display=swap");
+
+* {
+  font-size: large;
+  font-family: "Jua", sans-serif;
+  color: #434373 !important;
+}
+
+.brandLogo {
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: "Jua", sans-serif;
+}
+
+.menuNav {
+  background-color: #b8e0f837;
+}
+
+.menuNav a {
+  line-height: 52px;
+  width: 100px;
+  color: black !important;
+}
+
+.menuNav a:hover {
+  background-color: #e1f3fe;
+}
+
 .itemBox {
-  border: 1px solid black;
-  width: 300px;
+  width: 400px;
+  height: 380px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.267);
+  overflow: hidden;
+}
+
+.imgDiv {
+  margin: 0 auto;
+  width: 400px;
   height: 300px;
+  overflow: hidden;
+}
+
+.imgDiv img {
+  width: 100%;
+  height: 100%;
+}
+
+.imgDiv img:hover {
+  transform: scale(1.1);
+  transition: all 0.5s ease;
+}
+
+.container {
+  justify-content: center;
+  text-align: center;
 }
 
 .containerDiv {
-  width: 1024px;
-  margin: 50px auto;
+  max-width: 1300px;
+  margin: 100px auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 100px 70px;
+}
+
+.contentDiv p {
+  color: black !important;
+  text-align: center;
+}
+
+.contentDiv p:nth-child(2) {
+  font-size: 25px;
+}
+
+#noProduct {
+  text-align: center;
+  grid-column: 1 / 4;
+  height: 300px;
+  line-height: 300px;
+}
+
+#noProduct h1 {
+  font-size: x-large;
+}
+
+.pageContainer {
+  text-align: center;
+  margin:0 2% 5%;
+
+}
+
+.pageButton {
+  background-color: white !important;
+  margin-left: 1%;
+  font-size: 25px;
+  border:none;
+  border-bottom: 1px solid ;
+}
+
+.pageButton:hover {
+  color: rgb(114, 114, 255) !important;
 }
