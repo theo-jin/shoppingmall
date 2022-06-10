@@ -84,3 +84,21 @@
 #noProduct h1 {
   font-size: x-large;
 }
+
+.pageContainer {
+  text-align: center;
+  margin:0 2% 5%;
+
+}
+
+.pageButton {
+  background-color: white !important;
+  margin-left: 1%;
+  font-size: 25px;
+  border:none;
+  border-bottom: 1px solid ;
+}
+
+.pageButton:hover {
+  color: rgb(114, 114, 255) !important;
+}

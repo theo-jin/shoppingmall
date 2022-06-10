@@ -47,15 +47,12 @@ function createProductList(data) {
   return `<div id="noProduct"><h1>${data}</h1></div>`;
 }
 
-//TODO 버튼 이미지 수정하실려면 아래 태그에 클래스 넣으시면 될거에요!
-// 수정하시고 주석 지워주세요.
-
 // 페이지네이션 버튼 태그
 function createPageBtns(total) {
   const limit = 6;
   const buttons = [];
   for (let i = 0; i < Math.ceil(total / limit); i++) {
-    buttons.push(`<button>${i + 1}</button>`);
+    buttons.push(`<button class="pageButton">${i + 1}</button>`);
   }
   return buttons;
 }
