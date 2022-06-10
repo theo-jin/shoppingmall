@@ -64,15 +64,27 @@ function createProductDetail(data) {
       review += '<i class="far fa-star"></i>';
     }
   } else {
+    // 별점이 3.5점이라면 3점까지의 별을 색칠된 별로 표시
     for (let i = 0; i < reviewScore - 1; i++) {
       review += "<i class='fas fa-star'></i>";
     }
-    // 별 반쪽짜리 추가
-    if (reviewScore % 1 <= 0.5) {
+
+    // 소숫점 값에 따라 색칠의 정도 구분
+    if (reviewScore % 1 === 0) {
+      // 1,2,3,4,5 등의 정수일 경우 색칠된 별 표시
+      review += "<i class='fas fa-star'></i>";
+    } else if (reviewScore % 1 < 0.4) {
+      // x.0 < score < x.4 사이일 경우 빈 별 표시
+      review += '<i class="far fa-star"></i>';
+    } else if (reviewScore % 1 < 0.8) {
+      // x.4 <= score < x.8 사이일 경우 별 반개 표시
       review += "<i class='fas fa-star-half-alt'></i>";
     } else {
+      // x.8 이상인 경우 색칠된 별 표시
       review += "<i class='fas fa-star'></i>";
     }
+
+    // 별점이 3.5점이라면 위의 함수에 의해 별은 4개가 표시되므로 총 5개를 표시하기 위해 추가
     for (let i = Math.ceil(reviewScore); i < 5; i++) {
       review += '<i class="far fa-star"></i>';
     }
