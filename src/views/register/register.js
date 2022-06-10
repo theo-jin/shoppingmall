@@ -82,8 +82,8 @@ async function handleSubmit(e) {
     const result = await Api.post("/api/login", { email, password });
     // 로그인 성공,
     if (result.status === 200) {
-      const role = await Api.get("/api/role");
-      sessionStorage.setItem(role);
+      const { role } = await Api.get("/api/role");
+      sessionStorage.setItem("role", role);
       // 기본 페이지로 이동
       window.location.href = "/";
     }

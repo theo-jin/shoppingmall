@@ -12,7 +12,7 @@ async function addAllElements() {
   const getData = await getDataFromApi();
   const HtmlList = createOrderList(getData);
   HtmlList.forEach((el) => (reviewContainer.innerHTML += el));
-  sessionStorage.removeItem("data");
+  prevReviewScore(getData);
 }
 
 // 주문 데이터
@@ -21,22 +21,27 @@ async function getDataFromApi() {
   return data;
 }
 
-// 별점 데이터
-// TODO
-// async function getRatingFromApi(productId) {
-//   const data = await Api.get("/api/order/user", productId);
-//   return data;
-// }
+// 기존에 입력된 별점 데이터 반영
+function prevReviewScore(getData) {
+  const orderItems = document.querySelectorAll(".orderItem");
+  orderItems.forEach((el) => {
+    const reviewScore = getData[el.id].reviewScore;
+    const ratingContainer = el.querySelector(".ratingContainer");
+    for (let i = 0; i < reviewScore; i++) {
+      ratingContainer.children[i].innerHTML = "<i class='fas fa-star'></i>";
+    }
+  });
+}
 
 // api로 주문 목록 데이터를 받아와서 html로 표시하는 함수
 function createOrderList(data) {
   return data.map(
-    (el) =>
-      `<div class="orderItem">
+    (el, index) =>
+      `<div class="orderItem" id=${index}>
       <span>${el.orderedAt.split("T")[0]}</span>
       <span>${el.product.productName}</span>
       <span>
-        <div class="ratingContainer" id=${el.product.productId}>
+        <div class="ratingContainer" id=${el._id}>
           <span class="starSpan oneStar" data-item-id="oneStar">
             <i class="far fa-star"></i>
           </span>
@@ -75,7 +80,7 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
   // ratingContainer라는 클래스를 가진 경우에만 실행
   if (ratingContainer.classList.contains("ratingContainer")) {
     const starValue = e.target.closest("span").dataset.itemId;
-    const ratingValue = ratingObj[starValue];
+    const reviewScore = ratingObj[starValue];
     // 빈 별 상태로 초기 렌더링 후 클릭한 별의 갯수에 맞게 색칠된 별을 렌더링
     ratingContainer.innerHTML = `<span class="starSpan oneStar" data-item-id="oneStar">
     <i class="far fa-star"></i>
@@ -93,36 +98,25 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
     <i class="far fa-star"></i>
   </span>`;
 
-    for (let i = 0; i < ratingValue; i++) {
+    for (let i = 0; i < reviewScore; i++) {
       ratingContainer.children[i].innerHTML = "<i class='fas fa-star'></i>";
     }
     const data = {
-      productId: ratingContainer.id,
-      reviewScore: ratingValue,
+      scoreId: ratingContainer.id,
+      reviewScore: reviewScore,
     };
-    sessionStorage.setItem("data", JSON.stringify(data));
+    sessionStorage.setItem("reviewData", JSON.stringify(data));
   }
   // 등록, 수정 관련 기능
-  // 등록
-  /* if (e.target.classList.contains("add")) {
-    try {
-      const data = JSON.parse(sessionStorage.getItem("data"));
-      await Api.post("/api/score/", data);
-      alert("별점이 등록되었습니다.");
-      window.location.href = "/userInfo/review/";
-    } catch (err) {
-      alert(err);
-    }
-  } */
-
   // TODO 수정 기능 추후 추가 예정
   // 등록
+
   if (e.target.classList.contains("add")) {
     try {
-      const data = JSON.parse(sessionStorage.getItem("data"));
-      console.log(data)
-      await Api.patch("/api/score", data.productId, data);
+      const data = JSON.parse(sessionStorage.getItem("reviewData"));
+      await Api.patch("/api/score", data.scoreId, data);
       alert("별점이 수정되었습니다.");
+      sessionStorage.removeItem("reviewData");
       window.location.href = "/userInfo/review/";
     } catch (err) {
       alert(err);

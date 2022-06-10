@@ -1,9 +1,5 @@
 import * as Api from "/api.js";
-import {
-  validatePhoneNumber,
-  addCommas,
-  convertToNumber,
-} from "/useful-functions.js";
+import { validatePhoneNumber, addCommas, convertToNumber } from "/useful-functions.js";
 import { changeNavbar } from "/changeNavbar.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -65,14 +61,10 @@ async function getDirectItem() {
   const data = sessionStorage.getItem("product");
   const itemData = JSON.parse(data);
   console.log(itemData);
-  $("#productList").innerHTML += `<tr><td class="productName">${
-    itemData.name
-  }</td>
+  $("#productList").innerHTML += `<tr><td class="productName">${itemData.name}</td>
             <td class="productPrice">${addCommas(itemData.price)}</td>
             <td class="productNumber">${itemData.count}</td>
-            <td class="productTotal">${addCommas(
-              itemData.price * itemData.count
-            )}</td></tr>`;
+            <td class="productTotal">${addCommas(itemData.price * itemData.count)}</td></tr>`;
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
     `<label class="totaPrice" id="totalUserPrice">${addCommas(
@@ -97,9 +89,7 @@ async function getCartItem() {
     $("#productList").innerHTML += `<tr><td class="productName">${el.name}</td>
             <td class="productPrice">${addCommas(el.price)}<span>원</span></td>
             <td class="productNumber">${el.count}</td>
-            <td class="productTotal">${addCommas(
-              el.price * el.count
-            )}<span>원</span></td></tr>`;
+            <td class="productTotal">${addCommas(el.price * el.count)}<span>원</span></td></tr>`;
 
     products.push({
       productId: el.productId,
@@ -115,9 +105,7 @@ async function getCartItem() {
 
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
-    `<label class="totaPrice" id="totalUserPrice">${addCommas(
-      price
-    )}<span>원</span></label>`
+    `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}<span>원</span></label>`
   );
 }
 
@@ -189,7 +177,7 @@ async function handleSubmit(e) {
     await Api.post("/api/order/complete", data);
 
     alert(`주문이 완료되었습니다.`);
-    sessionStorage.clear();
+    getProduct();
 
     // 주문완료 페이지 이동
     window.location.href = "/orderComplete";
@@ -197,4 +185,15 @@ async function handleSubmit(e) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
+}
+
+// 세션스토리지에서 데이터 가져오기
+function getProduct() {
+  const productkeys = Object.keys(sessionStorage);
+  productkeys.forEach((el) => {
+    // 바로 주문하기 데이터, 장바구니에서 주문하기로 넘겨주는 데이터, 별점 관련 데이터 제외
+    if (el !== "role") {
+      sessionStorage.removeItem(el);
+    }
+  });
 }

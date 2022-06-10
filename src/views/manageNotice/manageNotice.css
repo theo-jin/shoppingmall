@@ -95,3 +95,8 @@ div.column {
 #editBtn:hover {
   background-color: rgb(106, 107, 109);
 }
+
+#noticeDescription1,
+#noticeDescription2 {
+  height: 300px;
+}

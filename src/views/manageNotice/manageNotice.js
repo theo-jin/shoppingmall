@@ -54,6 +54,7 @@ async function noticeLanding() {
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
       const prevNotice = e.target.parentNode.parentNode.querySelectorAll("div")[1].innerHTML;
+      const noticeId = e.target.parentNode.parentNode.id;
       editNoticeName.value = prevNotice;
 
       // 공지 수정 이벤트 리스너
@@ -64,7 +65,7 @@ async function noticeLanding() {
           content: editNoticeDescription.value,
         };
         try {
-          await Api.patch("/api/notice", prevNotice, data);
+          await Api.patch("/api/notice", noticeId, data);
           window.location.href = "/manageNotice/";
         } catch (err) {
           alert(err);
@@ -76,9 +77,9 @@ async function noticeLanding() {
   // 클릭 시 공지 삭제 api 요청 후 카테고리 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
-      const prevNotice = e.target.parentNode.parentNode.querySelectorAll("div")[1].innerHTML;
+      const noticeId = e.target.parentNode.parentNode.id;
       if (confirm("공지를 삭제하시겠습니까?")) {
-        await Api.delete("/api/notice/" + notice);
+        await Api.delete("/api/notice/" + noticeId);
         alert("공지가 삭제되었습니다.");
         window.location.href = "/manageNotice/";
       }
@@ -105,7 +106,7 @@ async function addNoticeFn() {
 function createNoticeList(data) {
   return data.map(
     (el) => `
-  <div class="columns textContent" >
+  <div class="columns textContent" id=${el._id}>
     <div class="column is-2">${el.createdAt.split("T")[0]}</div>
     <div class="column is-2 order-summary">${el.title}</div>
     <div class="column is-6">${el.content}</div>
