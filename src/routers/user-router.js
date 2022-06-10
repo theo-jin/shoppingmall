@@ -124,7 +124,7 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
           //token을 cookie에 담아서 보냄
           res.cookie("token", token, {
             // 1일
-            maxAge: 1000 * 60 * 60 * 24 * 3,
+            maxAge: 60 * 60 * 24 * 3,
             // web server에서만 접근
             httpOnly: true,
             // 암호화
@@ -133,7 +133,7 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
           // cookie
           res.cookie("role", role, {
             // 1일
-            maxAge: 1000 * 60 * 60 * 24 * 3,
+            maxAge: 60 * 60 * 24 * 3,
             // web server에서만 접근
             httpOnly: true,
             // 암호화
