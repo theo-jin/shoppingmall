@@ -28,8 +28,18 @@ class ProductService {
       throw new Error(`${category}는 존재하지 않는 카테고리입니다.`);
     }
 
+    let products = [];
+    if (page === 0) {
+      products = await this.productModel.findByCategory(category);
+    }
     // category로 검색
-    const products = await this.productModel.findByCategory(category, page, countPerPage);
+    else {
+      products = await this.productModel.findByCategory(
+        category,
+        page,
+        countPerPage
+      );
+    }
     //category 안에 존재하지 않을 때
     if (products.length < 1) {
       return `${category}은(는) 상품 준비중입니다😥`;

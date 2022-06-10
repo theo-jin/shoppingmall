@@ -19,6 +19,11 @@ export class ProductModel {
     return total;
   }
 
+  async findByCategory(category) {
+    const products = await Product.find({ category });
+    return products;
+  }
+
   async findByCategory(category, page, countPerPage) {
     const products = await Product.find({ category })
       .skip(countPerPage * (page - 1))
