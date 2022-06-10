@@ -196,7 +196,7 @@ productRouter.patch(
       const productInfoRequired = { productName: productCurrentName };
 
       // 수정할 data
-      const {
+      let {
         productName,
         productPrice,
         productContent,
@@ -204,9 +204,16 @@ productRouter.patch(
         category,
       } = req.body;
 
+      // undefined 값으로 들어올 때
+      productName = productName === "" ? undefined : productName
+      productPrice = productPrice === "" ? undefined : productPrice
+      productContent = productContent === "" ? undefined : productContent
+      productImage = productImage === "undefined" ? undefined : productImage
+      category = category === "" ? undefined : category
+
       // 데이터가 undefined가 아닌 값만 업데이트용 객체에 삽입
       const toUpdate = {
-        ...(productName && { productName }),
+        ...(productName && {productName}),
         ...(productPrice && { productPrice }),
         ...(productContent && { productContent }),
         ...(productImage && { productImage }),

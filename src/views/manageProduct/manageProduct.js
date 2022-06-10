@@ -62,7 +62,9 @@ async function addAllEvents() {
 // html에 상품 전체 목록을 출력해주는 함수
 async function allProductsLanding(getCategory) {
   const getData = await getProductListFromApi();
-  createProductList(getData).forEach((el) => productContainer.insertAdjacentHTML("beforeend", el));
+  createProductList(getData).forEach((el) =>
+    productContainer.insertAdjacentHTML("beforeend", el)
+  );
   const deleteButtons = document.querySelectorAll(".deleteButton");
   const editButtons = document.querySelectorAll(".editButton");
 
@@ -70,9 +72,14 @@ async function allProductsLanding(getCategory) {
   editButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
       editModal.classList.add("is-active");
-      const prevProductName = e.target.parentNode.querySelectorAll("span")[1].innerHTML;
-      editProductName.value = e.target.parentNode.querySelectorAll("span")[1].innerHTML;
-      editProductDescription.value = e.target.parentNode.querySelectorAll("span")[3].innerHTML;
+      const prevProductName =
+        e.target.parentNode.querySelectorAll("span")[1].innerHTML;
+      editProductName.value =
+        e.target.parentNode.querySelectorAll("span")[1].innerHTML;
+      editProductDescription.value =
+        e.target.parentNode.querySelectorAll("span")[3].innerHTML;
+      editProductPrice.value =
+        e.target.parentNode.querySelectorAll("span")[4].innerHTML;
 
       // 상품 수정 이벤트 리스너
       editProductBtn.addEventListener("click", async () => {
@@ -80,6 +87,8 @@ async function allProductsLanding(getCategory) {
         const productName = editProductName.value;
         const productContent = editProductDescription.value;
         const productPrice = editProductPrice.value;
+
+        // formData로 변경
         const formData = new FormData();
         formData.append("productImage", editProductImage.files[0]);
         formData.append("productName", productName);
@@ -92,6 +101,7 @@ async function allProductsLanding(getCategory) {
         console.log(`%cPATCH 요청: ${apiUrl}`, "color: #296aba;");
         console.log(`%cPATCH 요청 데이터: ${apiUrl}`, "color: #296aba;");
 
+        // 수정 요청
         const res = await fetch(apiUrl, {
           method: "PATCH",
           headers: {
@@ -117,7 +127,8 @@ async function allProductsLanding(getCategory) {
   // 클릭 시 상품 삭제 api 요청 후 상품 삭제
   deleteButtons.forEach((el) =>
     el.addEventListener("click", async (e) => {
-      const productName = e.target.parentNode.querySelectorAll("span")[1].innerHTML;
+      const productName =
+        e.target.parentNode.querySelectorAll("span")[1].innerHTML;
       if (confirm("상품을 삭제하시겠습니까?")) {
         await Api.delete("/api/product/" + productName);
         window.location.href = "/admin/manageProduct/";
@@ -144,11 +155,13 @@ function createProductList(data) {
 // 추가하기 버튼 클릭 시 실행되는 상품 추가 기능
 async function addProductFn(getCategory) {
   let category = getCategory[addProductCategory.value - 1];
-  const formData = new FormData();
+
   const productName = addProductName.value;
   const productContent = addProductDescription.value;
   const productPrice = addProductPrice.value;
 
+  // formData
+  const formData = new FormData();
   formData.append("productImage", addProductImage.files[0]);
   formData.append("productName", productName);
   formData.append("productContent", productContent);
