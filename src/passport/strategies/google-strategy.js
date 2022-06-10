@@ -5,8 +5,8 @@ const google = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    redirectURL: "http://localhost:5000",
-    callbackURL: "http://localhost:5000/api/auth/google/callback",
+    redirectURL: "http://http://kdt-sw2-busan-team04.elicecoding.com/",
+    callbackURL: "http://http://kdt-sw2-busan-team04.elicecoding.com//api/auth/google/callback",
     session: false,
     passReqToCallback: true,
   },
