@@ -37,19 +37,14 @@ const upload = multer({
 });
 
 // 상품 전체 조회
-productRouter.get(
-  "/list",
-  loginRequired,
-  adminAuthorized,
-  async function (req, res, next) {
-    try {
-      const products = await productService.getProducts();
-      res.status(200).json(products);
-    } catch (error) {
-      next(error);
-    }
+productRouter.get("/list", loginRequired, adminAuthorized, async function (req, res, next) {
+  try {
+    const products = await productService.getProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 상품 카테고리 별 조회
 //?category={}
@@ -75,34 +70,10 @@ productRouter.get("", async function (req, res, next) {
       page = Number(page);
     }
 
-    const total = await productService.countByCategory(category)
+    const total = await productService.countByCategory(category);
     const products = await productService.getProductsByCategory(category, page, countPerPage);
 
-    // if (page > 0) {
-    //   // 전체 제품 크기
-    //   let totalCount = total;
-    //   // start Number
-    //   let startItemNo = (page - 1) * countPerPage;
-    //   // last Number
-    //   let endItemNo = page * countPerPage - 1;
-
-    //   // 종료 번호가 전체 크기보다 크면 전체 크기로 변경
-    //   if (endItemNo > totalCount - 1) {
-    //     endItemNo = totalCount - 1;
-    //   }
-
-    //   let productPageList = [];
-    //   if (startItemNo < totalCount) {
-    //     for (let index = startItemNo; index <= endItemNo; index++) {
-    //       productPageList.push(products[index]);
-    //     }
-    //   }
-    //   // success
-    //   res.status(200).json(productPageList);
-    // } else {
-    //   res.status(200).json(products);
-    // }
-    res.status(200).json({total, products})
+    res.status(200).json({ total, products });
   } catch (error) {
     next(error);
   }
@@ -123,25 +94,17 @@ productRouter.get("/detail", async function (req, res, next) {
 });
 
 // 신상품 조회
-productRouter.get(
-  "/new",
-  upload.single("productImage"),
-  async function (req, res, next) {
-    try {
-      const now = new Date();
-      // 한 달 전
-      const date = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-      );
-      const newProducts = await productService.getNewProduct(date);
-      res.status(200).json(newProducts);
-    } catch (error) {
-      next(error);
-    }
+productRouter.get("/new", upload.single("productImage"), async function (req, res, next) {
+  try {
+    const now = new Date();
+    // 한 달 전
+    const date = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    const newProducts = await productService.getNewProduct(date);
+    res.status(200).json(newProducts);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 상품 추가 api (관리자만 접근 가능)
 productRouter.post(
@@ -153,9 +116,7 @@ productRouter.post(
     try {
       // req.body가 비어있는 경우 error
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
       }
 
       //req.body 데이터 가져오기
@@ -188,9 +149,7 @@ productRouter.patch(
     try {
       // req.body가 비어있는 경우 error
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
-        );
+        throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
       }
 
       // 현재 productName
@@ -198,24 +157,18 @@ productRouter.patch(
       const productInfoRequired = { productName: productCurrentName };
 
       // 수정할 data
-      let {
-        productName,
-        productPrice,
-        productContent,
-        productImage,
-        category,
-      } = req.body;
+      let { productName, productPrice, productContent, productImage, category } = req.body;
 
       // undefined 값으로 들어올 때
-      productName = productName === "" ? undefined : productName
-      productPrice = productPrice === "" ? undefined : productPrice
-      productContent = productContent === "" ? undefined : productContent
-      productImage = productImage === "undefined" ? undefined : productImage
-      category = category === "" ? undefined : category
+      productName = productName === "" ? undefined : productName;
+      productPrice = productPrice === "" ? undefined : productPrice;
+      productContent = productContent === "" ? undefined : productContent;
+      productImage = productImage === "undefined" ? undefined : productImage;
+      category = category === "" ? undefined : category;
 
       // 데이터가 undefined가 아닌 값만 업데이트용 객체에 삽입
       const toUpdate = {
-        ...(productName && {productName}),
+        ...(productName && { productName }),
         ...(productPrice && { productPrice }),
         ...(productContent && { productContent }),
         ...(productImage && { productImage }),
