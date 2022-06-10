@@ -40,7 +40,7 @@ function createOrderList(data) {
       `<div class="orderItem" id=${index}>
       <span>${el.orderedAt.split("T")[0]}</span>
       <span>${el.product.productName}</span>
-      <span>
+      <span id=${el.product.productId}>
         <div class="ratingContainer" id=${el._id}>
           <span class="starSpan oneStar" data-item-id="oneStar">
             <i class="far fa-star"></i>
@@ -79,6 +79,7 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
 
   // ratingContainer라는 클래스를 가진 경우에만 실행
   if (ratingContainer.classList.contains("ratingContainer")) {
+    const productId = ratingContainer.parentNode.id;
     const starValue = e.target.closest("span").dataset.itemId;
     const reviewScore = ratingObj[starValue];
     // 빈 별 상태로 초기 렌더링 후 클릭한 별의 갯수에 맞게 색칠된 별을 렌더링
@@ -102,6 +103,7 @@ document.querySelector("#reviewContainer").addEventListener("click", async (e) =
       ratingContainer.children[i].innerHTML = "<i class='fas fa-star'></i>";
     }
     const data = {
+      productId: productId,
       scoreId: ratingContainer.id,
       reviewScore: reviewScore,
     };
