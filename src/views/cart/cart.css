@@ -107,6 +107,9 @@ button.del {
   border: transparent;
   background-color: #434373;
   color: white !important;
+  font: icon;
+  padding: 0;
+  cursor: pointer;
 }
 
 button.delItem {
@@ -115,6 +118,7 @@ button.delItem {
   border: transparent;
   background-color: #434373;
   color: white !important;
+  cursor: pointer;
 }
 
 button.allClear,
@@ -125,6 +129,7 @@ button.selectedClear {
   border: transparent;
   background-color: #434373;
   color: white !important;
+  cursor: pointer;
 }
 
 button.allClear:hover,
