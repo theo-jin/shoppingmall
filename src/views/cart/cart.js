@@ -14,7 +14,13 @@ const selectedClearBtn = document.querySelector(".selectedClear");
 
 // 장바구니 전체 삭제
 allClearBtn.addEventListener("click", () => {
-  sessionStorage.clear();
+  const productkeys = Object.keys(sessionStorage);
+  productkeys.forEach((el) => {
+    // 바로 주문하기 데이터, 장바구니에서 주문하기로 넘겨주는 데이터, 별점 관련 데이터 제외
+    if (el !== "role") {
+      sessionStorage.removeItem(el);
+    }
+  });
   window.location.reload();
 });
 
