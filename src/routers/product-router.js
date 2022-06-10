@@ -59,7 +59,7 @@ productRouter.get("", async function (req, res, next) {
     // 페이지 번호
     let page = req.query.page;
     // 제품 개수
-    let countPerPage = req.query.count;
+    let countPerPage = req.query.limit;
 
     // countPerPage가 비어서 온 경우
     if (!countPerPage || countPerPage == null) {
@@ -75,32 +75,34 @@ productRouter.get("", async function (req, res, next) {
       page = Number(page);
     }
 
-    const products = await productService.getProductsByCategory(category);
+    const total = await productService.countByCategory(category)
+    const products = await productService.getProductsByCategory(category, page, countPerPage);
 
-    if (page > 0) {
-      // 전체 제품 크기
-      let totalCount = products.length;
-      // start Number
-      let startItemNo = (page - 1) * countPerPage;
-      // last Number
-      let endItemNo = page * countPerPage - 1;
+    // if (page > 0) {
+    //   // 전체 제품 크기
+    //   let totalCount = total;
+    //   // start Number
+    //   let startItemNo = (page - 1) * countPerPage;
+    //   // last Number
+    //   let endItemNo = page * countPerPage - 1;
 
-      // 종료 번호가 전체 크기보다 크면 전체 크기로 변경
-      if (endItemNo > totalCount - 1) {
-        endItemNo = totalCount - 1;
-      }
+    //   // 종료 번호가 전체 크기보다 크면 전체 크기로 변경
+    //   if (endItemNo > totalCount - 1) {
+    //     endItemNo = totalCount - 1;
+    //   }
 
-      let productPageList = [];
-      if (startItemNo < totalCount) {
-        for (let index = startItemNo; index <= endItemNo; index++) {
-          productPageList.push(products[index]);
-        }
-      }
-      // success
-      res.status(200).json(productPageList);
-    } else {
-      res.status(200).json(products);
-    }
+    //   let productPageList = [];
+    //   if (startItemNo < totalCount) {
+    //     for (let index = startItemNo; index <= endItemNo; index++) {
+    //       productPageList.push(products[index]);
+    //     }
+    //   }
+    //   // success
+    //   res.status(200).json(productPageList);
+    // } else {
+    //   res.status(200).json(products);
+    // }
+    res.status(200).json({total, products})
   } catch (error) {
     next(error);
   }

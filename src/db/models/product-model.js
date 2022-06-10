@@ -14,8 +14,15 @@ export class ProductModel {
     return product;
   }
 
-  async findByCategory(category) {
-    const products = await Product.find({ category });
+  async countBycategory(category) {
+    const total = await Product.countDocuments({ category });
+    return total;
+  }
+
+  async findByCategory(category, page, countPerPage) {
+    const products = await Product.find({ category })
+      .skip(countPerPage * (page - 1))
+      .limit(countPerPage);
     return products;
   }
 

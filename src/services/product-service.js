@@ -15,8 +15,13 @@ class ProductService {
     return products;
   }
 
+  async countByCategory(category) {
+    const total = await this.productModel.countBycategory(category);
+    return total;
+  }
+
   // 카테고리 별 상품 목록 조회
-  async getProductsByCategory(category) {
+  async getProductsByCategory(category, page, countPerPage) {
     //category가 존재하는지 확인
     const categoryInfo = await categoryModel.findByFoodType(category);
     if (!categoryInfo) {
@@ -24,7 +29,7 @@ class ProductService {
     }
 
     // category로 검색
-    const products = await this.productModel.findByCategory(category);
+    const products = await this.productModel.findByCategory(category, page, countPerPage);
     //category 안에 존재하지 않을 때
     if (products.length < 1) {
       return `${category}은(는) 상품 준비중입니다😥`;
