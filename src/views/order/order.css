@@ -73,13 +73,13 @@ form {
   width: 25% !important;
 }
 .productPrice {
-  width: 25% !important;
+  width: 30% !important;
 }
 .productNumber {
   width: 15%;
 }
-.productTotal {
-  width: 25% !important;
+.productTotal,.productTotalLabel {
+  width: 60% !important;
   text-align: right;
 }
 .productTitle {
@@ -108,4 +108,8 @@ table {
 
 #totalUserPrice {
   font-size: 30px;
+}
+
+.priceColumn {
+  float: right;
 }

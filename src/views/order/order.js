@@ -62,14 +62,14 @@ async function getDirectItem() {
   const itemData = JSON.parse(data);
   console.log(itemData);
   $("#productList").innerHTML += `<tr><td class="productName">${itemData.name}</td>
-            <td class="productPrice">${addCommas(itemData.price)}</td>
+            <td class="productPrice">${addCommas(itemData.price)}원</td>
             <td class="productNumber">${itemData.count}</td>
-            <td class="productTotal">${addCommas(itemData.price * itemData.count)}</td></tr>`;
+            <td class="productTotal priceColumn">${addCommas(itemData.price * itemData.count)}원</td></tr>`;
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
     `<label class="totaPrice" id="totalUserPrice">${addCommas(
       itemData.price * itemData.count
-    )}</label>`
+    )}원</label>`
   );
 
   const products = new Array();
@@ -87,9 +87,9 @@ async function getCartItem() {
   const products = new Array();
   itemData.forEach((el) => {
     $("#productList").innerHTML += `<tr><td class="productName">${el.name}</td>
-            <td class="productPrice">${addCommas(el.price)}<span>원</span></td>
+            <td class="productPrice">${addCommas(el.price)}원</td>
             <td class="productNumber">${el.count}</td>
-            <td class="productTotal">${addCommas(el.price * el.count)}<span>원</span></td></tr>`;
+            <td class="productTotal priceColumn">${addCommas(el.price * el.count)}원</td></tr>`;
 
     products.push({
       productId: el.productId,
@@ -105,7 +105,7 @@ async function getCartItem() {
 
   $("#totalProductPrice").insertAdjacentHTML(
     "beforeend",
-    `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}<span>원</span></label>`
+    `<label class="totaPrice" id="totalUserPrice">${addCommas(price)}원</label>`
   );
 }
 
