@@ -80,7 +80,7 @@ orderRouter.delete("/:orderId", loginRequired, async (req, res, next) => {
 
     // 로그인한 유저 정보 가져오기
     const userId = req.currentUserId;
-    const userRole = req.currentUserRole;
+    const userRole = req.signedCookies.role;
 
     // 주문한 사용자와 일치하지 않을 경우
     const order = await orderService.getOrder(orderId);
