@@ -55,6 +55,29 @@ async function productDetailLanding() {
 
 // api를 통해 상품 상세 정보를 받아온 후 html에 표시
 function createProductDetail(data) {
+  const reviewScore = data.reviewScore;
+  let review = "";
+
+  //별점이 0이거나 없는 경우
+  if (reviewScore === 0) {
+    for (let i = 0; i < 5; i++) {
+      review += '<i class="far fa-star"></i>';
+    }
+  } else {
+    for (let i = 0; i < reviewScore - 1; i++) {
+      review += "<i class='fas fa-star'></i>";
+    }
+    // 별 반쪽짜리 추가
+    if (reviewScore % 1 <= 0.5) {
+      review += "<i class='fas fa-star-half-alt'></i>";
+    } else {
+      review += "<i class='fas fa-star'></i>";
+    }
+    for (let i = Math.ceil(reviewScore); i < 5; i++) {
+      review += '<i class="far fa-star"></i>';
+    }
+  }
+
   return `<div class="imgDiv">
         <img class="productImage"  src="${data.productImage}" alt="${data.productName}">
         
@@ -62,6 +85,7 @@ function createProductDetail(data) {
       <div class="descriptionBox">
         <div class="description">
           <p class="productTitle">${data.productName}</p>
+          <p>${review}</p>
           <hr />
           <p>조리법 : ${data.productContent}</p>
         </div>
