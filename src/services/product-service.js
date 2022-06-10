@@ -95,10 +95,10 @@ class ProductService {
     if (!product) {
       throw new Error("존재하지 않는 상품입니다. 다시 한 번 확인해주세요.");
     }
-
+    const filter = { productName };
     // 수정
     const updatedResult = await this.productModel.update({
-      productInfoRequired,
+      filter,
       toUpdate,
     });
 

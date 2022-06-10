@@ -6,7 +6,7 @@ const Notice = model("notices", NoticeSchema);
 export class NoticeModel {
   // 공지사항 전체 조회
   async findAll() {
-    const notices = await Notice.find({});
+    const notices = await Notice.find({}).sort({ createdAt: -1 });
     return notices;
   }
 

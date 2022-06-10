@@ -37,9 +37,9 @@ scoreRouter.patch("/:scoreId", loginRequired, async function (req, res, next) {
     }
 
     // body에서 정보 받아오기
-    const { reviewScore } = req.body;
+    const { productId, reviewScore } = req.body;
 
-    const updatedResult = await scoreService.setScore(scoreId, reviewScore);
+    const updatedResult = await scoreService.setScore(scoreId, productId, reviewScore);
 
     if (updatedResult.modifiedCount !== 1) {
       throw new Error("평점 반영에 실패했습니다.");

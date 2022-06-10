@@ -145,7 +145,7 @@ userRouter.get("/auth/google/callback", async function (req, res, next) {
       }
     )(req, res);
 
-    res.redirect("http://http://kdt-sw2-busan-team04.elicecoding.com/");
+    res.redirect("http://kdt-sw2-busan-team04.elicecoding.com/");
   } catch (error) {
     next(error);
   }

@@ -20,12 +20,13 @@ export class ProductModel {
   }
 
   async findByCategory(category) {
-    const products = await Product.find({ category });
+    const products = await Product.find({ category }).sort({ createdAt: 1 });
     return products;
   }
 
   async findByCategory(category, page, countPerPage) {
     const products = await Product.find({ category })
+      .sort({createdAt: 1})
       .skip(countPerPage * (page - 1))
       .limit(countPerPage);
     return products;
@@ -52,10 +53,8 @@ export class ProductModel {
     return products;
   }
 
-  async update({ productInfoRequired, toUpdate }) {
-    const filter = { productName: productInfoRequired.productName };
+  async update({ filter, toUpdate }) {
     const option = { returnOriginal: false };
-
     const updatedResult = await Product.updateOne(filter, toUpdate, option);
     return updatedResult;
   }

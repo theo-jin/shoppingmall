@@ -1,4 +1,4 @@
-import { scoreModel } from "../db";
+import { productModel, scoreModel } from "../db";
 
 class ScoreService {
   // 본 파일의 맨 아래에서, new ScoreService(scoreModel) 하면, 이 함수의 인자로 전달됨
@@ -21,12 +21,24 @@ class ScoreService {
   }
 
   //평점 수정하기
-  async setScore(scoreId, reviewScore) {
+  async setScore(scoreId, productId, reviewScore) {
     // 평점 수정
     const updatedResult = await this.scoreModel.updateScore({
       scoreId,
       reviewScore,
     });
+
+    // 평균 별점
+    const score = await this.getScoresProduct(productId);
+
+    const filter = { _id: productId };
+    const toUpdate = { reviewScore: score };
+
+    // 상품에 평균 별점 업데이트
+    const updatedProduct = await productModel.update({ filter, toUpdate });
+    if (updatedProduct.modifiedCount !== 1) {
+      throw new Error("평점을 반영하기 실패했습니다.");
+    }
 
     return updatedResult;
   }

@@ -6,7 +6,7 @@ const Score = model("scores", ScoreSchema);
 export class ScoreModel {
   // 유저의 별점 목록 조회
   async findByUserId(userId) {
-    const scores = await Score.find({ userId });
+    const scores = await Score.find({ userId }).sort({orderedAt: -1});
     return scores;
   }
 
@@ -34,9 +34,7 @@ export class ScoreModel {
   //상품 평점 가져오기
   async findByProduct(productId) {
     const score = await Score.find({
-      product: {
-        $elemMatch: { productId },
-      },
+      'product.productId': productId
     });
     return score;
   }
