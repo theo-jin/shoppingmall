@@ -13,20 +13,6 @@
   font-family: "Jua", sans-serif;
 }
 
-.menuNav {
-  background-color: #b8e0f837;
-}
-
-.menuNav a {
-  line-height: 52px;
-  width: 100px;
-  color: black !important;
-}
-
-.menuNav a:hover {
-  background-color: #e1f3fe;
-}
-
 .itemBox {
   width: 400px;
   height: 380px;
@@ -50,11 +36,6 @@
 .imgDiv img:hover {
   transform: scale(1.1);
   transition: all 0.5s ease;
-}
-
-.container {
-  justify-content: center;
-  text-align: center;
 }
 
 .containerDiv {
