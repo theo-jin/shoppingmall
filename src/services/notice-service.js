@@ -6,9 +6,19 @@ class NoticeService {
   }
 
   // 공지사항 전체를 찾음.
-  async getNotices() {
+  async getNoticeList() {
     const notices = await this.noticeModel.findAll();
     return notices;
+  }
+
+  // 공지사항 조회
+  async getNotice(noticeId) {
+    const notice = await this.noticeModel.findByNoticeId(noticeId);
+    if (!notice) {
+      throw new Error(`${notice}은(는) 존재하지 않는 상품입니다.`);
+    }
+
+    return notice;
   }
 
   //공지사항 db에 저장하기
@@ -54,15 +64,6 @@ class NoticeService {
     return deletedResult;
   }
 
-  // 공지사항 조회
-  async getNotice(noticeId) {
-    const notice = await this.noticeModel.findByNoticeId(noticeId);
-    if (!notice) {
-      throw new Error(`${notice}은(는) 존재하지 않는 상품입니다.`);
-    }
-
-    return notice;
-  }
 }
 
 const noticeService = new NoticeService(noticeModel);

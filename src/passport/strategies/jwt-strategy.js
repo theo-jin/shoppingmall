@@ -4,9 +4,7 @@ import { userModel } from "../../db";
 const JWTStrategy = passportJWT.Strategy;
 
 const cookieExtractor = function (req) {
-  let token = null;
-  if (req && req.signedCookies) token = req.signedCookies.token;
-  return token;
+  if (req && req.signedCookies) return req.signedCookies.token;
 };
 
 const jwt = new JWTStrategy(
@@ -20,6 +18,7 @@ const jwt = new JWTStrategy(
     try {
       const user = await userModel.findById(jwtPayload.userId);
       if (user) return done(null, user, { message: "OK" });
+      // TODO: 불필요한 코드
       else return done(null, false, { message: "잘못된 토큰입니다." });
     } catch (err) {
       return done(err, false, { message: "에러가 발생했습니다." });

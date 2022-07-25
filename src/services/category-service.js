@@ -56,12 +56,12 @@ class CategoryService {
 
     // 카테고리 수정 시작
     // 업데이트 진행
-    const updatedResult = await this.categoryModel.update({
+    const updatedCategory = await this.categoryModel.update({
       foodType,
       update: toUpdate,
     });
 
-    return updatedResult;
+    return updatedCategory;
   }
 
   // 카테고리 삭제
@@ -77,9 +77,9 @@ class CategoryService {
 
     // 카테고리 유무를 확인 했으니 카테고리 삭제를 진행함
     // db에 반영
-    const deleteCategory = await this.categoryModel.delete(categoryType);
+    const deletedCategory = await this.categoryModel.delete(categoryType);
 
-    return deleteCategory;
+    return deletedCategory;
   }
 }
 

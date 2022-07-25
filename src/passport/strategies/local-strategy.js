@@ -27,7 +27,6 @@ const verify = async function (email, password, done) {
     // 비밀번호 불일치
     return done(null, false, { message: "비밀번호가 틀렸습니다." });
   } catch (error) {
-    console.log(error);
     done(error);
   }
 };

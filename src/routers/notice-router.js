@@ -89,8 +89,6 @@ noticeRouter.patch(
       const { title, content, author } = req.body;
 
       const toUpdate = {
-        //if fullName = undefined, result = undefined
-        //if fullName = "String", result = { fullName: "String"}
         ...(title && { title }),
         ...(content && { content }),
         ...(author && { author }),
@@ -98,7 +96,7 @@ noticeRouter.patch(
 
       // 주문 상태 정보를 업데이트함.
       const updatedResult = await noticeService.setNotice(noticeId, toUpdate);
-
+      // TODO: 명확하게 표시하기
       if (updatedResult.modifiedCount !== 1) {
         throw new Error("공지사항 수정에 실패했습니다.");
       }

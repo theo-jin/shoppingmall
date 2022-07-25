@@ -18,6 +18,7 @@ const google = new GoogleStrategy(
     const createdUser = await userModel.create({
       fullName: name,
       email,
+      // TODO: string 값이 아닌 다른 값 할당
       password: "GOOGLE_OAUTH",
     })
     return done(null, createdUser);

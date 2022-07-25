@@ -96,6 +96,7 @@ productRouter.get("/detail", async function (req, res, next) {
 // 신상품 조회
 productRouter.get("/new", upload.single("productImage"), async function (req, res, next) {
   try {
+    // TODO: moment.js, day.js로 변경
     const now = new Date();
     // 한 달 전
     const date = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
